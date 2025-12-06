@@ -5,20 +5,11 @@ import { writeFile, mkdir } from "fs/promises";
 import path from "path";
 import sharp from "sharp";
 
-// Type declaration for heic-convert
-declare module 'heic-convert' {
-  interface ConvertOptions {
-    buffer: Buffer;
-    format: 'JPEG' | 'PNG';
-    quality?: number;
-  }
-  function convert(options: ConvertOptions): Promise<Buffer>;
-  export default convert;
-}
-
 // Dynamic import for heic-convert (ESM module)
 const convertHeic = async (buffer: Buffer): Promise<Buffer> => {
-  const heicConvert = (await import("heic-convert")).default;
+  const heicConvertModule = await import("heic-convert");
+  // @ts-ignore - heic-convert doesn't have TypeScript definitions
+  const heicConvert = heicConvertModule.default;
   return await heicConvert({
     buffer,
     format: "JPEG",
@@ -55,6 +46,7 @@ export async function POST(request: NextRequest) {
         const jpegBuffer = await convertHeic(buffer);
         
         // Optimize with sharp
+        // @ts-ignore - Buffer type compatibility
         buffer = await sharp(jpegBuffer)
           .jpeg({ quality: 90 })
           .toBuffer();
@@ -76,6 +68,7 @@ export async function POST(request: NextRequest) {
         
         // Convert to JPEG if it's a supported format
         if (["jpeg", "jpg", "png", "webp"].includes(imageInfo.format || "")) {
+          // @ts-ignore - Buffer type compatibility
           buffer = await sharp(buffer)
             .jpeg({ quality: 90 })
             .toBuffer();

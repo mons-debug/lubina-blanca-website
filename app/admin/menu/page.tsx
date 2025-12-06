@@ -170,7 +170,17 @@ export default function MenuManagement() {
         toast.success(editingItem ? "Item updated!" : "Item added!");
         setShowForm(false);
         setEditingItem(null);
-        setFormData({ name: "", description: "", price: "", category: "", image: "" });
+        setFormData({
+          name: "",
+          description: "",
+          price: "",
+          category: "",
+          image: "",
+          images: [],
+          preparationOptions: "",
+          imagePosition: undefined,
+          imagesPositions: [],
+        });
         fetchMenuData();
       } else {
         toast.error("Operation failed");

@@ -2,12 +2,22 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #1a1a1a;
+  --primary: #5eb3ce;
+  --primary-dark: #3a8fa8;
+  --secondary: #1a3a52;
+  --accent: #6dd3e3;
+  --text-light: #7a9bb0;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-dark: var(--primary-dark);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-text-light: var(--text-light);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -19,8 +29,56 @@
   }
 }
 
+* {
+  scroll-behavior: smooth;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+  position: relative;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  /* 3D perspective for card stack */
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+  
+  .perspective-1500 {
+    perspective: 1500px;
+  }
+  
+  /* Preserve 3D transformations */
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+  
+  /* Disable text selection during drag */
+  .no-select {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  /* Zellige Pattern Overlay */
+  .zellige-pattern {
+    background-image: url('/zelija moncef.svg');
+    background-size: 300px 300px;
+    background-repeat: repeat;
+  }
+  
+  .zellige-pattern-white {
+    background-image: url('/zelija moncef.svg');
+    background-size: 350px 350px;
+    background-repeat: repeat;
+    opacity: 0.04;
+  }
 }

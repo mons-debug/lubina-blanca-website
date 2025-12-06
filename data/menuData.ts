@@ -1,0 +1,689 @@
+export interface MenuItem {
+  id: string;
+  name: string;
+  description: string;
+  price: string;
+  image: string;
+  category: string;
+  images?: string[]; // Multiple images for gallery view
+  preparationOptions?: string; // e.g., "Available: Grilled, Tagine, Plancha, Fried"
+  imagePosition?: { x: number; y: number; zoom: number }; // Main image positioning
+  imagesPositions?: Array<{ x: number; y: number; zoom: number }>; // Gallery images positioning
+}
+
+export const menuCategories = [
+  "All",
+  "Paella",
+  "Couscous",
+  "Salads",
+  "Soups",
+  "Fish Dishes",
+  "Fish by Kilo",
+  "Desserts",
+  "Drinks"
+];
+
+export const menuItems: MenuItem[] = [
+  {
+    "name": "Paella Special (1 person)",
+    "description": "Traditional Spanish paella with saffron rice, seafood, and authentic spices",
+    "price": "50.00 DH",
+    "category": "Paella",
+    "image": "/uploads/1762788129342-WhatsApp-Image-2024-06-29-at-16.23.18-(1).jpg",
+    "id": "1"
+  },
+  {
+    "name": "Paella Spécial (2 persons)",
+    "description": "Traditional Spanish paella with saffron rice, seafood, and authentic spices for two",
+    "price": "100.00 DH",
+    "category": "Paella",
+    "image": "/uploads/1764977359883-paella.jpg",
+    "images": [],
+    "preparationOptions": "",
+    "imagesPositions": [],
+    "id": "2"
+  },
+  {
+    "name": "Couscous au Poulet",
+    "description": "Traditional Moroccan couscous with tender chicken and vegetables",
+    "price": "60.00 DH",
+    "category": "Couscous",
+    "image": "/uploads/1764977380588-couscous.jpg",
+    "images": [],
+    "preparationOptions": "",
+    "imagesPositions": [],
+    "id": "3"
+  },
+  {
+    "name": "Couscous au Poulet (Beldi)",
+    "description": "Authentic Beldi-style couscous with free-range chicken and seven vegetables",
+    "price": "70.00 DH",
+    "category": "Couscous",
+    "image": "/uploads/1764977395960-couscous.jpg",
+    "images": [],
+    "preparationOptions": "",
+    "imagesPositions": [],
+    "id": "4"
+  },
+  {
+    "name": "Couscous à la Viande",
+    "description": "Traditional couscous with tender lamb or beef and aromatic vegetables",
+    "price": "80.00 DH",
+    "category": "Couscous",
+    "image": "/uploads/1765022746123-couscous.jpg",
+    "images": [],
+    "preparationOptions": "",
+    "imagesPositions": [],
+    "id": "5"
+  },
+  {
+    "name": "Couscous aux Poissons",
+    "description": "Fresh fish couscous with seasonal catch and rich broth",
+    "price": "Sur demande",
+    "category": "Couscous",
+    "image": "/uploads/1765022630017-IMG_2780-2.jpg",
+    "images": [],
+    "preparationOptions": "",
+    "imagesPositions": [],
+    "id": "6"
+  },
+  {
+    "name": "Salade Niçoise",
+    "description": "Classic French salad with tuna, eggs, olives, and fresh vegetables",
+    "price": "40.00 DH",
+    "category": "Salads",
+    "image": "/uploads/1764973421829-IMG_1038.jpg",
+    "images": [],
+    "preparationOptions": "",
+    "imagesPositions": [],
+    "id": "7"
+  },
+  {
+    "name": "Salade Fruits de Mer",
+    "description": "Fresh seafood salad with mixed shellfish and citrus dressing",
+    "price": "100.00 DH",
+    "category": "Salads",
+    "image": "/uploads/1765021047660-frt.jpg",
+    "images": [],
+    "preparationOptions": "",
+    "imagesPositions": [],
+    "id": "8"
+  },
+  {
+    "name": "Salade Verte",
+    "description": "Fresh green salad with seasonal lettuce and house vinaigrette",
+    "price": "40.00 DH",
+    "category": "Salads",
+    "image": "/uploads/1764977309371-salade-vert_.jpg",
+    "images": [],
+    "preparationOptions": "",
+    "imagesPositions": [],
+    "id": "9"
+  },
+  {
+    "name": "Salade Arabe",
+    "description": "Traditional Arabic salad with tomatoes, cucumbers, and mint",
+    "price": "40.00 DH",
+    "category": "Salads",
+    "image": "/uploads/1764977323004-salade.jpg",
+    "images": [],
+    "preparationOptions": "",
+    "imagesPositions": [],
+    "id": "10"
+  },
+  {
+    "name": "Salade Russe",
+    "description": "Russian-style potato salad with vegetables and mayonnaise",
+    "price": "40.00 DH",
+    "category": "Salads",
+    "image": "/uploads/1764973655792-salade-rosa.jpg",
+    "images": [],
+    "preparationOptions": "",
+    "imagesPositions": [],
+    "id": "11"
+  },
+  {
+    "name": "Salade Special",
+    "description": "Chef's special salad with seasonal ingredients",
+    "price": "Sur demande",
+    "category": "Salads",
+    "image": "/uploads/1765022711356-WhatsApp-Image-2024-07-25-at-20.38.39.jpeg",
+    "images": [],
+    "preparationOptions": "",
+    "imagesPositions": [],
+    "id": "12"
+  },
+  {
+    "name": "Soupe Special",
+    "description": "Chef's special soup of the day with fresh ingredients",
+    "price": "50.00 DH",
+    "category": "Soups",
+    "image": "/uploads/1764977468871-souo.jpg",
+    "images": [],
+    "preparationOptions": "",
+    "imagesPositions": [],
+    "id": "13"
+  },
+  {
+    "name": "Soupe Royal",
+    "description": "Premium seafood soup with lobster, fish, and aromatic herbs",
+    "price": "150.00 DH",
+    "category": "Soups",
+    "image": "/uploads/1765022886397-IMG_1073.jpg",
+    "images": [],
+    "preparationOptions": "",
+    "imagesPositions": [],
+    "id": "14"
+  },
+  {
+    "name": "Friture Spéciale (1 person)",
+    "description": "Special mixed fried fish platter with seasonal catch",
+    "price": "180.00 DH",
+    "category": "Fish Dishes",
+    "image": "/uploads/1764977550753-friture-special.jpg",
+    "images": [],
+    "preparationOptions": "",
+    "imagesPositions": [],
+    "id": "15"
+  },
+  {
+    "name": "Calamars",
+    "description": "Grilled or fried calamari with lemon and garlic sauce",
+    "price": "120.00 DH",
+    "category": "Fish Dishes",
+    "image": "/uploads/1765021209853-IMG_2778-2.jpg",
+    "images": [],
+    "preparationOptions": "Available: Grilled, Fried, Plancha",
+    "imagesPositions": [],
+    "id": "16"
+  },
+  {
+    "name": "Gambas Pil Pil",
+    "description": "Sizzling prawns in spicy garlic oil, traditional Spanish style",
+    "price": "100.00 DH",
+    "category": "Fish Dishes",
+    "image": "/uploads/1764977570482-tajine.jpg",
+    "images": [],
+    "preparationOptions": "",
+    "imagesPositions": [],
+    "id": "17"
+  },
+  {
+    "name": "Saumon pour Assiette",
+    "description": "Fresh grilled salmon steak with herbs and lemon",
+    "price": "120.00 DH",
+    "category": "Fish Dishes",
+    "image": "/uploads/1765030055953-salmon.jpg",
+    "images": [],
+    "preparationOptions": "",
+    "imagesPositions": [],
+    "id": "18"
+  },
+  {
+    "name": "Rigamonte",
+    "description": "Traditional Portuguese-style fish preparation",
+    "price": "100.00 DH",
+    "category": "Fish Dishes",
+    "image": "/uploads/1764977601883-IMG_4153-5.jpg",
+    "images": [
+      "/uploads/1765023026232-355316642_635235201970949_4477364875249452850_n-(1).jpg"
+    ],
+    "preparationOptions": "",
+    "imagesPositions": [
+      {
+        "x": 0,
+        "y": 0,
+        "zoom": 1
+      }
+    ],
+    "id": "19"
+  },
+  {
+    "id": "20",
+    "name": "Merlan",
+    "description": "Grilled whiting fish with olive oil and herbs",
+    "price": "100.00 DH",
+    "image": "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=800&h=600&fit=crop",
+    "category": "Fish Dishes"
+  },
+  {
+    "id": "21",
+    "name": "Kotcha",
+    "description": "Local specialty fish grilled to perfection",
+    "price": "80.00 DH",
+    "image": "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=800&h=600&fit=crop",
+    "category": "Fish Dishes"
+  },
+  {
+    "name": "Meja",
+    "description": "Fresh local fish prepared Mediterranean style",
+    "price": "Sur demande",
+    "category": "Fish Dishes",
+    "image": "/uploads/1764973251675-cociage.jpg",
+    "images": [],
+    "preparationOptions": "",
+    "imagePosition": {
+      "x": 4,
+      "y": 0,
+      "zoom": 1
+    },
+    "imagesPositions": [],
+    "id": "22"
+  },
+  {
+    "name": "Les Huîtres (Unité)",
+    "description": "Fresh oysters served on ice with lemon",
+    "price": "20.00 DH",
+    "category": "Fish Dishes",
+    "image": "/uploads/1765021889150-hute.jpg",
+    "images": [],
+    "preparationOptions": "",
+    "imagesPositions": [],
+    "id": "23"
+  },
+  {
+    "name": "Crab",
+    "description": "Fresh crab prepared to your preference",
+    "price": "100.00 DH",
+    "category": "Fish Dishes",
+    "image": "/uploads/1764982593367-crab.jpg",
+    "images": [],
+    "preparationOptions": "",
+    "imagesPositions": [],
+    "id": "24"
+  },
+  {
+    "name": "Anchois (Chthoun)",
+    "description": "Fresh anchovies grilled or marinated",
+    "price": "60.00 DH",
+    "category": "Fish Dishes",
+    "image": "/uploads/1765021977497-anchois.jpg",
+    "images": [],
+    "preparationOptions": "",
+    "imagesPositions": [],
+    "id": "25"
+  },
+  {
+    "name": "Pilpil Royal",
+    "description": "Royal seafood pil pil with premium ingredients",
+    "price": "Sur demande",
+    "category": "Fish Dishes",
+    "image": "/uploads/1764982637215-royall-pilpil.jpg",
+    "images": [],
+    "preparationOptions": "",
+    "imagesPositions": [],
+    "id": "26"
+  },
+  {
+    "name": "Gambas Planchat",
+    "description": "Grilled prawns on plancha with garlic butter",
+    "price": "120.00 DH",
+    "category": "Fish Dishes",
+    "image": "/uploads/1765030096546-gamba-plancha.jpg",
+    "images": [],
+    "preparationOptions": "",
+    "imagesPositions": [],
+    "id": "27"
+  },
+  {
+    "name": "Mandrita",
+    "description": "Fresh sea bream grilled with Mediterranean herbs",
+    "price": "120.00 DH",
+    "category": "Fish Dishes",
+    "image": "/uploads/1765022573105-IMG_2779-2.jpg",
+    "images": [],
+    "preparationOptions": "",
+    "imagesPositions": [],
+    "id": "28"
+  },
+  {
+    "name": "Spadon",
+    "description": "Swordfish steak grilled or pan-seared",
+    "price": "120.00 DH",
+    "category": "Fish Dishes",
+    "image": "/uploads/1765030506464-melousa.jpg",
+    "images": [],
+    "preparationOptions": "",
+    "imagesPositions": [],
+    "id": "29"
+  },
+  {
+    "name": "Meloussa",
+    "description": "Fresh local fish with traditional preparation",
+    "price": "100.00 DH",
+    "category": "Fish Dishes",
+    "image": "/uploads/1765030484046-melousaa.jpg",
+    "images": [],
+    "preparationOptions": "",
+    "imagesPositions": [],
+    "id": "30"
+  },
+  {
+    "name": "Rouget",
+    "description": "Red mullet grilled with olive oil and lemon",
+    "price": "100.00 DH",
+    "category": "Fish Dishes",
+    "image": "/uploads/1765030271750-toujet.jpg",
+    "images": [],
+    "preparationOptions": "",
+    "imagesPositions": [],
+    "id": "31"
+  },
+  {
+    "id": "32",
+    "name": "Laouzi",
+    "description": "Fresh local specialty fish",
+    "price": "90.00 DH",
+    "image": "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=800&h=600&fit=crop",
+    "category": "Fish Dishes"
+  },
+  {
+    "id": "33",
+    "name": "Œufs des Poissons",
+    "description": "Fish roe prepared Mediterranean style",
+    "price": "100.00 DH",
+    "image": "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=800&h=600&fit=crop",
+    "category": "Fish Dishes"
+  },
+  {
+    "id": "34",
+    "name": "Marrajo",
+    "description": "Shark steak grilled with spices",
+    "price": "100.00 DH",
+    "image": "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=800&h=600&fit=crop",
+    "category": "Fish Dishes"
+  },
+  {
+    "id": "35",
+    "name": "Croquette",
+    "description": "Fish croquette with crispy coating",
+    "price": "10.00 DH",
+    "image": "https://images.unsplash.com/photo-1625944525533-473f1a3d54e7?w=800&h=600&fit=crop",
+    "category": "Fish Dishes"
+  },
+  {
+    "name": "Plat de Poisson Royal",
+    "description": "Royal fish platter with chef's selection of premium seafood",
+    "price": "Sur demande",
+    "category": "Fish Dishes",
+    "image": "/uploads/1765018954650-WhatsApp-Image-2024-07-26-at-15.48.57.jpeg",
+    "images": [
+      "/uploads/1765018983506-3.jpg"
+    ],
+    "preparationOptions": "",
+    "imagesPositions": [
+      {
+        "x": 0,
+        "y": 0,
+        "zoom": 1
+      }
+    ],
+    "id": "36"
+  },
+  {
+    "id": "37",
+    "name": "Spilinka",
+    "description": "Traditional coastal fish specialty",
+    "price": "90.00 DH",
+    "image": "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=800&h=600&fit=crop",
+    "category": "Fish Dishes"
+  },
+  {
+    "name": "Thon",
+    "description": "Fresh tuna steak grilled or seared",
+    "price": "120.00 DH",
+    "category": "Fish Dishes",
+    "image": "/uploads/1765029973591-tuna.jpg",
+    "images": [],
+    "preparationOptions": "",
+    "imagesPositions": [],
+    "id": "38"
+  },
+  {
+    "name": "Angolas",
+    "description": "Premium specialty fish preparation",
+    "price": "400.00 DH",
+    "category": "Fish Dishes",
+    "image": "/uploads/1765020046413-angola.jpg",
+    "images": [],
+    "preparationOptions": "",
+    "imagesPositions": [],
+    "id": "39"
+  },
+  {
+    "id": "41",
+    "name": "Bogavante (KG)",
+    "description": "Fresh lobster sold by weight",
+    "price": "600.00 DH/KG",
+    "image": "https://images.unsplash.com/photo-1559339352-11d035aa65de?w=800&h=600&fit=crop",
+    "category": "Fish by Kilo"
+  },
+  {
+    "name": "Langusta (KG)",
+    "description": "Fresh spiny lobster sold by weight",
+    "price": "600.00 DH/KG",
+    "category": "Fish by Kilo",
+    "image": "/uploads/1765020171811-langusta.jpg",
+    "images": [],
+    "preparationOptions": "",
+    "imagesPositions": [],
+    "id": "42"
+  },
+  {
+    "name": "Royal (KG)",
+    "description": "Premium royal fish selection",
+    "price": "1500.00 DH/KG",
+    "category": "Fish by Kilo",
+    "image": "/uploads/1765020898734-royal.jpg",
+    "images": [],
+    "preparationOptions": "",
+    "imagesPositions": [],
+    "id": "43"
+  },
+  {
+    "id": "44",
+    "name": "Pardio Découpé (KG)",
+    "description": "Filleted pardio fish sold by weight",
+    "price": "500.00 DH/KG",
+    "image": "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=800&h=600&fit=crop",
+    "category": "Fish by Kilo"
+  },
+  {
+    "id": "45",
+    "name": "Rapel Lalote (KG)",
+    "description": "Fresh lalote fish sold by weight",
+    "price": "500.00 DH/KG",
+    "image": "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=800&h=600&fit=crop",
+    "category": "Fish by Kilo"
+  },
+  {
+    "id": "46",
+    "name": "Langusta Gris (KG)",
+    "description": "Grey lobster sold by weight",
+    "price": "500.00 DH/KG",
+    "image": "https://images.unsplash.com/photo-1559339352-11d035aa65de?w=800&h=600&fit=crop",
+    "category": "Fish by Kilo"
+  },
+  {
+    "id": "47",
+    "name": "Langostinos (KG)",
+    "description": "Large prawns sold by weight",
+    "price": "600.00 DH/KG",
+    "image": "https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?w=800&h=600&fit=crop",
+    "category": "Fish by Kilo"
+  },
+  {
+    "id": "48",
+    "name": "Sigala (KG)",
+    "description": "Premium sigala fish sold by weight",
+    "price": "800.00 DH/KG",
+    "image": "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=800&h=600&fit=crop",
+    "category": "Fish by Kilo"
+  },
+  {
+    "id": "49",
+    "name": "Filet Lalote (KG)",
+    "description": "Lalote fillets sold by weight",
+    "price": "500.00 DH/KG",
+    "image": "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=800&h=600&fit=crop",
+    "category": "Fish by Kilo"
+  },
+  {
+    "id": "50",
+    "name": "Filet Lubina (KG)",
+    "description": "Sea bass fillets sold by weight",
+    "price": "600.00 DH/KG",
+    "image": "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=800&h=600&fit=crop",
+    "category": "Fish by Kilo"
+  },
+  {
+    "id": "51",
+    "name": "Filet Merou (KG)",
+    "description": "Grouper fillets sold by weight",
+    "price": "600.00 DH/KG",
+    "image": "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=800&h=600&fit=crop",
+    "category": "Fish by Kilo"
+  },
+  {
+    "name": "Boracci (KG)",
+    "description": "Fresh boracci fish sold by weight",
+    "price": "400.00 DH/KG",
+    "category": "Fish by Kilo",
+    "image": "/uploads/1764972504821-borassi.jpg",
+    "images": [
+      "/uploads/1764972440771-borassi.jpg"
+    ],
+    "preparationOptions": "",
+    "imagesPositions": [
+      {
+        "x": 0,
+        "y": 52,
+        "zoom": 1
+      }
+    ],
+    "id": "52"
+  },
+  {
+    "name": "Mero Découpé (KG)",
+    "description": "Filleted grouper sold by weight",
+    "price": "550.00 DH/KG",
+    "category": "Fish by Kilo",
+    "image": "/uploads/1764977863468-meru.jpg",
+    "images": [],
+    "preparationOptions": "",
+    "imagesPositions": [],
+    "id": "53"
+  },
+  {
+    "name": "Shatra (KG)",
+    "description": "Fresh shatra fish sold by weight",
+    "price": "300.00 DH/KG",
+    "category": "Fish by Kilo",
+    "image": "/uploads/1762788716377-chatra.jpg",
+    "id": "54"
+  },
+  {
+    "name": "Baghar (KG)",
+    "description": "Fresh baghar fish sold by weight",
+    "price": "400.00 DH/KG",
+    "category": "Fish by Kilo",
+    "image": "/uploads/1765020278708-fish1.jpg",
+    "images": [],
+    "preparationOptions": "",
+    "imagesPositions": [],
+    "id": "55"
+  },
+  {
+    "name": "Dourada (KG)",
+    "description": "Sea bream sold by weight",
+    "price": "400.00 DH/KG",
+    "category": "Fish by Kilo",
+    "image": "/uploads/1764977977000-dorada.jpg",
+    "images": [
+      "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1580959375944-620a7c78ea41?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1626804475297-41608ea09aeb?w=800&h=600&fit=crop"
+    ],
+    "preparationOptions": "Available: Grilled, Tagine, Plancha, Baked, Salt-Crusted",
+    "imagesPositions": [],
+    "id": "56"
+  },
+  {
+    "name": "Sole (KG)",
+    "description": "Fresh sole fish sold by weight",
+    "price": "300.00 DH/KG",
+    "category": "Fish by Kilo",
+    "image": "/uploads/1765022614647-IMG_2781-2.jpg",
+    "images": [
+      "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1580959375944-620a7c78ea41?w=800&h=600&fit=crop"
+    ],
+    "preparationOptions": "Available: Grilled, Tagine, Plancha, Fried",
+    "imagesPositions": [],
+    "id": "57"
+  },
+  {
+    "name": "Torbo (KG)",
+    "description": "Fresh turbot sold by weight",
+    "price": "350.00 DH/KG",
+    "category": "Fish by Kilo",
+    "image": "/uploads/1765020339789-fidh3.jpg",
+    "images": [],
+    "preparationOptions": "",
+    "imagesPositions": [],
+    "id": "58"
+  },
+  {
+    "name": "Rouget (KG)",
+    "description": "Red mullet sold by weight",
+    "price": "Sur demande",
+    "category": "Fish by Kilo",
+    "image": "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=800&h=600&fit=crop",
+    "images": [],
+    "preparationOptions": "",
+    "imagesPositions": [],
+    "id": "59"
+  },
+  {
+    "id": "60",
+    "name": "Flan (Crème Caramel)",
+    "description": "Classic caramel custard dessert",
+    "price": "20.00 DH",
+    "image": "https://images.unsplash.com/photo-1551024601-bec78aea704b?w=800&h=600&fit=crop",
+    "category": "Desserts"
+  },
+  {
+    "id": "61",
+    "name": "Fruits de Saison",
+    "description": "Fresh seasonal fruit platter",
+    "price": "Sur demande",
+    "image": "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=800&h=600&fit=crop",
+    "category": "Desserts"
+  },
+  {
+    "id": "62",
+    "name": "Eau (0.5 litre)",
+    "description": "Bottled water 0.5L",
+    "price": "10.00 DH",
+    "image": "https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=800&h=600&fit=crop",
+    "category": "Drinks"
+  },
+  {
+    "id": "63",
+    "name": "Eau (1 litre/verre)",
+    "description": "Bottled water 1L or glass",
+    "price": "15.00 DH",
+    "image": "https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=800&h=600&fit=crop",
+    "category": "Drinks"
+  },
+  {
+    "id": "64",
+    "name": "Boissons Gazeuses 0.5L",
+    "description": "Soft drinks 0.5L",
+    "price": "10.00 DH",
+    "image": "https://images.unsplash.com/photo-1581636625402-29b2a704ef13?w=800&h=600&fit=crop",
+    "category": "Drinks"
+  }
+];

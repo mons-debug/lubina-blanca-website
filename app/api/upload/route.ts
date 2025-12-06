@@ -5,6 +5,17 @@ import { writeFile, mkdir } from "fs/promises";
 import path from "path";
 import sharp from "sharp";
 
+// Type declaration for heic-convert
+declare module 'heic-convert' {
+  interface ConvertOptions {
+    buffer: Buffer;
+    format: 'JPEG' | 'PNG';
+    quality?: number;
+  }
+  function convert(options: ConvertOptions): Promise<Buffer>;
+  export default convert;
+}
+
 // Dynamic import for heic-convert (ESM module)
 const convertHeic = async (buffer: Buffer): Promise<Buffer> => {
   const heicConvert = (await import("heic-convert")).default;

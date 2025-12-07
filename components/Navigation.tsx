@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiMenu, FiX, FiInstagram } from "react-icons/fi";
 import { FaGoogle } from "react-icons/fa";
@@ -17,6 +18,12 @@ const navLinks = [
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
+
+  // Hide navigation on tablet-menu page (it has its own header)
+  if (pathname === "/tablet-menu") {
+    return null;
+  }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -40,9 +47,10 @@ export default function Navigation() {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "bg-white shadow-lg py-4" : "bg-transparent py-6"
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled
+        ? "bg-[#0a1628]/95 backdrop-blur-lg shadow-xl py-3"
+        : "bg-transparent py-5"
+        }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
@@ -53,9 +61,9 @@ export default function Navigation() {
             whileTap={{ scale: 0.95 }}
             className="flex items-center"
           >
-            <img 
-              src="/lubinalogo.png" 
-              alt="Lubina Blanca Logo" 
+            <img
+              src="/lubinalogo.png"
+              alt="Lubina Blanca Logo"
               className="h-12 md:h-16 w-auto"
             />
           </motion.button>
@@ -66,27 +74,23 @@ export default function Navigation() {
               <motion.button
                 key={link.name}
                 onClick={() => scrollToSection(link.href)}
-                whileHover={{ scale: 1.1 }}
+                whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className={`font-medium transition-colors ${
-                  scrolled
-                    ? "text-gray-700 hover:text-[#5eb3ce]"
-                    : "text-white hover:text-[#e8d5b5]"
-                }`}
+                className="text-white/80 hover:text-[#5eb3ce] font-medium transition-colors text-sm tracking-wide"
               >
                 {link.name}
               </motion.button>
             ))}
-            
+
             {/* Social Icons */}
-            <div className="flex items-center space-x-4 ml-4 border-l pl-4">
+            <div className="flex items-center space-x-4 ml-4 border-l border-white/20 pl-4">
               <motion.a
                 href={restaurantInfo.social.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.2, rotate: 5 }}
                 whileTap={{ scale: 0.9 }}
-                className={scrolled ? "text-gray-700" : "text-white"}
+                className="text-white/70 hover:text-[#5eb3ce] transition-colors"
               >
                 <FiInstagram size={20} />
               </motion.a>
@@ -96,7 +100,7 @@ export default function Navigation() {
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.2, rotate: -5 }}
                 whileTap={{ scale: 0.9 }}
-                className={scrolled ? "text-gray-700" : "text-white"}
+                className="text-white/70 hover:text-[#5eb3ce] transition-colors"
               >
                 <FaGoogle size={20} />
               </motion.a>
@@ -107,7 +111,7 @@ export default function Navigation() {
           <motion.button
             whileTap={{ scale: 0.9 }}
             onClick={() => setIsOpen(!isOpen)}
-            className={`md:hidden z-50 ${scrolled ? "text-gray-700" : "text-white"}`}
+            className="md:hidden z-50 text-white"
           >
             {isOpen ? <FiX size={28} /> : <FiMenu size={28} />}
           </motion.button>
@@ -150,7 +154,7 @@ export default function Navigation() {
                   {link.name}
                 </motion.button>
               ))}
-              
+
               {/* Mobile Social Icons */}
               <div className="flex items-center space-x-6 pt-8">
                 <motion.a

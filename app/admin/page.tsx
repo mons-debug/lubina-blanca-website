@@ -63,10 +63,25 @@ export default function AdminDashboard() {
   ];
 
   return (
-    <div className="p-8 bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
+    <div className="p-6 md:p-8 bg-gradient-to-br from-gray-50 via-white to-gray-100 min-h-screen">
+      {/* Welcome Header */}
       <div className="mb-8">
-        <h1 className="text-4xl font-bold text-gray-900 mb-2">Dashboard</h1>
-        <p className="text-lg text-gray-700">Welcome to Lubina Blanca Admin Panel</p>
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <div>
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-1">
+              Welcome back! 👋
+            </h1>
+            <p className="text-base md:text-lg text-gray-600">
+              Lubina Blanca Admin Dashboard
+            </p>
+          </div>
+          <div className="bg-white rounded-xl px-4 py-3 shadow-md border border-gray-200">
+            <p className="text-sm text-gray-500">Today&apos;s Date</p>
+            <p className="text-lg font-semibold text-gray-800">
+              {new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
+            </p>
+          </div>
+        </div>
       </div>
 
       <div className="grid md:grid-cols-3 gap-6 mb-8">

@@ -4,8 +4,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence, PanInfo } from "framer-motion";
 import Image from "next/image";
 import { MenuItem } from "@/data/menuData";
-import { FiX, FiChevronLeft, FiChevronRight } from "react-icons/fi";
-import { MdOutlineRestaurantMenu } from "react-icons/md";
+import { FiX, FiChevronLeft, FiChevronRight, FiPhone } from "react-icons/fi";
 import PositionedImage from "./PositionedImage";
 
 interface MenuItemModalProps {
@@ -16,23 +15,24 @@ interface MenuItemModalProps {
 
 export default function MenuItemModal({ item, isOpen, onClose }: MenuItemModalProps) {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
-  
-  // Get all images (use images array if available, otherwise fallback to single image)
-  const allImages = item?.images && item.images.length > 0 ? item.images : item?.image ? [item.image] : [];
-  
-  // Get positions for images
-  const allPositions = item?.images && item.images.length > 0 
-    ? item.imagesPositions || []
-    : item?.imagePosition 
+
+  // Combine main image with variant images
+  const allImages = item?.images && item.images.length > 0
+    ? [item.image, ...item.images]
+    : item?.image
+      ? [item.image]
+      : [];
+
+  const allPositions = item?.imagesPositions && item.imagesPositions.length > 0
+    ? [item.imagePosition || { x: 0, y: 0, zoom: 1 }, ...item.imagesPositions]
+    : item?.imagePosition
       ? [item.imagePosition]
       : [];
-  
-  // Reset active image when item changes
+
   useEffect(() => {
     setActiveImageIndex(0);
   }, [item?.id]);
 
-  // Close on Escape key
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -49,30 +49,15 @@ export default function MenuItemModal({ item, isOpen, onClose }: MenuItemModalPr
 
   if (!item) return null;
 
-  const nextImage = () => {
-    setActiveImageIndex((prev) => (prev + 1) % allImages.length);
-  };
+  const nextImage = () => setActiveImageIndex((prev) => (prev + 1) % allImages.length);
+  const prevImage = () => setActiveImageIndex((prev) => (prev - 1 + allImages.length) % allImages.length);
 
-  const prevImage = () => {
-    setActiveImageIndex((prev) => (prev - 1 + allImages.length) % allImages.length);
-  };
-
-  // Handle swipe/drag gestures
   const handleDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
     if (allImages.length <= 1) return;
-    
     const swipeThreshold = 50;
-    const velocityThreshold = 500;
-    
-    // Check if swipe was strong enough
-    if (Math.abs(info.offset.x) > swipeThreshold || Math.abs(info.velocity.x) > velocityThreshold) {
-      if (info.offset.x > 0 || info.velocity.x > 0) {
-        // Swipe right - previous image
-        prevImage();
-      } else {
-        // Swipe left - next image
-        nextImage();
-      }
+    if (Math.abs(info.offset.x) > swipeThreshold) {
+      if (info.offset.x > 0) prevImage();
+      else nextImage();
     }
   };
 
@@ -86,155 +71,181 @@ export default function MenuItemModal({ item, isOpen, onClose }: MenuItemModalPr
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50"
+            className="fixed inset-0 bg-black/90 backdrop-blur-sm z-[100]"
           />
 
           {/* Modal */}
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto">
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 overflow-y-auto">
             <motion.div
-              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              transition={{ type: "spring", damping: 30, stiffness: 300 }}
               onClick={(e) => e.stopPropagation()}
-              className="bg-white rounded-3xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto relative"
+              className="bg-white rounded-2xl w-full max-w-5xl max-h-[90vh] overflow-hidden relative shadow-2xl"
             >
               {/* Close Button */}
               <button
                 onClick={onClose}
-                className="absolute top-4 right-4 z-10 bg-white/90 hover:bg-white text-gray-800 rounded-full p-2 shadow-lg transition-all hover:scale-110"
+                className="absolute top-4 right-4 z-20 w-10 h-10 bg-black/20 hover:bg-black/40 backdrop-blur-sm rounded-full flex items-center justify-center text-white transition-colors"
               >
-                <FiX size={24} />
+                <FiX size={20} />
               </button>
 
-              {/* Image Gallery */}
-              <div className="relative">
-                {/* Main Image */}
-                <motion.div
-                  drag="x"
-                  dragConstraints={{ left: 0, right: 0 }}
-                  dragElastic={0.2}
-                  onDragEnd={handleDragEnd}
-                  className="relative h-[300px] md:h-[400px] bg-gray-900 rounded-t-3xl overflow-hidden cursor-grab active:cursor-grabbing"
-                >
+              <div className="flex flex-col md:flex-row h-full max-h-[90vh]">
+                {/* Image Section */}
+                <div className="relative md:w-3/5 bg-slate-900 flex-shrink-0">
+                  {/* Main Image */}
                   <motion.div
-                    key={activeImageIndex}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.3 }}
-                    className="w-full h-full"
+                    drag="x"
+                    dragConstraints={{ left: 0, right: 0 }}
+                    dragElastic={0.2}
+                    onDragEnd={handleDragEnd}
+                    className="relative h-72 md:h-[500px] cursor-grab active:cursor-grabbing"
                   >
-                    <PositionedImage
-                      src={allImages[activeImageIndex]}
-                      alt={item.name}
-                      position={allPositions[activeImageIndex]}
-                      className="w-full h-full"
-                    />
-                  </motion.div>
-                  
-                  {/* Navigation Arrows (only show if multiple images) */}
-                  {allImages.length > 1 && (
-                    <>
-                      <button
-                        onClick={prevImage}
-                        className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-gray-800 rounded-full p-3 shadow-lg transition-all hover:scale-110"
+                    <AnimatePresence mode="wait">
+                      <motion.div
+                        key={activeImageIndex}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="w-full h-full"
                       >
-                        <FiChevronLeft size={24} />
-                      </button>
-                      <button
-                        onClick={nextImage}
-                        className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-gray-800 rounded-full p-3 shadow-lg transition-all hover:scale-110"
-                      >
-                        <FiChevronRight size={24} />
-                      </button>
-
-                      {/* Image Counter */}
-                      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/60 text-white px-4 py-2 rounded-full text-sm">
-                        {activeImageIndex + 1} / {allImages.length}
-                      </div>
-                    </>
-                  )}
-                </motion.div>
-
-                {/* Thumbnails (only show if multiple images) */}
-                {allImages.length > 1 && (
-                  <div className="flex gap-2 p-4 overflow-x-auto">
-                    {allImages.map((image, index) => (
-                      <button
-                        key={index}
-                        onClick={() => setActiveImageIndex(index)}
-                        className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-all ${
-                          index === activeImageIndex
-                            ? "border-[#5eb3ce] scale-105 shadow-lg"
-                            : "border-gray-300 hover:border-gray-400"
-                        }`}
-                      >
-                        <Image
-                          src={image}
-                          alt={`${item.name} ${index + 1}`}
-                          fill
-                          className="object-cover"
-                          sizes="80px"
+                        <PositionedImage
+                          src={allImages[activeImageIndex]}
+                          alt={item.name}
+                          position={allPositions[activeImageIndex]}
+                          className="w-full h-full"
                         />
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
+                      </motion.div>
+                    </AnimatePresence>
 
-              {/* Content */}
-              <div className="p-6 md:p-8">
-                {/* Header */}
-                <div className="flex items-start justify-between gap-4 mb-6">
-                  <div className="flex-1">
-                    <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
-                      {item.name}
-                    </h2>
-                    <div className="flex items-center gap-2 text-gray-500 text-sm">
-                      <MdOutlineRestaurantMenu size={16} />
-                      <span>{item.category}</span>
+                    {/* Navigation Arrows */}
+                    {allImages.length > 1 && (
+                      <>
+                        <button
+                          onClick={prevImage}
+                          className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/20 hover:bg-white/40 backdrop-blur-sm rounded-full flex items-center justify-center text-white transition-all"
+                        >
+                          <FiChevronLeft size={20} />
+                        </button>
+                        <button
+                          onClick={nextImage}
+                          className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/20 hover:bg-white/40 backdrop-blur-sm rounded-full flex items-center justify-center text-white transition-all"
+                        >
+                          <FiChevronRight size={20} />
+                        </button>
+                      </>
+                    )}
+                  </motion.div>
+
+                  {/* Gallery Thumbnails - Displayed at bottom of image section */}
+                  {allImages.length > 1 && (
+                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
+                      <div className="flex justify-center gap-2">
+                        {allImages.map((image, index) => (
+                          <motion.button
+                            key={index}
+                            onClick={() => setActiveImageIndex(index)}
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            className={`relative w-16 h-16 md:w-20 md:h-20 rounded-lg overflow-hidden transition-all ${index === activeImageIndex
+                              ? "ring-2 ring-white ring-offset-2 ring-offset-black/50"
+                              : "opacity-60 hover:opacity-100"
+                              }`}
+                          >
+                            <Image
+                              src={image}
+                              alt={`${item.name} variant ${index + 1}`}
+                              fill
+                              className="object-cover"
+                              sizes="80px"
+                            />
+                            {index === 0 && allImages.length > 1 && (
+                              <div className="absolute inset-0 flex items-end justify-center pb-1">
+                                <span className="text-[10px] text-white bg-black/50 px-1.5 py-0.5 rounded">
+                                  Main
+                                </span>
+                              </div>
+                            )}
+                          </motion.button>
+                        ))}
+                      </div>
+                      <p className="text-center text-white/60 text-xs mt-2">
+                        {activeImageIndex + 1} of {allImages.length} • Swipe to browse
+                      </p>
                     </div>
-                  </div>
-                  <div className="bg-[#5eb3ce] text-white px-6 py-3 rounded-full font-bold text-xl shadow-lg flex-shrink-0">
-                    {item.price}
-                  </div>
+                  )}
                 </div>
 
-                {/* Description */}
-                <div className="mb-6">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">Description</h3>
-                  <p className="text-gray-600 leading-relaxed text-base">
+                {/* Content Section */}
+                <div className="flex-1 p-6 md:p-8 overflow-y-auto">
+                  {/* Category Badge */}
+                  <span className="inline-block bg-slate-100 text-slate-600 px-3 py-1 rounded-full text-xs uppercase tracking-wider mb-4">
+                    {item.category}
+                  </span>
+
+                  {/* Title */}
+                  <h2
+                    className="text-2xl md:text-3xl font-light text-slate-900 mb-2"
+                    style={{ fontFamily: 'var(--font-playfair, Georgia, serif)' }}
+                  >
+                    {item.name}
+                  </h2>
+
+                  {/* Price */}
+                  <p className="text-2xl font-medium text-[#5eb3ce] mb-6">
+                    {item.price}
+                  </p>
+
+                  <div className="w-12 h-[1px] bg-slate-200 mb-6" />
+
+                  {/* Description */}
+                  <p className="text-slate-600 leading-relaxed mb-6">
                     {item.description}
                   </p>
-                </div>
 
-                {/* Preparation Options */}
-                {item.preparationOptions && (
-                  <div className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl p-6 border border-blue-100">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                      <span className="text-2xl">👨‍🍳</span>
-                      Preparation Options
-                    </h3>
-                    <p className="text-gray-700 text-base leading-relaxed">
-                      {item.preparationOptions}
-                    </p>
+                  {/* Preparation Options */}
+                  {item.preparationOptions && (
+                    <div className="bg-slate-50 rounded-xl p-5 mb-6">
+                      <h3 className="text-sm uppercase tracking-wider text-slate-500 mb-2">
+                        Preparation Options
+                      </h3>
+                      <p className="text-slate-700">
+                        {item.preparationOptions}
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Gallery Info */}
+                  {allImages.length > 1 && (
+                    <div className="bg-blue-50 rounded-xl p-5 mb-6">
+                      <h3 className="text-sm uppercase tracking-wider text-blue-600 mb-2">
+                        📸 {allImages.length} Photos Available
+                      </h3>
+                      <p className="text-blue-700 text-sm">
+                        Browse through different views and presentations of this dish
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Actions */}
+                  <div className="flex gap-3 mt-auto pt-4">
+                    <button
+                      onClick={onClose}
+                      className="flex-1 px-6 py-3 bg-slate-100 hover:bg-slate-200 text-slate-800 font-medium rounded-xl transition-colors"
+                    >
+                      Close
+                    </button>
+                    <a
+                      href="tel:+212539318849"
+                      className="flex-1 px-6 py-3 bg-slate-900 hover:bg-slate-800 text-white font-medium rounded-xl transition-colors flex items-center justify-center gap-2"
+                    >
+                      <FiPhone size={16} />
+                      Order Now
+                    </a>
                   </div>
-                )}
-
-                {/* Action Button */}
-                <div className="mt-8 flex gap-4">
-                  <button
-                    onClick={onClose}
-                    className="flex-1 px-6 py-4 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-full font-semibold transition-colors"
-                  >
-                    Close
-                  </button>
-                  <a
-                    href={`tel:+212539318849`}
-                    className="flex-1 px-6 py-4 bg-[#5eb3ce] hover:bg-[#3a8fa8] text-white rounded-full font-semibold transition-colors text-center"
-                  >
-                    Call to Order
-                  </a>
                 </div>
               </div>
             </motion.div>
@@ -244,8 +255,3 @@ export default function MenuItemModal({ item, isOpen, onClose }: MenuItemModalPr
     </AnimatePresence>
   );
 }
-
-
-
-
-

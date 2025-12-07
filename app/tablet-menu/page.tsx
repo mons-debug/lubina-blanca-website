@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { MenuItem } from "@/data/menuData";
 import MenuItemModal from "@/components/MenuItemModal";
 import PositionedImage from "@/components/PositionedImage";
+import { FiPhone } from "react-icons/fi";
 
 export default function TabletMenuPage() {
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -54,99 +55,94 @@ export default function TabletMenuPage() {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.05,
-      },
+      transition: { staggerChildren: 0.03 },
     },
   };
 
-  const item = {
-    hidden: { opacity: 0, scale: 0.95 },
-    show: { opacity: 1, scale: 1 },
+  const itemVariant = {
+    hidden: { opacity: 0, y: 10 },
+    show: { opacity: 1, y: 0 },
   };
 
   if (loading) {
     return (
-      <main className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
+      <main className="min-h-screen bg-slate-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-[#5eb3ce] mx-auto mb-4"></div>
-          <p className="text-xl font-semibold text-gray-700">Loading menu...</p>
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+            className="w-12 h-12 border-2 border-slate-200 border-t-[#5eb3ce] rounded-full mx-auto mb-4"
+          />
+          <p className="text-slate-500">Loading menu...</p>
         </div>
       </main>
     );
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-6">
-      {/* Header */}
-      <div className="max-w-[1600px] mx-auto">
-        <div className="flex items-center justify-between mb-8">
-          {/* Logo */}
-          <div className="flex items-center gap-4">
+    <main className="min-h-screen bg-slate-50">
+      {/* Header - Fixed */}
+      <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-sm border-b border-slate-100">
+        <div className="max-w-[1400px] mx-auto px-4 py-3">
+          <div className="flex items-center justify-between">
+            {/* Logo Only */}
             <img
               src="/lubinalogo.png"
               alt="Lubina Blanca"
-              className="h-20 w-auto"
+              className="h-14 w-auto"
             />
-            <div>
-              <h1 className="text-4xl font-bold text-gray-900">Lubina Blanca</h1>
-              <p className="text-gray-600 text-lg">Mediterranean Seafood Restaurant</p>
-            </div>
-          </div>
 
-          {/* Contact Info */}
-          <div className="text-right">
-            <p className="text-gray-600 text-lg">Call for Orders</p>
+            {/* Call Button */}
             <a
               href="tel:+212539318849"
-              className="text-2xl font-bold text-[#5eb3ce] hover:text-[#3a8fa8] transition-colors"
+              className="flex items-center gap-2 bg-[#5eb3ce] text-white px-5 py-2.5 rounded-full font-medium hover:bg-[#4da3be] transition-colors"
             >
-              +212 5393-18849
+              <FiPhone size={18} />
+              <span className="hidden sm:inline">+212 5393-18849</span>
+              <span className="sm:hidden">Call</span>
             </a>
           </div>
         </div>
+      </header>
 
-        {/* Category Filter */}
-        {menuCategories.length > 0 && (
-          <div className="flex flex-wrap gap-3 mb-8">
+      {/* Category Filter - Sticky below header */}
+      <div className="sticky top-[70px] z-30 bg-slate-50 border-b border-slate-100">
+        <div className="max-w-[1400px] mx-auto px-4 py-3">
+          <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
             {menuCategories.map((category) => (
-            <motion.button
-              key={category}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => setSelectedCategory(category)}
-              className={`px-8 py-4 rounded-2xl font-semibold text-lg transition-all ${
-                selectedCategory === category
-                  ? "bg-[#5eb3ce] text-white shadow-xl scale-105"
-                  : "bg-white text-gray-700 hover:bg-gray-100 shadow-lg"
-              }`}
-            >
-              {category}
-            </motion.button>
+              <motion.button
+                key={category}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setSelectedCategory(category)}
+                className={`flex-shrink-0 px-5 py-2.5 rounded-full font-medium text-sm transition-all ${selectedCategory === category
+                    ? "bg-slate-900 text-white shadow-md"
+                    : "bg-white text-slate-600 hover:bg-slate-100 border border-slate-200"
+                  }`}
+              >
+                {category}
+              </motion.button>
             ))}
           </div>
-        )}
+        </div>
+      </div>
 
+      {/* Content */}
+      <div className="max-w-[1400px] mx-auto px-4 py-4">
         {/* Items Count */}
-        <div className="mb-6">
-          <p className="text-gray-700 text-xl">
-            <span className="font-bold text-[#5eb3ce] text-2xl">
-              {filteredItems.length}
-            </span>{" "}
-            item{filteredItems.length !== 1 ? "s" : ""}
+        <div className="flex items-center justify-between mb-4">
+          <p className="text-slate-500 text-sm">
+            <span className="font-semibold text-slate-900">{filteredItems.length}</span>
+            {" "}item{filteredItems.length !== 1 ? "s" : ""}
             {selectedCategory !== "All" && (
-              <span>
-                {" "}
-                in <span className="font-bold">{selectedCategory}</span>
-              </span>
+              <span className="text-slate-400"> in {selectedCategory}</span>
             )}
           </p>
         </div>
 
         {/* Menu Grid */}
         {filteredItems.length === 0 ? (
-          <div className="text-center py-24">
-            <p className="text-2xl text-gray-500">No items found in this category.</p>
+          <div className="text-center py-16">
+            <p className="text-slate-400">No items found in this category.</p>
           </div>
         ) : (
           <AnimatePresence mode="wait">
@@ -156,75 +152,65 @@ export default function TabletMenuPage() {
               initial="hidden"
               animate="show"
               exit="hidden"
-              className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+              className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3"
             >
               {filteredItems.map((menuItem) => (
                 <motion.div
                   key={menuItem.id}
-                  variants={item}
+                  variants={itemVariant}
                   layout
                   onClick={() => openModal(menuItem)}
-                  className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer group"
+                  className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-200 cursor-pointer active:scale-[0.98]"
                 >
                   {/* Image */}
-                  <div className="relative h-56 overflow-hidden">
-                    <motion.div
-                      whileHover={{ scale: 1.1 }}
-                      transition={{ duration: 0.3 }}
-                      className="absolute inset-0"
-                    >
-                      <PositionedImage
-                        src={menuItem.image}
-                        alt={menuItem.name}
-                        position={menuItem.imagePosition}
-                        className="w-full h-full"
-                      />
-                    </motion.div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-                    
+                  <div className="relative aspect-[4/3] overflow-hidden bg-slate-100">
+                    <PositionedImage
+                      src={menuItem.image}
+                      alt={menuItem.name}
+                      position={menuItem.imagePosition}
+                      className="w-full h-full transition-transform duration-300 hover:scale-105"
+                    />
+
                     {/* Price Badge */}
-                    <div className="absolute bottom-3 right-3 bg-[#5eb3ce] text-white px-5 py-2 rounded-full font-bold text-lg shadow-lg">
+                    <div className="absolute bottom-2 right-2 bg-white/95 backdrop-blur-sm text-slate-900 px-3 py-1 rounded-lg font-semibold text-sm shadow-sm">
                       {menuItem.price}
                     </div>
 
                     {/* Multiple Images Indicator */}
-                    {menuItem.images && menuItem.images.length > 1 && (
-                      <div className="absolute top-3 right-3 bg-white/90 text-gray-800 px-3 py-1 rounded-full text-sm font-medium flex items-center gap-1">
-                        <span>📸</span>
-                        <span>{menuItem.images.length}</span>
+                    {menuItem.images && menuItem.images.length > 0 && (
+                      <div className="absolute top-2 right-2 bg-black/50 backdrop-blur-sm text-white w-7 h-7 rounded-full flex items-center justify-center text-xs font-medium">
+                        +{menuItem.images.length}
                       </div>
                     )}
                   </div>
 
                   {/* Content */}
-                  <div className="p-5">
-                    <h3 className="text-xl font-bold text-gray-900 mb-2 line-clamp-1">
+                  <div className="p-3">
+                    <h3 className="font-semibold text-slate-900 text-sm leading-tight mb-1 line-clamp-1">
                       {menuItem.name}
                     </h3>
-                    <p className="text-gray-600 text-base leading-relaxed line-clamp-2 mb-2">
+                    <p className="text-slate-500 text-xs leading-relaxed line-clamp-2">
                       {menuItem.description}
                     </p>
                     {menuItem.preparationOptions && (
-                      <div className="flex items-center gap-2 mt-3">
-                        <span className="text-lg">👨‍🍳</span>
-                        <p className="text-[#5eb3ce] text-sm font-semibold">
-                          Multiple preparations
-                        </p>
+                      <div className="mt-2 flex items-center gap-1">
+                        <span className="text-[10px] bg-[#5eb3ce]/10 text-[#5eb3ce] px-2 py-0.5 rounded-full font-medium">
+                          Options available
+                        </span>
                       </div>
                     )}
                   </div>
-
-                  {/* Hover Effect */}
-                  <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none" />
                 </motion.div>
               ))}
             </motion.div>
           </AnimatePresence>
         )}
 
-        {/* Footer */}
-        <div className="mt-12 text-center text-gray-500 text-base">
-          <p>Tap any item to see details and preparation options</p>
+        {/* Footer Hint */}
+        <div className="mt-8 pb-6 text-center">
+          <p className="text-slate-400 text-xs">
+            Tap any item to view details
+          </p>
         </div>
       </div>
 
@@ -233,8 +219,3 @@ export default function TabletMenuPage() {
     </main>
   );
 }
-
-
-
-
-

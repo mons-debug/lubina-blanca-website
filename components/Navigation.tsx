@@ -188,7 +188,8 @@ export default function Navigation() {
             animate={{ x: 0 }}
             exit={{ x: isRTL ? "-100%" : "100%" }}
             transition={{ type: "tween", duration: 0.3 }}
-            className="fixed inset-0 w-full h-full bg-white md:hidden z-[100]"
+            className="fixed inset-0 w-full h-full md:hidden z-[200]"
+            style={{ backgroundColor: '#ffffff' }}
           >
             {/* Close Button - Top Right */}
             <motion.button

@@ -12,9 +12,10 @@ interface MenuItemModalProps {
   item: MenuItem | null;
   isOpen: boolean;
   onClose: () => void;
+  hideCallButton?: boolean; // Hide call button for tablet menu
 }
 
-export default function MenuItemModal({ item, isOpen, onClose }: MenuItemModalProps) {
+export default function MenuItemModal({ item, isOpen, onClose, hideCallButton = false }: MenuItemModalProps) {
   const { t, tCategory, getMenuItemName, getMenuItemDesc } = useTranslation();
   const { isRTL } = useLanguage();
   const [activeImageIndex, setActiveImageIndex] = useState(0);
@@ -237,17 +238,19 @@ export default function MenuItemModal({ item, isOpen, onClose }: MenuItemModalPr
                   <div className={`flex gap-3 mt-auto pt-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
                     <button
                       onClick={onClose}
-                      className="flex-1 px-6 py-3 bg-slate-100 hover:bg-slate-200 text-slate-800 font-medium rounded-xl transition-colors"
+                      className={`${hideCallButton ? 'w-full' : 'flex-1'} px-6 py-3 bg-slate-100 hover:bg-slate-200 text-slate-800 font-medium rounded-xl transition-colors`}
                     >
                       {t('common', 'close')}
                     </button>
-                    <a
-                      href="tel:+212539318849"
-                      className={`flex-1 px-6 py-3 bg-slate-900 hover:bg-slate-800 text-white font-medium rounded-xl transition-colors flex items-center justify-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}
-                    >
-                      <FiPhone size={16} />
-                      {t('common', 'callNow')}
-                    </a>
+                    {!hideCallButton && (
+                      <a
+                        href="tel:+212539318849"
+                        className={`flex-1 px-6 py-3 bg-slate-900 hover:bg-slate-800 text-white font-medium rounded-xl transition-colors flex items-center justify-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}
+                      >
+                        <FiPhone size={16} />
+                        {t('common', 'callNow')}
+                      </a>
+                    )}
                   </div>
                 </div>
               </div>

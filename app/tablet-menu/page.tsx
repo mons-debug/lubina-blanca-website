@@ -266,7 +266,7 @@ function TabletMenuContent() {
       </div>
 
       {/* Menu Item Modal */}
-      <MenuItemModal item={selectedItem} isOpen={isModalOpen} onClose={closeModal} />
+      <MenuItemModal item={selectedItem} isOpen={isModalOpen} onClose={closeModal} hideCallButton={true} />
     </main>
   );
 }

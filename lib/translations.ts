@@ -147,7 +147,7 @@ export const translations = {
             welcome: {
                 title: { en: 'Lubina Blanca', ar: 'لوبينا بلانكا', fr: 'Lubina Blanca', es: 'Lubina Blanca' },
                 subtitle: { en: 'Seafood Restaurant', ar: 'مطعم المأكولات البحرية', fr: 'Restaurant de Fruits de Mer', es: 'Restaurante de Mariscos' },
-                description: { en: 'Experience the finest Mediterranean seafood in M\'diq', ar: 'تجربة أفضل المأكولات البحرية المتوسطية في المضيق', fr: 'Découvrez les meilleurs fruits de mer méditerranéens à M\'diq', es: 'Experimente los mejores mariscos mediterráneos en M\'diq' },
+                description: { en: 'Experience the finest Mediterranean seafood in Tangier', ar: 'تجربة أفضل المأكولات البحرية المتوسطية في طنجة', fr: 'Découvrez les meilleurs fruits de mer méditerranéens à Tanger', es: 'Experimente los mejores mariscos mediterráneos en Tánger' },
             },
             // Fresh fish slide
             freshFish: {
@@ -339,7 +339,7 @@ export const translations = {
     interior: {
         title: {
             en: 'Our Space',
-            ar: 'مساحتنا',
+            ar: 'قاعتنا',
             fr: 'Notre Espace',
             es: 'Nuestro Espacio',
         },

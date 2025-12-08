@@ -1,9 +1,20 @@
-import { sql } from '@vercel/postgres';
+import { neon } from '@neondatabase/serverless';
 import { MenuItem, MenuItemTranslations } from '@/data/menuData';
+
+// Get database connection
+const getSQL = () => {
+    const databaseUrl = process.env.DATABASE_URL || process.env.POSTGRES_URL;
+    if (!databaseUrl) {
+        throw new Error('Database URL not configured');
+    }
+    return neon(databaseUrl);
+};
 
 // Initialize database tables
 export async function initializeDatabase() {
     try {
+        const sql = getSQL();
+
         // Create menu_items table
         await sql`
       CREATE TABLE IF NOT EXISTS menu_items (
@@ -13,7 +24,7 @@ export async function initializeDatabase() {
         price VARCHAR(50) NOT NULL,
         image TEXT,
         category VARCHAR(100) NOT NULL,
-        images TEXT[], -- Array of image URLs
+        images JSONB DEFAULT '[]',
         preparation_options TEXT,
         image_position JSONB,
         images_positions JSONB,
@@ -46,7 +57,8 @@ export async function initializeDatabase() {
 // Get all menu items
 export async function getMenuItems(): Promise<MenuItem[]> {
     try {
-        const { rows } = await sql`
+        const sql = getSQL();
+        const rows = await sql`
       SELECT * FROM menu_items ORDER BY sort_order ASC, id ASC
     `;
 
@@ -75,7 +87,8 @@ export async function getMenuItems(): Promise<MenuItem[]> {
 // Get all categories
 export async function getCategories(): Promise<string[]> {
     try {
-        const { rows } = await sql`
+        const sql = getSQL();
+        const rows = await sql`
       SELECT name FROM menu_categories ORDER BY sort_order ASC
     `;
         return rows.map(row => row.name);
@@ -88,7 +101,8 @@ export async function getCategories(): Promise<string[]> {
 // Add a new menu item
 export async function addMenuItem(item: Omit<MenuItem, 'id'>): Promise<MenuItem | null> {
     try {
-        const { rows } = await sql`
+        const sql = getSQL();
+        const rows = await sql`
       INSERT INTO menu_items (
         name, description, price, image, category, images,
         preparation_options, image_position, images_positions,
@@ -137,6 +151,7 @@ export async function addMenuItem(item: Omit<MenuItem, 'id'>): Promise<MenuItem 
 // Update a menu item
 export async function updateMenuItem(item: MenuItem): Promise<boolean> {
     try {
+        const sql = getSQL();
         await sql`
       UPDATE menu_items SET
         name = ${item.name},
@@ -165,6 +180,7 @@ export async function updateMenuItem(item: MenuItem): Promise<boolean> {
 // Delete a menu item
 export async function deleteMenuItem(id: string): Promise<boolean> {
     try {
+        const sql = getSQL();
         await sql`DELETE FROM menu_items WHERE id = ${parseInt(id)}`;
         return true;
     } catch (error) {
@@ -176,6 +192,7 @@ export async function deleteMenuItem(id: string): Promise<boolean> {
 // Update sort order for multiple items
 export async function updateSortOrder(items: { id: string; sortOrder: number }[]): Promise<boolean> {
     try {
+        const sql = getSQL();
         for (const item of items) {
             await sql`
         UPDATE menu_items SET sort_order = ${item.sortOrder} WHERE id = ${parseInt(item.id)}
@@ -191,6 +208,7 @@ export async function updateSortOrder(items: { id: string; sortOrder: number }[]
 // Add a new category
 export async function addCategory(name: string): Promise<boolean> {
     try {
+        const sql = getSQL();
         await sql`
       INSERT INTO menu_categories (name, sort_order)
       VALUES (${name}, (SELECT COALESCE(MAX(sort_order), 0) + 1 FROM menu_categories))
@@ -205,6 +223,7 @@ export async function addCategory(name: string): Promise<boolean> {
 // Delete a category
 export async function deleteCategory(name: string): Promise<boolean> {
     try {
+        const sql = getSQL();
         await sql`DELETE FROM menu_categories WHERE name = ${name}`;
         return true;
     } catch (error) {
@@ -223,6 +242,8 @@ export async function exportData(): Promise<{ menuItems: MenuItem[]; menuCategor
 // Import data from backup
 export async function importData(data: { menuItems: MenuItem[]; menuCategories: string[] }): Promise<boolean> {
     try {
+        const sql = getSQL();
+
         // Clear existing data
         await sql`DELETE FROM menu_items`;
         await sql`DELETE FROM menu_categories`;

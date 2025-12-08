@@ -7,14 +7,14 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const action = searchParams.get("action");
-    
+
     const data = await readDataFile<{ menuItems: MenuItem[]; menuCategories: string[] }>("menuData.ts");
-    
+
     // If requesting only categories
     if (action === "categories") {
       return NextResponse.json({ menuCategories: data.menuCategories });
     }
-    
+
     return NextResponse.json(data);
   } catch (error) {
     console.error("Error reading menu data:", error);
@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
     // Handle category addition
     if (action === "add-category") {
       const { category } = await request.json();
-      
+
       if (!category || category.trim() === "") {
         return NextResponse.json({ error: "Category name is required" }, { status: 400 });
       }
@@ -63,9 +63,31 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ menuCategories: data.menuCategories }, { status: 201 });
     }
 
+    // Handle reorder action
+    if (action === "reorder") {
+      const { items } = await request.json();
+
+      // Update sortOrder for each item
+      for (const orderItem of items) {
+        const menuItem = data.menuItems.find((item: MenuItem) => item.id === orderItem.id);
+        if (menuItem) {
+          menuItem.sortOrder = orderItem.sortOrder;
+        }
+      }
+
+      const exportContent = {
+        menuCategories: data.menuCategories,
+        menuItems: data.menuItems,
+      };
+
+      await writeDataFile("menuData.ts", exportContent, "{ menuCategories, menuItems }");
+
+      return NextResponse.json({ success: true }, { status: 200 });
+    }
+
     // Handle menu item creation
     const newItem = await request.json();
-    
+
     // Generate new ID
     const maxId = Math.max(...data.menuItems.map((item: MenuItem) => parseInt(item.id)), 0);
     newItem.id = String(maxId + 1);
@@ -145,8 +167,8 @@ export async function DELETE(request: NextRequest) {
       // Check if any menu items use this category
       const itemsInCategory = data.menuItems.filter((item: MenuItem) => item.category === category);
       if (itemsInCategory.length > 0) {
-        return NextResponse.json({ 
-          error: `Cannot delete category. ${itemsInCategory.length} menu item(s) are using this category.` 
+        return NextResponse.json({
+          error: `Cannot delete category. ${itemsInCategory.length} menu item(s) are using this category.`
         }, { status: 400 });
       }
 

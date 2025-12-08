@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { FiEdit, FiTrash2, FiPlus, FiUpload, FiEye, FiEyeOff, FiCrop } from "react-icons/fi";
+import { FiEdit, FiTrash2, FiPlus, FiUpload, FiEye, FiEyeOff, FiCrop, FiArrowUp, FiArrowDown } from "react-icons/fi";
 import toast from "react-hot-toast";
 import { MenuItem } from "@/data/menuData";
 import MenuItemModal from "@/components/MenuItemModal";
@@ -45,12 +45,49 @@ export default function MenuManagement() {
     try {
       const response = await fetch("/api/menu");
       const data = await response.json();
-      setMenuItems(data.menuItems || []);
+      // Sort items by sortOrder when loading
+      const sortedItems = (data.menuItems || []).sort((a: MenuItem, b: MenuItem) =>
+        (a.sortOrder ?? 999) - (b.sortOrder ?? 999)
+      );
+      setMenuItems(sortedItems);
       setCategories(data.menuCategories || []);
     } catch (error) {
       toast.error("Failed to load menu data");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const moveItem = async (itemId: string, direction: 'up' | 'down') => {
+    const currentIndex = menuItems.findIndex(item => item.id === itemId);
+    if (currentIndex === -1) return;
+
+    const newIndex = direction === 'up' ? currentIndex - 1 : currentIndex + 1;
+    if (newIndex < 0 || newIndex >= menuItems.length) return;
+
+    // Create new array with swapped items
+    const newItems = [...menuItems];
+    [newItems[currentIndex], newItems[newIndex]] = [newItems[newIndex], newItems[currentIndex]];
+
+    // Update sortOrder for all items
+    const updatedItems = newItems.map((item, index) => ({
+      ...item,
+      sortOrder: index + 1
+    }));
+
+    setMenuItems(updatedItems);
+
+    // Save to API
+    try {
+      await fetch("/api/menu?action=reorder", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ items: updatedItems.map(item => ({ id: item.id, sortOrder: item.sortOrder })) }),
+      });
+      toast.success("Order updated!");
+    } catch (error) {
+      toast.error("Failed to save order");
+      fetchMenuData(); // Revert on error
     }
   };
 
@@ -596,24 +633,6 @@ export default function MenuManagement() {
               </button>
             </div>
 
-            {/* Sort Order */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Display Order
-              </label>
-              <input
-                type="number"
-                min="0"
-                value={formData.sortOrder}
-                onChange={(e) => setFormData({ ...formData, sortOrder: parseInt(e.target.value) || 0 })}
-                className="w-32 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#5eb3ce] focus:border-transparent"
-                placeholder="0"
-              />
-              <p className="text-xs text-gray-500 mt-1">
-                Lower numbers appear first (1 = first, 2 = second, etc.)
-              </p>
-            </div>
-
             <div className="flex space-x-4">
               <button
                 type="submit"
@@ -638,6 +657,7 @@ export default function MenuManagement() {
         <table className="w-full">
           <thead className="bg-gray-50 border-b">
             <tr>
+              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Order</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Image</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Category</th>
@@ -648,13 +668,33 @@ export default function MenuManagement() {
           <tbody className="divide-y">
             {menuItems.length === 0 ? (
               <tr>
-                <td colSpan={5} className="px-6 py-12 text-center text-gray-500">
+                <td colSpan={6} className="px-6 py-12 text-center text-gray-500">
                   No menu items yet. Click "Add Item" to create your first menu item.
                 </td>
               </tr>
             ) : (
-              menuItems.map((item) => (
+              menuItems.map((item, index) => (
                 <tr key={item.id} className="hover:bg-gray-50">
+                  <td className="px-4 py-4">
+                    <div className="flex flex-col gap-1">
+                      <button
+                        onClick={() => moveItem(item.id, 'up')}
+                        disabled={index === 0}
+                        className={`p-1.5 rounded ${index === 0 ? 'text-gray-300 cursor-not-allowed' : 'text-gray-500 hover:bg-gray-100 hover:text-gray-700'}`}
+                        title="Move up"
+                      >
+                        <FiArrowUp size={16} />
+                      </button>
+                      <button
+                        onClick={() => moveItem(item.id, 'down')}
+                        disabled={index === menuItems.length - 1}
+                        className={`p-1.5 rounded ${index === menuItems.length - 1 ? 'text-gray-300 cursor-not-allowed' : 'text-gray-500 hover:bg-gray-100 hover:text-gray-700'}`}
+                        title="Move down"
+                      >
+                        <FiArrowDown size={16} />
+                      </button>
+                    </div>
+                  </td>
                   <td className="px-6 py-4">
                     <div className="relative group">
                       <img

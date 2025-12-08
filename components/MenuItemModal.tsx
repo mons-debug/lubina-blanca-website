@@ -222,17 +222,7 @@ export default function MenuItemModal({ item, isOpen, onClose, hideCallButton = 
                     </div>
                   )}
 
-                  {/* Gallery Info */}
-                  {allImages.length > 1 && (
-                    <div className="bg-blue-50 rounded-xl p-5 mb-6">
-                      <h3 className="text-sm uppercase tracking-wider text-blue-600 mb-2">
-                        📸 {allImages.length} {t('menu', 'moreImages')}
-                      </h3>
-                      <p className="text-blue-700 text-sm">
-                        {t('tabletMenu', 'tapToView')}
-                      </p>
-                    </div>
-                  )}
+                  {/* Gallery Info Removed */}
 
                   {/* Actions */}
                   <div className={`flex gap-3 mt-auto pt-4 ${isRTL ? 'flex-row-reverse' : ''}`}>

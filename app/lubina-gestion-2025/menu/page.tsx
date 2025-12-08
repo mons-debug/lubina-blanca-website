@@ -46,7 +46,7 @@ export default function MenuManagement() {
       const response = await fetch("/api/menu");
       const data = await response.json();
       // Sort items by sortOrder when loading
-      const sortedItems = (data.menuItems || []).sort((a: MenuItem, b: MenuItem) =>
+      const sortedItems = (data.menuItems || []).sort((a: { sortOrder?: number }, b: { sortOrder?: number }) =>
         (a.sortOrder ?? 999) - (b.sortOrder ?? 999)
       );
       setMenuItems(sortedItems);

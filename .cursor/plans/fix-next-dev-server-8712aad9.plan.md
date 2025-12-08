@@ -1,4 +1,27 @@
-<!-- 8712aad9-de82-44f5-8c0c-8fd893b10acb 7dd407dd-1af7-4b6e-af17-98f4ea36d993 -->
+---
+name: Zellige Pattern Refinement Plan
+overview: ""
+todos:
+  - id: 4b97ac94-4f87-4753-8b36-65b02da135b7
+    content: Add aboutImages array to restaurantData.ts with sample images
+    status: pending
+  - id: 62361bdc-dc05-4470-b6c1-b732ee52c566
+    content: Create /api/about-images route with GET, POST, DELETE handlers
+    status: pending
+  - id: 0f3c5538-aa15-4162-b211-243268c2389d
+    content: Update dataManager.ts to parse and write aboutImages
+    status: pending
+  - id: f8f11662-2f21-471d-9b2d-81766b2f107c
+    content: Build swipeable card stack component in About.tsx with drag gestures and auto-play
+    status: pending
+  - id: d8df116c-1336-49d6-98f0-fc66e3829e19
+    content: Add image management UI to admin about dashboard with upload/delete/reorder
+    status: pending
+  - id: a9b12246-fea1-430d-903c-cc196552c670
+    content: Style card stack with layering, animations, and mobile responsiveness
+    status: pending
+---
+
 # Zellige Pattern Refinement Plan
 
 ## 1. Fix AFCON Section - Remove Duplicate Zellige Layer
@@ -76,12 +99,3 @@ This creates subtle wavy diagonal lines in the restaurant's blue color that flow
 - AFCON section will have clean, single-layer white Zellige pattern on red
 - White sections will have blue Zellige tiles with complementary wavy diagonal lines
 - Low opacity waves create subtle Mediterranean/coastal atmosphere without overwhelming content
-
-### To-dos
-
-- [ ] Add aboutImages array to restaurantData.ts with sample images
-- [ ] Create /api/about-images route with GET, POST, DELETE handlers
-- [ ] Update dataManager.ts to parse and write aboutImages
-- [ ] Build swipeable card stack component in About.tsx with drag gestures and auto-play
-- [ ] Add image management UI to admin about dashboard with upload/delete/reorder
-- [ ] Style card stack with layering, animations, and mobile responsiveness

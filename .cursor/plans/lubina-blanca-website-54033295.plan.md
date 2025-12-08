@@ -1,4 +1,30 @@
-<!-- 54033295-6bc7-4622-af1c-1cb30947b04c c0fcc6fa-fb7d-4d2f-8378-eb73ac67e039 -->
+---
+name: Admin Dashboard & Content Management System
+overview: ""
+todos:
+  - id: aa204336-78ea-4852-ba98-3c492043232d
+    content: Initialize Next.js project with TypeScript, install dependencies (Framer Motion, Tailwind CSS, React Icons), and configure Tailwind
+    status: pending
+  - id: 0835b13e-3a68-4cba-bc87-60647054af7f
+    content: Create root layout and animated navigation component with mobile menu
+    status: pending
+  - id: 0e443675-303f-4cad-aaec-6ba88110f4ce
+    content: Build animated hero section with full-screen imagery and call-to-action
+    status: pending
+  - id: 791fa59c-3356-469d-a554-fec3c49fada1
+    content: Create about section and menu component with categories and animations
+    status: pending
+  - id: 7ba73713-b041-473d-b2d8-8b4ca3dab46a
+    content: Build gallery section with grid layout and hover animations
+    status: pending
+  - id: f0641c11-59c8-4ce4-8256-b867290b259c
+    content: Implement contact section with form, location info, and footer
+    status: pending
+  - id: f30fee24-d011-46ff-a21e-1e1e3a92d249
+    content: Add scroll-triggered animations, smooth scrolling, and final polish
+    status: pending
+---
+
 # Admin Dashboard & Content Management System
 
 ## Overview
@@ -215,13 +241,3 @@ lib/
 - Analytics dashboard
 - Reservation management
 - Email notifications
-
-### To-dos
-
-- [ ] Initialize Next.js project with TypeScript, install dependencies (Framer Motion, Tailwind CSS, React Icons), and configure Tailwind
-- [ ] Create root layout and animated navigation component with mobile menu
-- [ ] Build animated hero section with full-screen imagery and call-to-action
-- [ ] Create about section and menu component with categories and animations
-- [ ] Build gallery section with grid layout and hover animations
-- [ ] Implement contact section with form, location info, and footer
-- [ ] Add scroll-triggered animations, smooth scrolling, and final polish

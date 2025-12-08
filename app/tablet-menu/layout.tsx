@@ -3,6 +3,15 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
     title: "Menu | Lubina Blanca",
     description: "Browse our full menu - Authentic Mediterranean Seafood in Tangier",
+    manifest: "/manifest-tablet.json",
+    appleWebApp: {
+        capable: true,
+        statusBarStyle: "default",
+        title: "Lubina Menu",
+    },
+    other: {
+        "mobile-web-app-capable": "yes",
+    },
 };
 
 export default function TabletMenuLayout({

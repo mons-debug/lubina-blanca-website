@@ -25,6 +25,7 @@ export default function MenuManagement() {
     imagePosition: undefined as { x: number; y: number; zoom: number } | undefined,
     imagesPositions: [] as Array<{ x: number; y: number; zoom: number }>,
     hidden: false,
+    sortOrder: 0,
   });
   const [uploadingImage, setUploadingImage] = useState(false);
   const [uploadingGalleryImage, setUploadingGalleryImage] = useState(false);
@@ -182,6 +183,7 @@ export default function MenuManagement() {
           imagePosition: undefined,
           imagesPositions: [],
           hidden: false,
+          sortOrder: 0,
         });
         fetchMenuData();
       } else {
@@ -206,6 +208,7 @@ export default function MenuManagement() {
       imagePosition: item.imagePosition,
       imagesPositions: item.imagesPositions || [],
       hidden: item.hidden || false,
+      sortOrder: item.sortOrder || 0,
     });
     setShowForm(true);
     // Scroll to form
@@ -243,7 +246,8 @@ export default function MenuManagement() {
       preparationOptions: "",
       imagePosition: undefined,
       imagesPositions: [],
-      hidden: false
+      hidden: false,
+      sortOrder: 0
     });
   };
 
@@ -590,6 +594,24 @@ export default function MenuManagement() {
                   className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${formData.hidden ? 'translate-x-5' : 'translate-x-0'}`}
                 />
               </button>
+            </div>
+
+            {/* Sort Order */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Display Order
+              </label>
+              <input
+                type="number"
+                min="0"
+                value={formData.sortOrder}
+                onChange={(e) => setFormData({ ...formData, sortOrder: parseInt(e.target.value) || 0 })}
+                className="w-32 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#5eb3ce] focus:border-transparent"
+                placeholder="0"
+              />
+              <p className="text-xs text-gray-500 mt-1">
+                Lower numbers appear first (1 = first, 2 = second, etc.)
+              </p>
             </div>
 
             <div className="flex space-x-4">

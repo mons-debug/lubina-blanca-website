@@ -1,9 +1,10 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { motion, useInView, AnimatePresence } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import Image from "next/image";
-import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import { FiChevronLeft, FiChevronRight, FiMaximize2 } from "react-icons/fi";
+import { useTranslation } from "@/lib/LanguageContext";
 
 interface InteriorImage {
   id: number;
@@ -14,11 +15,13 @@ interface InteriorImage {
 }
 
 export default function Interior() {
+  const { t } = useTranslation();
   const ref = useRef(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [images, setImages] = useState<InteriorImage[]>([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedImage, setSelectedImage] = useState<InteriorImage | null>(null);
 
   useEffect(() => {
     fetchImages();
@@ -40,42 +43,49 @@ export default function Interior() {
     }
   };
 
-  const nextImage = () => setCurrentIndex((prev) => (prev + 1) % images.length);
-  const prevImage = () => setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
+  const scroll = (direction: 'left' | 'right') => {
+    if (scrollContainerRef.current) {
+      const scrollAmount = 300;
+      const newScrollLeft = scrollContainerRef.current.scrollLeft + (direction === 'right' ? scrollAmount : -scrollAmount);
+      scrollContainerRef.current.scrollTo({
+        left: newScrollLeft,
+        behavior: 'smooth'
+      });
+    }
+  };
 
   if (images.length === 0 && !isLoading) return null;
 
   return (
-    <section id="interior" className="relative py-24 md:py-32 bg-slate-50 overflow-hidden">
+    <section id="interior" className="relative py-16 md:py-20 bg-slate-50 overflow-hidden">
       {/* Zellige pattern overlay */}
       <div className="absolute inset-0 zellige-pattern-white pointer-events-none" />
 
-      <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
+      <div className="relative max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
         {/* Header */}
         <motion.div
           ref={ref}
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-12 md:mb-16"
         >
-          <p className="text-slate-400 text-sm uppercase tracking-[0.3em] mb-4">Experience</p>
+          <p className="text-slate-400 text-sm uppercase tracking-[0.3em] mb-4">{t('interior', 'subtitle')}</p>
           <h2
             className="text-4xl md:text-5xl lg:text-6xl font-extralight text-slate-900 mb-6"
             style={{ fontFamily: 'var(--font-playfair, Georgia, serif)' }}
           >
-            Our Space
+            {t('interior', 'title')}
           </h2>
-          <div className="w-16 h-[1px] bg-slate-300 mx-auto" />
+          <div className="w-16 h-[1px] bg-slate-300 mx-auto mb-6" />
+          <p className="text-slate-500 max-w-2xl mx-auto font-light">
+            {t('interior', 'subtitle')}
+          </p>
         </motion.div>
 
         {isLoading ? (
-          <div className="flex items-center justify-center h-[500px]">
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
-              className="w-12 h-12 border-2 border-slate-200 border-t-slate-600 rounded-full"
-            />
+          <div className="flex items-center justify-center h-64">
+            <div className="w-8 h-8 border-2 border-slate-200 border-t-slate-600 rounded-full animate-spin" />
           </div>
         ) : (
           <motion.div
@@ -84,87 +94,115 @@ export default function Interior() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="relative"
           >
-            {/* Main Image */}
-            <div className="relative aspect-[16/9] md:aspect-[21/9] overflow-hidden bg-slate-200">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={currentIndex}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.6 }}
-                  className="absolute inset-0"
-                >
-                  <Image
-                    src={images[currentIndex]?.url || ""}
-                    alt={images[currentIndex]?.alt || "Interior"}
-                    fill
-                    className="object-cover"
-                    sizes="100vw"
-                    priority
-                  />
-                </motion.div>
-              </AnimatePresence>
-
-              {/* Navigation */}
-              {images.length > 1 && (
-                <>
-                  <button
-                    onClick={prevImage}
-                    className="absolute left-6 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/90 hover:bg-white flex items-center justify-center transition-all"
-                    aria-label="Previous"
-                  >
-                    <FiChevronLeft size={20} className="text-slate-800" />
-                  </button>
-                  <button
-                    onClick={nextImage}
-                    className="absolute right-6 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/90 hover:bg-white flex items-center justify-center transition-all"
-                    aria-label="Next"
-                  >
-                    <FiChevronRight size={20} className="text-slate-800" />
-                  </button>
-                </>
-              )}
-
-              {/* Image info overlay */}
-              <div className="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-black/60 to-transparent">
-                <div className="max-w-3xl">
-                  <p className="text-white/70 text-sm uppercase tracking-widest mb-2">
-                    {currentIndex + 1} / {images.length}
-                  </p>
-                  <h3 className="text-white text-2xl md:text-3xl font-light">
-                    {images[currentIndex]?.alt || "Our Beautiful Interior"}
-                  </h3>
-                </div>
-              </div>
-            </div>
-
-            {/* Thumbnails */}
-            {images.length > 1 && (
-              <div className="flex gap-2 mt-4 overflow-x-auto pb-2">
+            {/* Mobile View: Horizontal Snap Scroll */}
+            <div className="md:hidden relative">
+              <div
+                className="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-8 scrollbar-hide -mx-4 px-4"
+                style={{ scrollPaddingLeft: '1rem', scrollPaddingRight: '1rem' }}
+              >
                 {images.map((image, index) => (
-                  <button
+                  <div
                     key={image.id}
-                    onClick={() => setCurrentIndex(index)}
-                    className={`flex-shrink-0 relative w-24 h-16 overflow-hidden transition-all ${index === currentIndex
-                      ? "ring-2 ring-slate-900 ring-offset-2"
-                      : "opacity-60 hover:opacity-100"
-                      }`}
+                    className="flex-shrink-0 w-[85vw] snap-center relative aspect-[4/3] rounded-2xl overflow-hidden shadow-lg"
+                    onClick={() => setSelectedImage(image)}
                   >
                     <Image
                       src={image.url}
                       alt={image.alt}
                       fill
                       className="object-cover"
-                      sizes="96px"
+                      sizes="85vw"
+                      loading={index < 2 ? "eager" : "lazy"}
                     />
-                  </button>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                      <p className="text-white font-medium">{image.alt}</p>
+                    </div>
+                  </div>
                 ))}
               </div>
-            )}
+
+              {/* Swipe Indicator */}
+              <div className="flex justify-center gap-2 mt-4">
+                <div className="w-16 h-1 bg-slate-200 rounded-full overflow-hidden">
+                  <div className="h-full bg-slate-400 w-1/3 rounded-full animate-pulse" />
+                </div>
+              </div>
+            </div>
+
+            {/* Desktop View: Grid Layout */}
+            <div className="hidden md:grid grid-cols-12 gap-6 auto-rows-[300px]">
+              {images.map((image, index) => {
+                // Create an interesting layout pattern
+                // Index 0: Large (8 cols)
+                // Index 1: Tall/Right (4 cols)
+                // Index 2,3,4: Small (4 cols)
+                let gridClass = "col-span-4";
+                if (index === 0) gridClass = "col-span-8 row-span-2";
+                if (index === 1) gridClass = "col-span-4 row-span-2";
+                if (index > 4) gridClass = "col-span-4"; // Default for rest
+
+                return (
+                  <motion.div
+                    key={image.id}
+                    whileHover={{ y: -5 }}
+                    className={`relative rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 group cursor-pointer ${gridClass}`}
+                    onClick={() => setSelectedImage(image)}
+                  >
+                    <Image
+                      src={image.url}
+                      alt={image.alt}
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      sizes="(max-width: 1200px) 50vw, 33vw"
+                    />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
+                      <FiMaximize2 className="text-white opacity-0 group-hover:opacity-100 transform scale-75 group-hover:scale-100 transition-all duration-300" size={32} />
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+
+            {/* Desktop Scroll Controls (if needed for overflow) */}
+            {/* Not needed for grid layout */}
+
           </motion.div>
         )}
       </div>
+
+      {/* Lightbox Modal */}
+      {selectedImage && (
+        <div
+          className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4 backdrop-blur-sm"
+          onClick={() => setSelectedImage(null)}
+        >
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="relative max-w-6xl w-full h-[80vh]"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <Image
+              src={selectedImage.url}
+              alt={selectedImage.alt}
+              fill
+              className="object-contain"
+              sizes="100vw"
+              quality={100}
+            />
+            <button
+              className="absolute top-4 right-4 text-white bg-black/50 p-2 rounded-full hover:bg-white/20 transition-colors"
+              onClick={() => setSelectedImage(null)}
+            >
+              <FiMaximize2 className="rotate-45" size={24} />
+            </button>
+            <div className="absolute bottom-4 left-4 text-white">
+              <h3 className="text-xl font-light">{selectedImage.alt}</h3>
+              {selectedImage.description && <p className="text-white/70 text-sm mt-1">{selectedImage.description}</p>}
+            </div>
+          </motion.div>
+        </div>
+      )}
     </section>
   );
 }

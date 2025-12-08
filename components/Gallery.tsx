@@ -5,8 +5,10 @@ import { motion, useInView, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { galleryImages } from "@/data/restaurantData";
 import { FiX, FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import { useTranslation } from "@/lib/LanguageContext";
 
 export default function Gallery() {
+  const { t } = useTranslation();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
@@ -17,7 +19,7 @@ export default function Gallery() {
   const prevImage = () => setSelectedImage((prev) => prev !== null ? (prev - 1 + galleryImages.length) % galleryImages.length : null);
 
   return (
-    <section id="gallery" className="relative py-24 md:py-32 bg-white overflow-hidden">
+    <section id="gallery" className="relative py-16 md:py-20 bg-white overflow-hidden">
       {/* Zellige pattern overlay */}
       <div className="absolute inset-0 zellige-pattern-white pointer-events-none" />
 
@@ -30,12 +32,12 @@ export default function Gallery() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <p className="text-slate-400 text-sm uppercase tracking-[0.3em] mb-4">Visual Story</p>
+          <p className="text-slate-400 text-sm uppercase tracking-[0.3em] mb-4">{t('gallery', 'subtitle')}</p>
           <h2
             className="text-4xl md:text-5xl lg:text-6xl font-extralight text-slate-900 mb-6"
             style={{ fontFamily: 'var(--font-playfair, Georgia, serif)' }}
           >
-            Gallery
+            {t('gallery', 'title')}
           </h2>
           <div className="w-16 h-[1px] bg-slate-300 mx-auto" />
         </motion.div>

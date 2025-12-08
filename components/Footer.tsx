@@ -4,8 +4,10 @@ import { motion } from "framer-motion";
 import { FiInstagram, FiHeart } from "react-icons/fi";
 import { FaGoogle } from "react-icons/fa";
 import { restaurantInfo } from "@/data/restaurantData";
+import { useTranslation } from "@/lib/LanguageContext";
 
 export default function Footer() {
+  const { t } = useTranslation();
   const currentYear = new Date().getFullYear();
 
   return (
@@ -15,9 +17,9 @@ export default function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8 mb-6 sm:mb-8">
           {/* Brand - Full width on mobile, then normal */}
           <div className="col-span-2 md:col-span-1">
-            <img 
-              src="/lubinalogo.png" 
-              alt="Lubina Blanca Logo" 
+            <img
+              src="/lubinalogo.png"
+              alt="Lubina Blanca Logo"
               className="h-12 sm:h-16 md:h-20 w-auto mb-2 sm:mb-3 md:mb-4"
             />
             <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-[#5eb3ce] mb-2 sm:mb-3 md:mb-4">
@@ -52,15 +54,21 @@ export default function Footer() {
 
           {/* Quick Links - Compact on mobile */}
           <div className="col-span-1">
-            <h4 className="text-sm sm:text-base md:text-lg font-semibold mb-2 sm:mb-3 md:mb-4">Quick Links</h4>
+            <h4 className="text-sm sm:text-base md:text-lg font-semibold mb-2 sm:mb-3 md:mb-4">{t('nav', 'menu')}</h4>
             <ul className="space-y-1 sm:space-y-2">
-              {["Home", "About", "Menu", "Gallery", "Contact"].map((link) => (
-                <li key={link}>
+              {[
+                { key: 'home', href: '#home' },
+                { key: 'about', href: '#about' },
+                { key: 'menu', href: '#menu' },
+                { key: 'gallery', href: '#gallery' },
+                { key: 'contact', href: '#contact' }
+              ].map((link) => (
+                <li key={link.key}>
                   <a
-                    href={`#${link.toLowerCase()}`}
+                    href={link.href}
                     className="text-xs sm:text-sm text-gray-300 hover:text-[#5eb3ce] transition-colors"
                   >
-                    {link}
+                    {t('nav', link.key as 'home' | 'about' | 'menu' | 'gallery' | 'contact')}
                   </a>
                 </li>
               ))}
@@ -92,9 +100,7 @@ export default function Footer() {
         <div className="border-t border-gray-600 pt-4 sm:pt-6 md:pt-8 text-center">
           <p className="text-xs sm:text-sm text-gray-400 flex flex-wrap items-center justify-center gap-1 sm:gap-2">
             <span>© {currentYear} {restaurantInfo.name}.</span>
-            <span className="flex items-center gap-1">
-              Made with <FiHeart className="text-[#5eb3ce]" /> for food lovers.
-            </span>
+            <span>{t('footer', 'copyright')}</span>
           </p>
         </div>
       </div>

@@ -1,9 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { FiChevronDown } from "react-icons/fi";
+import { useTranslation, useLanguage } from "@/lib/LanguageContext";
+import { translations, Language } from "@/lib/translations";
 
 interface HeroSlide {
   id: string;
@@ -16,7 +18,21 @@ interface HeroSlide {
   order: number;
 }
 
+// Helper to get translated slide content
+const getSlideTranslation = (slideIndex: number, language: Language) => {
+  const slideKeys = ['welcome', 'freshFish', 'dining', 'specialties'] as const;
+  const key = slideKeys[slideIndex % slideKeys.length];
+  const slideData = translations.hero.slides[key];
+  return {
+    title: slideData?.title?.[language] || slideData?.title?.['en'] || '',
+    subtitle: slideData?.subtitle?.[language] || slideData?.subtitle?.['en'] || '',
+    description: slideData?.description?.[language] || slideData?.description?.['en'] || '',
+  };
+};
+
 export default function Hero() {
+  const { t } = useTranslation();
+  const { language } = useLanguage();
   const [slides, setSlides] = useState<HeroSlide[]>([]);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
@@ -80,9 +96,9 @@ export default function Hero() {
           onClick={(e) => { e.preventDefault(); scrollToSection('#afcon-watch'); }}
           className="group flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-[#1a472a]/90 to-[#2d5a3f]/90 backdrop-blur-sm border border-white/10 hover:border-[#c4a000]/40 transition-all duration-300 shadow-lg hover:shadow-xl"
         >
-          <span className="text-[10px] text-[#c4a000] font-semibold uppercase tracking-wider">Live</span>
+          <span className="text-[10px] text-[#c4a000] font-semibold uppercase tracking-wider">{t('hero', 'afconLive')}</span>
           <span className="w-1.5 h-1.5 bg-[#c4a000] rounded-full animate-pulse" />
-          <span className="text-white/90 text-xs font-medium">AFCON 2025</span>
+          <span className="text-white/90 text-xs font-medium">{t('hero', 'afcon2025')}</span>
         </a>
       </motion.div>
 
@@ -135,17 +151,17 @@ export default function Hero() {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             >
-              {/* Subtitle */}
+              {/* Subtitle - translated */}
               <motion.p
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.2 }}
                 className="text-white/70 text-sm uppercase tracking-[0.4em] font-light mb-8"
               >
-                {slide.subtitle}
+                {getSlideTranslation(currentSlide, language).subtitle || slide.subtitle}
               </motion.p>
 
-              {/* Main Title */}
+              {/* Main Title - translated */}
               <motion.h1
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -153,7 +169,7 @@ export default function Hero() {
                 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extralight text-white mb-8 leading-[0.95] tracking-tight"
                 style={{ fontFamily: 'var(--font-playfair, Georgia, serif)' }}
               >
-                {slide.title}
+                {getSlideTranslation(currentSlide, language).title || slide.title}
               </motion.h1>
 
               {/* Thin decorative line */}
@@ -164,14 +180,14 @@ export default function Hero() {
                 className="w-20 h-[1px] bg-white/40 mx-auto mb-8"
               />
 
-              {/* Description */}
+              {/* Description - translated */}
               <motion.p
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.6 }}
                 className="text-lg md:text-xl text-white/60 max-w-xl mx-auto mb-12 font-light leading-relaxed"
               >
-                {slide.description}
+                {getSlideTranslation(currentSlide, language).description || slide.description}
               </motion.p>
 
               {/* CTA Buttons */}
@@ -185,13 +201,13 @@ export default function Hero() {
                   onClick={() => scrollToSection("#menu")}
                   className="px-10 py-4 bg-white text-slate-900 font-medium tracking-wide hover:bg-white/90 transition-all duration-300"
                 >
-                  View Menu
+                  {t('common', 'viewMenu')}
                 </button>
                 <button
                   onClick={() => scrollToSection("#contact")}
                   className="px-10 py-4 border border-white/30 text-white font-light tracking-wide hover:bg-white/10 transition-all duration-300"
                 >
-                  Reservations
+                  {t('common', 'reservations')}
                 </button>
               </motion.div>
             </motion.div>

@@ -3,22 +3,28 @@
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { FiMenu, FiX, FiInstagram } from "react-icons/fi";
+import { FiMenu, FiX, FiInstagram, FiGlobe, FiChevronDown } from "react-icons/fi";
 import { FaGoogle } from "react-icons/fa";
 import { restaurantInfo } from "@/data/restaurantData";
-
-const navLinks = [
-  { name: "Home", href: "#home" },
-  { name: "About", href: "#about" },
-  { name: "Menu", href: "#menu" },
-  { name: "Gallery", href: "#gallery" },
-  { name: "Contact", href: "#contact" },
-];
+import { useLanguage, useTranslation } from "@/lib/LanguageContext";
+import { languages, Language } from "@/lib/translations";
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [langMenuOpen, setLangMenuOpen] = useState(false);
   const pathname = usePathname();
+  const { language, setLanguage, isRTL } = useLanguage();
+  const { t } = useTranslation();
+
+  // Get translated nav links
+  const navLinks = [
+    { name: t('nav', 'home'), href: "#home" },
+    { name: t('nav', 'about'), href: "#about" },
+    { name: t('nav', 'menu'), href: "#menu" },
+    { name: t('nav', 'gallery'), href: "#gallery" },
+    { name: t('nav', 'contact'), href: "#contact" },
+  ];
 
   // Hide navigation on tablet-menu page (it has its own header)
   if (pathname === "/tablet-menu") {
@@ -42,6 +48,8 @@ export default function Navigation() {
     }
   };
 
+  const currentLang = languages.find(l => l.code === language);
+
   return (
     <motion.nav
       initial={{ y: -100 }}
@@ -53,7 +61,7 @@ export default function Navigation() {
         }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between">
+        <div className={`flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}>
           {/* Logo */}
           <motion.button
             onClick={() => scrollToSection("#home")}
@@ -69,10 +77,10 @@ export default function Navigation() {
           </motion.button>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className={`hidden md:flex items-center ${isRTL ? 'space-x-reverse' : ''} space-x-8`}>
             {navLinks.map((link) => (
               <motion.button
-                key={link.name}
+                key={link.href}
                 onClick={() => scrollToSection(link.href)}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -82,8 +90,48 @@ export default function Navigation() {
               </motion.button>
             ))}
 
+            {/* Language Switcher */}
+            <div className="relative">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setLangMenuOpen(!langMenuOpen)}
+                className="flex items-center gap-2 text-white/80 hover:text-[#5eb3ce] font-medium transition-colors text-sm"
+              >
+                <FiGlobe size={16} />
+                <span>{currentLang?.flag}</span>
+                <FiChevronDown size={14} className={`transition-transform ${langMenuOpen ? 'rotate-180' : ''}`} />
+              </motion.button>
+
+              <AnimatePresence>
+                {langMenuOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                    className={`absolute ${isRTL ? 'left-0' : 'right-0'} top-full mt-2 bg-white rounded-lg shadow-xl overflow-hidden min-w-[160px]`}
+                  >
+                    {languages.map((lang) => (
+                      <button
+                        key={lang.code}
+                        onClick={() => {
+                          setLanguage(lang.code);
+                          setLangMenuOpen(false);
+                        }}
+                        className={`w-full px-4 py-3 flex items-center gap-3 hover:bg-slate-50 transition-colors ${language === lang.code ? 'bg-slate-100' : ''
+                          }`}
+                      >
+                        <span className="text-xl">{lang.flag}</span>
+                        <span className="text-slate-700 text-sm font-medium">{lang.nativeName}</span>
+                      </button>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
             {/* Social Icons */}
-            <div className="flex items-center space-x-4 ml-4 border-l border-white/20 pl-4">
+            <div className={`flex items-center ${isRTL ? 'space-x-reverse' : ''} space-x-4 ml-4 border-l border-white/20 pl-4`}>
               <motion.a
                 href={restaurantInfo.social.instagram}
                 target="_blank"
@@ -122,9 +170,9 @@ export default function Navigation() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ x: "100%" }}
+            initial={{ x: isRTL ? "-100%" : "100%" }}
             animate={{ x: 0 }}
-            exit={{ x: "100%" }}
+            exit={{ x: isRTL ? "-100%" : "100%" }}
             transition={{ type: "tween", duration: 0.3 }}
             className="fixed top-0 right-0 bottom-0 w-full bg-white md:hidden shadow-2xl z-50"
           >
@@ -135,7 +183,7 @@ export default function Navigation() {
               exit={{ opacity: 0, scale: 0.8 }}
               transition={{ delay: 0.1 }}
               onClick={() => setIsOpen(false)}
-              className="absolute top-4 right-4 p-3 bg-gray-100 hover:bg-gray-200 rounded-full transition-colors z-50"
+              className={`absolute top-4 ${isRTL ? 'left-4' : 'right-4'} p-3 bg-gray-100 hover:bg-gray-200 rounded-full transition-colors z-50`}
               aria-label="Close menu"
             >
               <FiX size={24} className="text-gray-800" />
@@ -144,8 +192,8 @@ export default function Navigation() {
             <div className="flex flex-col items-center justify-center h-full space-y-8 px-4">
               {navLinks.map((link, index) => (
                 <motion.button
-                  key={link.name}
-                  initial={{ opacity: 0, x: 50 }}
+                  key={link.href}
+                  initial={{ opacity: 0, x: isRTL ? -50 : 50 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: index * 0.1 }}
                   onClick={() => scrollToSection(link.href)}
@@ -155,8 +203,33 @@ export default function Navigation() {
                 </motion.button>
               ))}
 
+              {/* Mobile Language Switcher */}
+              <motion.div
+                initial={{ opacity: 0, x: isRTL ? -50 : 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.5 }}
+                className="flex flex-wrap justify-center gap-3 pt-4"
+              >
+                {languages.map((lang) => (
+                  <button
+                    key={lang.code}
+                    onClick={() => {
+                      setLanguage(lang.code);
+                      setIsOpen(false);
+                    }}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-full border transition-colors ${language === lang.code
+                      ? 'bg-[#5eb3ce] text-white border-[#5eb3ce]'
+                      : 'bg-white text-gray-700 border-gray-300 hover:border-[#5eb3ce]'
+                      }`}
+                  >
+                    <span className="text-lg">{lang.flag}</span>
+                    <span className="text-sm font-medium">{lang.nativeName}</span>
+                  </button>
+                ))}
+              </motion.div>
+
               {/* Mobile Social Icons */}
-              <div className="flex items-center space-x-6 pt-8">
+              <div className="flex items-center space-x-6 pt-4">
                 <motion.a
                   href={restaurantInfo.social.instagram}
                   target="_blank"
@@ -185,5 +258,3 @@ export default function Navigation() {
     </motion.nav>
   );
 }
-
-

@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Playfair_Display, Cormorant_Garamond } from "next/font/google";
+import { Geist, Geist_Mono, Playfair_Display, Cormorant_Garamond, Noto_Sans_Arabic } from "next/font/google";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
+import ClientLayout from "@/components/ClientLayout";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,6 +26,12 @@ const cormorant = Cormorant_Garamond({
   weight: ["300", "400", "500", "600", "700"],
 });
 
+const notoArabic = Noto_Sans_Arabic({
+  variable: "--font-arabic",
+  subsets: ["arabic"],
+  weight: ["300", "400", "500", "600", "700"],
+});
+
 export const metadata: Metadata = {
   title: "Lubina Blanca - Authentic Mediterranean Seafood Restaurant in Tangier",
   description: "Experience the finest Mediterranean cuisine with fresh seafood and traditional recipes in Tangier, Morocco. Visit Lubina Blanca for an unforgettable dining experience. Open 24 hours.",
@@ -44,11 +51,14 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} ${cormorant.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} ${cormorant.variable} ${notoArabic.variable} antialiased`}
       >
-        <Navigation />
-        {children}
+        <ClientLayout>
+          <Navigation />
+          {children}
+        </ClientLayout>
       </body>
     </html>
   );
 }
+

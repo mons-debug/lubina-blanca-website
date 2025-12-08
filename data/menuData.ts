@@ -1,3 +1,10 @@
+export interface MenuItemTranslations {
+  en?: string;
+  ar?: string;
+  fr?: string;
+  es?: string;
+}
+
 export interface MenuItem {
   id: string;
   name: string;
@@ -9,6 +16,9 @@ export interface MenuItem {
   preparationOptions?: string; // e.g., "Available: Grilled, Tagine, Plancha, Fried"
   imagePosition?: { x: number; y: number; zoom: number }; // Main image positioning
   imagesPositions?: Array<{ x: number; y: number; zoom: number }>; // Gallery images positioning
+  // Multi-language support
+  nameTranslations?: MenuItemTranslations;
+  descriptionTranslations?: MenuItemTranslations;
 }
 
 export const menuCategories = [
@@ -30,7 +40,9 @@ export const menuItems: MenuItem[] = [
     "price": "50.00 DH",
     "category": "Paella",
     "image": "/uploads/1762788129342-WhatsApp-Image-2024-06-29-at-16.23.18-(1).jpg",
-    "id": "1"
+    "id": "1",
+    "nameTranslations": {"en":"Paella Special (1 person)","ar":"باييلا سبيسيال (شخص واحد)","fr":"Paella Spéciale (1 personne)","es":"Paella Especial (1 persona)"},
+    "descriptionTranslations": {"en":"Traditional Spanish paella with saffron rice, seafood, and authentic spices","ar":"باييلا إسبانية تقليدية مع أرز الزعفران والمأكولات البحرية والتوابل الأصيلة","fr":"Paella espagnole traditionnelle avec riz au safran, fruits de mer et épices authentiques","es":"Paella española tradicional con arroz con azafrán, mariscos y especias auténticas"}
   },
   {
     "name": "Paella Spécial (2 persons)",
@@ -41,7 +53,9 @@ export const menuItems: MenuItem[] = [
     "images": [],
     "preparationOptions": "",
     "imagesPositions": [],
-    "id": "2"
+    "id": "2",
+    "nameTranslations": {"en":"Paella Special (2 persons)","ar":"باييلا سبيسيال (شخصين)","fr":"Paella Spéciale (2 personnes)","es":"Paella Especial (2 personas)"},
+    "descriptionTranslations": {"en":"Traditional Spanish paella with saffron rice, seafood, and authentic spices for two","ar":"باييلا إسبانية تقليدية لشخصين","fr":"Paella traditionnelle pour deux","es":"Paella tradicional para dos"}
   },
   {
     "name": "Couscous au Poulet",
@@ -52,7 +66,9 @@ export const menuItems: MenuItem[] = [
     "images": [],
     "preparationOptions": "",
     "imagesPositions": [],
-    "id": "3"
+    "id": "3",
+    "nameTranslations": {"en":"Couscous with Chicken","ar":"كسكس بالدجاج","fr":"Couscous au Poulet","es":"Cuscús con Pollo"},
+    "descriptionTranslations": {"en":"Traditional Moroccan couscous with tender chicken and vegetables","ar":"كسكس مغربي تقليدي مع دجاج طري وخضروات","fr":"Couscous marocain avec poulet tendre et légumes","es":"Cuscús marroquí con pollo tierno y verduras"}
   },
   {
     "name": "Couscous au Poulet (Beldi)",
@@ -63,7 +79,9 @@ export const menuItems: MenuItem[] = [
     "images": [],
     "preparationOptions": "",
     "imagesPositions": [],
-    "id": "4"
+    "id": "4",
+    "nameTranslations": {"en":"Couscous with Chicken (Beldi)","ar":"كسكس بالدجاج البلدي","fr":"Couscous au Poulet (Beldi)","es":"Cuscús con Pollo (Beldi)"},
+    "descriptionTranslations": {"en":"Authentic Beldi-style couscous with free-range chicken","ar":"كسكس بلدي أصيل مع دجاج بلدي","fr":"Couscous Beldi avec poulet fermier","es":"Cuscús Beldi con pollo de corral"}
   },
   {
     "name": "Couscous à la Viande",
@@ -74,7 +92,9 @@ export const menuItems: MenuItem[] = [
     "images": [],
     "preparationOptions": "",
     "imagesPositions": [],
-    "id": "5"
+    "id": "5",
+    "nameTranslations": {"en":"Couscous with Meat","ar":"كسكس باللحم","fr":"Couscous à la Viande","es":"Cuscús con Carne"},
+    "descriptionTranslations": {"en":"Traditional couscous with tender lamb or beef","ar":"كسكس تقليدي مع لحم غنم أو بقر طري","fr":"Couscous traditionnel avec agneau ou bœuf","es":"Cuscús tradicional con cordero o ternera"}
   },
   {
     "name": "Couscous aux Poissons",
@@ -85,7 +105,9 @@ export const menuItems: MenuItem[] = [
     "images": [],
     "preparationOptions": "",
     "imagesPositions": [],
-    "id": "6"
+    "id": "6",
+    "nameTranslations": {"en":"Couscous with Fish","ar":"كسكس بالسمك","fr":"Couscous aux Poissons","es":"Cuscús con Pescado"},
+    "descriptionTranslations": {"en":"Fresh fish couscous with seasonal catch","ar":"كسكس السمك الطازج مع صيد الموسم","fr":"Couscous au poisson frais","es":"Cuscús de pescado fresco"}
   },
   {
     "name": "Salade Niçoise",
@@ -96,7 +118,9 @@ export const menuItems: MenuItem[] = [
     "images": [],
     "preparationOptions": "",
     "imagesPositions": [],
-    "id": "7"
+    "id": "7",
+    "nameTranslations": {"en":"Niçoise Salad","ar":"سلطة نيسواز","fr":"Salade Niçoise","es":"Ensalada Niçoise"},
+    "descriptionTranslations": {"en":"Classic French salad with tuna and vegetables","ar":"سلطة فرنسية كلاسيكية مع التونة","fr":"Salade classique avec thon","es":"Ensalada clásica con atún"}
   },
   {
     "name": "Salade Fruits de Mer",
@@ -107,7 +131,9 @@ export const menuItems: MenuItem[] = [
     "images": [],
     "preparationOptions": "",
     "imagesPositions": [],
-    "id": "8"
+    "id": "8",
+    "nameTranslations": {"en":"Seafood Salad","ar":"سلطة فواكه البحر","fr":"Salade Fruits de Mer","es":"Ensalada de Mariscos"},
+    "descriptionTranslations": {"en":"Fresh seafood salad with shellfish","ar":"سلطة المأكولات البحرية الطازجة","fr":"Salade de fruits de mer frais","es":"Ensalada de mariscos frescos"}
   },
   {
     "name": "Salade Verte",
@@ -118,7 +144,9 @@ export const menuItems: MenuItem[] = [
     "images": [],
     "preparationOptions": "",
     "imagesPositions": [],
-    "id": "9"
+    "id": "9",
+    "nameTranslations": {"en":"Green Salad","ar":"سلطة خضراء","fr":"Salade Verte","es":"Ensalada Verde"},
+    "descriptionTranslations": {"en":"Fresh green salad with house vinaigrette","ar":"سلطة خضراء طازجة","fr":"Salade verte fraîche","es":"Ensalada verde fresca"}
   },
   {
     "name": "Salade Arabe",
@@ -129,7 +157,9 @@ export const menuItems: MenuItem[] = [
     "images": [],
     "preparationOptions": "",
     "imagesPositions": [],
-    "id": "10"
+    "id": "10",
+    "nameTranslations": {"en":"Arabian Salad","ar":"سلطة عربية","fr":"Salade Arabe","es":"Ensalada Árabe"},
+    "descriptionTranslations": {"en":"Traditional Arabic salad","ar":"سلطة عربية تقليدية","fr":"Salade arabe traditionnelle","es":"Ensalada árabe tradicional"}
   },
   {
     "name": "Salade Russe",
@@ -140,7 +170,9 @@ export const menuItems: MenuItem[] = [
     "images": [],
     "preparationOptions": "",
     "imagesPositions": [],
-    "id": "11"
+    "id": "11",
+    "nameTranslations": {"en":"Russian Salad","ar":"سلطة روسية","fr":"Salade Russe","es":"Ensalada Rusa"},
+    "descriptionTranslations": {"en":"Russian-style potato salad","ar":"سلطة البطاطس الروسية","fr":"Salade russe de pommes de terre","es":"Ensalada rusa de patatas"}
   },
   {
     "name": "Salade Special",
@@ -151,7 +183,9 @@ export const menuItems: MenuItem[] = [
     "images": [],
     "preparationOptions": "",
     "imagesPositions": [],
-    "id": "12"
+    "id": "12",
+    "nameTranslations": {"en":"Special Salad","ar":"سلطة خاصة","fr":"Salade Spéciale","es":"Ensalada Especial"},
+    "descriptionTranslations": {"en":"Chef's special salad","ar":"سلطة الشيف الخاصة","fr":"Salade spéciale du chef","es":"Ensalada especial del chef"}
   },
   {
     "name": "Soupe Special",
@@ -162,7 +196,9 @@ export const menuItems: MenuItem[] = [
     "images": [],
     "preparationOptions": "",
     "imagesPositions": [],
-    "id": "13"
+    "id": "13",
+    "nameTranslations": {"en":"Special Soup","ar":"حساء خاص","fr":"Soupe Spéciale","es":"Sopa Especial"},
+    "descriptionTranslations": {"en":"Chef's special soup of the day","ar":"حساء الشيف الخاص لليوم","fr":"Soupe spéciale du jour","es":"Sopa especial del día"}
   },
   {
     "name": "Soupe Royal",
@@ -173,7 +209,9 @@ export const menuItems: MenuItem[] = [
     "images": [],
     "preparationOptions": "",
     "imagesPositions": [],
-    "id": "14"
+    "id": "14",
+    "nameTranslations": {"en":"Royal Soup","ar":"حساء رويال","fr":"Soupe Royale","es":"Sopa Royal"},
+    "descriptionTranslations": {"en":"Premium seafood soup with lobster","ar":"حساء المأكولات البحرية الفاخر","fr":"Soupe de fruits de mer premium","es":"Sopa de mariscos premium"}
   },
   {
     "name": "Friture Spéciale (1 person)",
@@ -184,7 +222,9 @@ export const menuItems: MenuItem[] = [
     "images": [],
     "preparationOptions": "",
     "imagesPositions": [],
-    "id": "15"
+    "id": "15",
+    "nameTranslations": {"en":"Special Fried Fish","ar":"فريتورا خاصة","fr":"Friture Spéciale","es":"Fritura Especial"},
+    "descriptionTranslations": {"en":"Special mixed fried fish platter","ar":"طبق سمك مقلي مشكل خاص","fr":"Assiette de poisson frit","es":"Plato de pescado frito"}
   },
   {
     "name": "Calamars",
@@ -195,7 +235,9 @@ export const menuItems: MenuItem[] = [
     "images": [],
     "preparationOptions": "Available: Grilled, Fried, Plancha",
     "imagesPositions": [],
-    "id": "16"
+    "id": "16",
+    "nameTranslations": {"en":"Calamari","ar":"كالاماري","fr":"Calamars","es":"Calamares"},
+    "descriptionTranslations": {"en":"Grilled or fried calamari","ar":"حبار مشوي أو مقلي","fr":"Calamars grillés ou frits","es":"Calamares a la plancha o fritos"}
   },
   {
     "name": "Gambas Pil Pil",
@@ -206,7 +248,9 @@ export const menuItems: MenuItem[] = [
     "images": [],
     "preparationOptions": "",
     "imagesPositions": [],
-    "id": "17"
+    "id": "17",
+    "nameTranslations": {"en":"Gambas Pil Pil","ar":"جمبري بيل بيل","fr":"Gambas Pil Pil","es":"Gambas al Pil Pil"},
+    "descriptionTranslations": {"en":"Sizzling prawns in garlic oil","ar":"قريدس ساخن في زيت الثوم","fr":"Crevettes à l'huile d'ail","es":"Gambas al ajillo"}
   },
   {
     "name": "Saumon pour Assiette",
@@ -217,7 +261,9 @@ export const menuItems: MenuItem[] = [
     "images": [],
     "preparationOptions": "",
     "imagesPositions": [],
-    "id": "18"
+    "id": "18",
+    "nameTranslations": {"en":"Salmon Plate","ar":"طبق سلمون","fr":"Saumon pour Assiette","es":"Plato de Salmón"},
+    "descriptionTranslations": {"en":"Fresh grilled salmon steak","ar":"شريحة سلمون مشوية طازجة","fr":"Steak de saumon grillé","es":"Filete de salmón a la parrilla"}
   },
   {
     "name": "Rigamonte",
@@ -236,7 +282,9 @@ export const menuItems: MenuItem[] = [
         "zoom": 1
       }
     ],
-    "id": "19"
+    "id": "19",
+    "nameTranslations": {"en":"Rigamonte","ar":"ريغامونتي","fr":"Rigamonte","es":"Rigamonte"},
+    "descriptionTranslations": {"en":"Portuguese-style fish","ar":"سمك على الطريقة البرتغالية","fr":"Poisson style portugais","es":"Pescado estilo portugués"}
   },
   {
     "id": "20",
@@ -268,7 +316,9 @@ export const menuItems: MenuItem[] = [
       "zoom": 1
     },
     "imagesPositions": [],
-    "id": "22"
+    "id": "22",
+    "nameTranslations": {"en":"Meja","ar":"ميخا","fr":"Meja","es":"Meja"},
+    "descriptionTranslations": {"en":"Fresh local fish Mediterranean style","ar":"سمك محلي طازج","fr":"Poisson local style méditerranéen","es":"Pescado local estilo mediterráneo"}
   },
   {
     "name": "Les Huîtres (Unité)",
@@ -279,7 +329,9 @@ export const menuItems: MenuItem[] = [
     "images": [],
     "preparationOptions": "",
     "imagesPositions": [],
-    "id": "23"
+    "id": "23",
+    "nameTranslations": {"en":"Oysters (Unit)","ar":"المحار (وحدة)","fr":"Huîtres (Unité)","es":"Ostras (Unidad)"},
+    "descriptionTranslations": {"en":"Fresh oysters on ice","ar":"محار طازج على الثلج","fr":"Huîtres fraîches sur glace","es":"Ostras frescas sobre hielo"}
   },
   {
     "name": "Crab",
@@ -290,7 +342,9 @@ export const menuItems: MenuItem[] = [
     "images": [],
     "preparationOptions": "",
     "imagesPositions": [],
-    "id": "24"
+    "id": "24",
+    "nameTranslations": {"en":"Crab","ar":"سلطعون","fr":"Crabe","es":"Cangrejo"},
+    "descriptionTranslations": {"en":"Fresh crab","ar":"سلطعون طازج","fr":"Crabe frais","es":"Cangrejo fresco"}
   },
   {
     "name": "Anchois (Chthoun)",
@@ -301,7 +355,9 @@ export const menuItems: MenuItem[] = [
     "images": [],
     "preparationOptions": "",
     "imagesPositions": [],
-    "id": "25"
+    "id": "25",
+    "nameTranslations": {"en":"Anchovies","ar":"أنشوجة","fr":"Anchois","es":"Anchoas"},
+    "descriptionTranslations": {"en":"Fresh anchovies grilled","ar":"أنشوجة طازجة مشوية","fr":"Anchois frais grillés","es":"Anchoas frescas a la parrilla"}
   },
   {
     "name": "Pilpil Royal",
@@ -312,7 +368,9 @@ export const menuItems: MenuItem[] = [
     "images": [],
     "preparationOptions": "",
     "imagesPositions": [],
-    "id": "26"
+    "id": "26",
+    "nameTranslations": {"en":"Royal Pil Pil","ar":"بيل بيل رويال","fr":"Pilpil Royal","es":"Pil Pil Royal"},
+    "descriptionTranslations": {"en":"Royal seafood pil pil","ar":"طبق بيل بيل ملكي","fr":"Pil pil royal aux fruits de mer","es":"Pil pil real de mariscos"}
   },
   {
     "name": "Gambas Planchat",
@@ -323,7 +381,9 @@ export const menuItems: MenuItem[] = [
     "images": [],
     "preparationOptions": "",
     "imagesPositions": [],
-    "id": "27"
+    "id": "27",
+    "nameTranslations": {"en":"Grilled Prawns","ar":"جمبري مشوي","fr":"Gambas Plancha","es":"Gambas a la Plancha"},
+    "descriptionTranslations": {"en":"Grilled prawns on plancha","ar":"قريدس مشوي على البلانشا","fr":"Crevettes grillées à la plancha","es":"Gambas a la plancha"}
   },
   {
     "name": "Mandrita",
@@ -334,7 +394,9 @@ export const menuItems: MenuItem[] = [
     "images": [],
     "preparationOptions": "",
     "imagesPositions": [],
-    "id": "28"
+    "id": "28",
+    "nameTranslations": {"en":"Mandrita","ar":"ماندريتا","fr":"Mandrita","es":"Mandrita"},
+    "descriptionTranslations": {"en":"Fresh sea bream","ar":"سمك الدنيس الطازج","fr":"Daurade fraîche","es":"Dorada fresca"}
   },
   {
     "name": "Spadon",
@@ -345,7 +407,9 @@ export const menuItems: MenuItem[] = [
     "images": [],
     "preparationOptions": "",
     "imagesPositions": [],
-    "id": "29"
+    "id": "29",
+    "nameTranslations": {"en":"Swordfish","ar":"سمك أبو سيف","fr":"Espadon","es":"Pez Espada"},
+    "descriptionTranslations": {"en":"Swordfish steak","ar":"شريحة سمك أبو سيف","fr":"Steak d'espadon","es":"Filete de pez espada"}
   },
   {
     "name": "Meloussa",
@@ -356,7 +420,9 @@ export const menuItems: MenuItem[] = [
     "images": [],
     "preparationOptions": "",
     "imagesPositions": [],
-    "id": "30"
+    "id": "30",
+    "nameTranslations": {"en":"Meloussa","ar":"ملوسة","fr":"Meloussa","es":"Meloussa"},
+    "descriptionTranslations": {"en":"Fresh local fish","ar":"سمك محلي طازج","fr":"Poisson local frais","es":"Pescado local fresco"}
   },
   {
     "name": "Rouget",
@@ -367,7 +433,9 @@ export const menuItems: MenuItem[] = [
     "images": [],
     "preparationOptions": "",
     "imagesPositions": [],
-    "id": "31"
+    "id": "31",
+    "nameTranslations": {"en":"Red Mullet","ar":"سمك البوري","fr":"Rouget","es":"Salmonete"},
+    "descriptionTranslations": {"en":"Red mullet grilled","ar":"سمك البوري مشوي","fr":"Rouget grillé","es":"Salmonete a la parrilla"}
   },
   {
     "id": "32",
@@ -418,7 +486,9 @@ export const menuItems: MenuItem[] = [
         "zoom": 1
       }
     ],
-    "id": "36"
+    "id": "36",
+    "nameTranslations": {"en":"Royal Fish Platter","ar":"طبق السمك الملكي","fr":"Plat de Poisson Royal","es":"Plato de Pescado Real"},
+    "descriptionTranslations": {"en":"Royal fish platter","ar":"طبق سمك ملكي","fr":"Assiette royale de poisson","es":"Plato real de pescado"}
   },
   {
     "id": "37",
@@ -437,7 +507,9 @@ export const menuItems: MenuItem[] = [
     "images": [],
     "preparationOptions": "",
     "imagesPositions": [],
-    "id": "38"
+    "id": "38",
+    "nameTranslations": {"en":"Tuna","ar":"تونة","fr":"Thon","es":"Atún"},
+    "descriptionTranslations": {"en":"Fresh tuna steak","ar":"شريحة تونة طازجة","fr":"Steak de thon frais","es":"Filete de atún fresco"}
   },
   {
     "name": "Angolas",
@@ -448,7 +520,9 @@ export const menuItems: MenuItem[] = [
     "images": [],
     "preparationOptions": "",
     "imagesPositions": [],
-    "id": "39"
+    "id": "39",
+    "nameTranslations": {"en":"Angolas","ar":"أنغولاس","fr":"Angolas","es":"Angolas"},
+    "descriptionTranslations": {"en":"Premium specialty fish","ar":"سمك متخصص فاخر","fr":"Poisson spécialité premium","es":"Pescado especialidad premium"}
   },
   {
     "id": "41",
@@ -467,7 +541,9 @@ export const menuItems: MenuItem[] = [
     "images": [],
     "preparationOptions": "",
     "imagesPositions": [],
-    "id": "42"
+    "id": "42",
+    "nameTranslations": {"en":"Spiny Lobster (KG)","ar":"لانغوستا (كجم)","fr":"Languste (KG)","es":"Langosta (KG)"},
+    "descriptionTranslations": {"en":"Spiny lobster by weight","ar":"جراد البحر بالوزن","fr":"Langouste au poids","es":"Langosta por peso"}
   },
   {
     "name": "Royal (KG)",
@@ -478,7 +554,9 @@ export const menuItems: MenuItem[] = [
     "images": [],
     "preparationOptions": "",
     "imagesPositions": [],
-    "id": "43"
+    "id": "43",
+    "nameTranslations": {"en":"Royal Fish (KG)","ar":"رويال (كجم)","fr":"Royal (KG)","es":"Royal (KG)"},
+    "descriptionTranslations": {"en":"Premium royal fish","ar":"سمك ملكي فاخر","fr":"Poisson royal premium","es":"Pescado real premium"}
   },
   {
     "id": "44",
@@ -561,7 +639,9 @@ export const menuItems: MenuItem[] = [
         "zoom": 1
       }
     ],
-    "id": "52"
+    "id": "52",
+    "nameTranslations": {"en":"Boracci (KG)","ar":"بوراسي (كجم)","fr":"Boracci (KG)","es":"Boracci (KG)"},
+    "descriptionTranslations": {"en":"Fresh boracci fish","ar":"سمك بوراسي طازج","fr":"Poisson boracci frais","es":"Pescado boracci fresco"}
   },
   {
     "name": "Mero Découpé (KG)",
@@ -572,7 +652,9 @@ export const menuItems: MenuItem[] = [
     "images": [],
     "preparationOptions": "",
     "imagesPositions": [],
-    "id": "53"
+    "id": "53",
+    "nameTranslations": {"en":"Grouper Cuts (KG)","ar":"ميرو مقطع (كجم)","fr":"Mérou Découpé (KG)","es":"Mero en Cortes (KG)"},
+    "descriptionTranslations": {"en":"Filleted grouper","ar":"ميرو مقطع","fr":"Mérou en filets","es":"Mero en filetes"}
   },
   {
     "name": "Shatra (KG)",
@@ -580,7 +662,9 @@ export const menuItems: MenuItem[] = [
     "price": "300.00 DH/KG",
     "category": "Fish by Kilo",
     "image": "/uploads/1762788716377-chatra.jpg",
-    "id": "54"
+    "id": "54",
+    "nameTranslations": {"en":"Shatra (KG)","ar":"شطرة (كجم)","fr":"Shatra (KG)","es":"Shatra (KG)"},
+    "descriptionTranslations": {"en":"Fresh shatra fish","ar":"سمك شطرة طازج","fr":"Poisson shatra frais","es":"Pescado shatra fresco"}
   },
   {
     "name": "Baghar (KG)",
@@ -591,7 +675,9 @@ export const menuItems: MenuItem[] = [
     "images": [],
     "preparationOptions": "",
     "imagesPositions": [],
-    "id": "55"
+    "id": "55",
+    "nameTranslations": {"en":"Baghar (KG)","ar":"بغار (كجم)","fr":"Baghar (KG)","es":"Baghar (KG)"},
+    "descriptionTranslations": {"en":"Fresh baghar fish","ar":"سمك بغار طازج","fr":"Poisson baghar frais","es":"Pescado baghar fresco"}
   },
   {
     "name": "Dourada (KG)",
@@ -607,7 +693,9 @@ export const menuItems: MenuItem[] = [
     ],
     "preparationOptions": "Available: Grilled, Tagine, Plancha, Baked, Salt-Crusted",
     "imagesPositions": [],
-    "id": "56"
+    "id": "56",
+    "nameTranslations": {"en":"Sea Bream (KG)","ar":"دورادا (كجم)","fr":"Daurade (KG)","es":"Dorada (KG)"},
+    "descriptionTranslations": {"en":"Sea bream by weight","ar":"سمك الدوراد بالوزن","fr":"Daurade au poids","es":"Dorada por peso"}
   },
   {
     "name": "Sole (KG)",
@@ -622,7 +710,9 @@ export const menuItems: MenuItem[] = [
     ],
     "preparationOptions": "Available: Grilled, Tagine, Plancha, Fried",
     "imagesPositions": [],
-    "id": "57"
+    "id": "57",
+    "nameTranslations": {"en":"Sole (KG)","ar":"سمك موسى (كجم)","fr":"Sole (KG)","es":"Lenguado (KG)"},
+    "descriptionTranslations": {"en":"Fresh sole fish","ar":"سمك موسى الطازج","fr":"Sole fraîche","es":"Lenguado fresco"}
   },
   {
     "name": "Torbo (KG)",
@@ -633,7 +723,9 @@ export const menuItems: MenuItem[] = [
     "images": [],
     "preparationOptions": "",
     "imagesPositions": [],
-    "id": "58"
+    "id": "58",
+    "nameTranslations": {"en":"Turbot (KG)","ar":"توربو (كجم)","fr":"Turbot (KG)","es":"Rodaballo (KG)"},
+    "descriptionTranslations": {"en":"Fresh turbot","ar":"سمك التوربو الطازج","fr":"Turbot frais","es":"Rodaballo fresco"}
   },
   {
     "name": "Rouget (KG)",
@@ -644,7 +736,9 @@ export const menuItems: MenuItem[] = [
     "images": [],
     "preparationOptions": "",
     "imagesPositions": [],
-    "id": "59"
+    "id": "59",
+    "nameTranslations": {"en":"Red Mullet (KG)","ar":"روجيه (كجم)","fr":"Rouget (KG)","es":"Salmonete (KG)"},
+    "descriptionTranslations": {"en":"Red mullet by weight","ar":"سمك البوري بالوزن","fr":"Rouget au poids","es":"Salmonete por peso"}
   },
   {
     "id": "60",

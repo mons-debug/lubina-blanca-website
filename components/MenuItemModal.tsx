@@ -6,6 +6,7 @@ import Image from "next/image";
 import { MenuItem } from "@/data/menuData";
 import { FiX, FiChevronLeft, FiChevronRight, FiPhone } from "react-icons/fi";
 import PositionedImage from "./PositionedImage";
+import { useTranslation, useLanguage } from "@/lib/LanguageContext";
 
 interface MenuItemModalProps {
   item: MenuItem | null;
@@ -14,6 +15,8 @@ interface MenuItemModalProps {
 }
 
 export default function MenuItemModal({ item, isOpen, onClose }: MenuItemModalProps) {
+  const { t, tCategory, getMenuItemName, getMenuItemDesc } = useTranslation();
+  const { isRTL } = useLanguage();
   const [activeImageIndex, setActiveImageIndex] = useState(0);
 
   // Combine main image with variant images
@@ -180,10 +183,10 @@ export default function MenuItemModal({ item, isOpen, onClose }: MenuItemModalPr
                 </div>
 
                 {/* Content Section */}
-                <div className="flex-1 p-6 md:p-8 overflow-y-auto">
+                <div className={`flex-1 p-6 md:p-8 overflow-y-auto ${isRTL ? 'text-right' : ''}`}>
                   {/* Category Badge */}
                   <span className="inline-block bg-slate-100 text-slate-600 px-3 py-1 rounded-full text-xs uppercase tracking-wider mb-4">
-                    {item.category}
+                    {tCategory(item.category)}
                   </span>
 
                   {/* Title */}
@@ -191,7 +194,7 @@ export default function MenuItemModal({ item, isOpen, onClose }: MenuItemModalPr
                     className="text-2xl md:text-3xl font-light text-slate-900 mb-2"
                     style={{ fontFamily: 'var(--font-playfair, Georgia, serif)' }}
                   >
-                    {item.name}
+                    {getMenuItemName(item)}
                   </h2>
 
                   {/* Price */}
@@ -203,14 +206,14 @@ export default function MenuItemModal({ item, isOpen, onClose }: MenuItemModalPr
 
                   {/* Description */}
                   <p className="text-slate-600 leading-relaxed mb-6">
-                    {item.description}
+                    {getMenuItemDesc(item)}
                   </p>
 
                   {/* Preparation Options */}
                   {item.preparationOptions && (
                     <div className="bg-slate-50 rounded-xl p-5 mb-6">
                       <h3 className="text-sm uppercase tracking-wider text-slate-500 mb-2">
-                        Preparation Options
+                        {t('menu', 'preparationOptions')}
                       </h3>
                       <p className="text-slate-700">
                         {item.preparationOptions}
@@ -222,28 +225,28 @@ export default function MenuItemModal({ item, isOpen, onClose }: MenuItemModalPr
                   {allImages.length > 1 && (
                     <div className="bg-blue-50 rounded-xl p-5 mb-6">
                       <h3 className="text-sm uppercase tracking-wider text-blue-600 mb-2">
-                        📸 {allImages.length} Photos Available
+                        📸 {allImages.length} {t('menu', 'moreImages')}
                       </h3>
                       <p className="text-blue-700 text-sm">
-                        Browse through different views and presentations of this dish
+                        {t('tabletMenu', 'tapToView')}
                       </p>
                     </div>
                   )}
 
                   {/* Actions */}
-                  <div className="flex gap-3 mt-auto pt-4">
+                  <div className={`flex gap-3 mt-auto pt-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
                     <button
                       onClick={onClose}
                       className="flex-1 px-6 py-3 bg-slate-100 hover:bg-slate-200 text-slate-800 font-medium rounded-xl transition-colors"
                     >
-                      Close
+                      {t('common', 'close')}
                     </button>
                     <a
                       href="tel:+212539318849"
-                      className="flex-1 px-6 py-3 bg-slate-900 hover:bg-slate-800 text-white font-medium rounded-xl transition-colors flex items-center justify-center gap-2"
+                      className={`flex-1 px-6 py-3 bg-slate-900 hover:bg-slate-800 text-white font-medium rounded-xl transition-colors flex items-center justify-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}
                     >
                       <FiPhone size={16} />
-                      Order Now
+                      {t('common', 'callNow')}
                     </a>
                   </div>
                 </div>

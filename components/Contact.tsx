@@ -4,8 +4,10 @@ import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { FiPhone, FiMail, FiMapPin, FiClock, FiNavigation } from "react-icons/fi";
 import { restaurantInfo } from "@/data/restaurantData";
+import { useTranslation } from "@/lib/LanguageContext";
 
 export default function Contact() {
+  const { t } = useTranslation();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
@@ -27,11 +29,11 @@ export default function Contact() {
             className="text-4xl md:text-5xl lg:text-6xl font-light text-slate-900 mb-4"
             style={{ fontFamily: 'var(--font-playfair, Georgia, serif)' }}
           >
-            Visit Us
+            {t('contact', 'title')}
           </h2>
           <div className="w-16 h-[2px] bg-[#5eb3ce] mx-auto mb-4" />
           <p className="text-lg text-slate-500 max-w-xl mx-auto">
-            Experience exceptional Mediterranean cuisine in Tangier
+            {t('contact', 'subtitle')}
           </p>
         </motion.div>
 
@@ -50,8 +52,8 @@ export default function Contact() {
                   <FiPhone size={28} />
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold">Call for Reservations</h3>
-                  <p className="text-white/80 text-sm">Speak with us directly</p>
+                  <h3 className="text-xl font-semibold">{t('contact', 'callForReservations')}</h3>
+                  <p className="text-white/80 text-sm">{t('contact', 'speakWithUs')}</p>
                 </div>
               </div>
 
@@ -66,7 +68,7 @@ export default function Contact() {
 
               <div className="flex items-center justify-center gap-2 text-white/70 text-sm">
                 <FiClock size={14} />
-                <span>Open 24 hours - Call anytime!</span>
+                <span>{t('contact', 'open24Hours')}</span>
               </div>
             </div>
 
@@ -77,7 +79,7 @@ export default function Contact() {
                   <FiMapPin className="text-[#5eb3ce]" size={20} />
                 </div>
                 <div>
-                  <h4 className="font-medium text-slate-900 mb-1">Address</h4>
+                  <h4 className="font-medium text-slate-900 mb-1">{t('contact', 'address')}</h4>
                   <p className="text-slate-600 text-sm leading-relaxed">
                     {restaurantInfo.address.street}<br />
                     {restaurantInfo.address.city} {restaurantInfo.address.zip}<br />
@@ -91,7 +93,7 @@ export default function Contact() {
                   <FiMail className="text-[#5eb3ce]" size={20} />
                 </div>
                 <div>
-                  <h4 className="font-medium text-slate-900 mb-1">Email</h4>
+                  <h4 className="font-medium text-slate-900 mb-1">{t('contact', 'email')}</h4>
                   <a
                     href={`mailto:${restaurantInfo.email}`}
                     className="text-slate-600 text-sm hover:text-[#5eb3ce] transition-colors"
@@ -106,9 +108,9 @@ export default function Contact() {
                   <FiClock className="text-green-600" size={20} />
                 </div>
                 <div>
-                  <h4 className="font-medium text-slate-900 mb-1">Hours</h4>
-                  <p className="text-green-600 font-medium">Open 24 Hours</p>
-                  <p className="text-slate-500 text-sm">Every day of the week</p>
+                  <h4 className="font-medium text-slate-900 mb-1">{t('contact', 'hours')}</h4>
+                  <p className="text-green-600 font-medium">{t('contact', 'openAllDay')}</p>
+                  <p className="text-slate-500 text-sm">{t('contact', 'everyDay')}</p>
                 </div>
               </div>
             </div>
@@ -130,7 +132,7 @@ export default function Contact() {
                 className="flex items-center justify-center gap-2 bg-slate-900 text-white py-4 px-6 rounded-xl font-medium hover:bg-slate-800 transition-all"
               >
                 <FiPhone size={18} />
-                <span>Call Now</span>
+                <span>{t('common', 'callNow')}</span>
               </motion.a>
               <motion.a
                 href={restaurantInfo.social.googleBusiness}
@@ -141,7 +143,7 @@ export default function Contact() {
                 className="flex items-center justify-center gap-2 bg-[#5eb3ce] text-white py-4 px-6 rounded-xl font-medium hover:bg-[#4da3be] transition-all"
               >
                 <FiNavigation size={18} />
-                <span>Get Directions</span>
+                <span>{t('common', 'getDirections')}</span>
               </motion.a>
             </div>
 

@@ -6,8 +6,11 @@ import { menuItems, menuCategories, MenuItem } from "@/data/menuData";
 import MenuItemModal from "./MenuItemModal";
 import PositionedImage from "./PositionedImage";
 import { FiChevronDown } from "react-icons/fi";
+import { useTranslation, useLanguage } from "@/lib/LanguageContext";
 
 export default function Menu() {
+  const { t, tCategory, getMenuItemName, getMenuItemDesc } = useTranslation();
+  const { isRTL } = useLanguage();
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -98,7 +101,7 @@ export default function Menu() {
   };
 
   return (
-    <section id="menu" className="relative py-24 md:py-32 bg-slate-50 overflow-hidden">
+    <section id="menu" className="relative py-16 md:py-20 bg-white overflow-hidden">
       {/* Zellige pattern overlay for event feel */}
       <div className="absolute inset-0 zellige-pattern-white pointer-events-none" />
 
@@ -110,13 +113,13 @@ export default function Menu() {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <p className="text-slate-400 text-sm uppercase tracking-[0.3em] mb-4">Our Selection</p>
+          <p className="text-slate-400 text-sm uppercase tracking-[0.3em] mb-4">{t('menu', 'subtitle')}</p>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-extralight text-slate-900 mb-6" style={{ fontFamily: 'var(--font-playfair, Georgia, serif)' }}>
-            Menu
+            {t('menu', 'title')}
           </h2>
           <div className="w-16 h-[1px] bg-slate-300 mx-auto mb-6" />
           <p className="text-base md:text-lg text-slate-500 max-w-2xl mx-auto font-light">
-            Discover our carefully crafted dishes featuring the finest Mediterranean ingredients
+            {t('menu', 'subtitle')}
           </p>
         </motion.div>
 
@@ -136,7 +139,7 @@ export default function Menu() {
                 : "bg-white text-slate-600 hover:bg-slate-100 border border-slate-200"
                 }`}
             >
-              {category}
+              {tCategory(category)}
             </button>
           ))}
         </motion.div>
@@ -198,14 +201,14 @@ export default function Menu() {
 
                       <div className="p-5">
                         <h3 className="text-lg font-medium text-slate-900 mb-2 group-hover:text-slate-600 transition-colors">
-                          {menuItem.name}
+                          {getMenuItemName(menuItem)}
                         </h3>
                         <p className="text-slate-400 text-sm leading-relaxed line-clamp-2 font-light">
-                          {menuItem.description}
+                          {getMenuItemDesc(menuItem)}
                         </p>
                         {menuItem.preparationOptions && (
                           <p className="text-slate-500 text-xs mt-3">
-                            Multiple preparations available
+                            {t('menu', 'optionsAvailable')}
                           </p>
                         )}
                       </div>
@@ -263,7 +266,7 @@ export default function Menu() {
                   >
                     <FiChevronDown className="text-[#5eb3ce] text-xl rotate-180" />
                   </motion.div>
-                  <span>Show Less</span>
+                  <span>{t('menu', 'showLess')}</span>
                 </motion.button>
               </div>
             )}

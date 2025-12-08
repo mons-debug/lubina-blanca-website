@@ -3,8 +3,11 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { FiMonitor, FiCalendar, FiMapPin } from "react-icons/fi";
+import { useTranslation, useLanguage } from "@/lib/LanguageContext";
 
 export default function AfconWatch() {
+  const { t } = useTranslation();
+  const { isRTL } = useLanguage();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
@@ -72,55 +75,54 @@ export default function AfconWatch() {
           />
 
           <span className="inline-block bg-gradient-to-r from-[#C1272D] to-[#a02026] text-white px-6 py-2 rounded-full text-sm font-medium mb-6">
-            Africa Cup 2025 🇲🇦
+            {t('afcon', 'africaCup')}
           </span>
 
           <h2
             className="text-4xl md:text-5xl lg:text-6xl font-light text-white mb-4"
             style={{ fontFamily: 'var(--font-playfair, Georgia, serif)' }}
           >
-            Watch Live at Lubina Blanca
+            {t('afcon', 'watchLiveTitle')}
           </h2>
 
           <p className="text-lg md:text-xl text-white/70 max-w-2xl mx-auto">
-            Support Morocco's journey with great food, drinks & atmosphere
+            {t('afcon', 'supportMorocco')}
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-8 md:gap-12">
+        <div className={`grid lg:grid-cols-2 gap-8 md:gap-12 ${isRTL ? 'lg:grid-flow-dense' : ''}`}>
           {/* Left Column - Info Cards */}
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
+            initial={{ opacity: 0, x: isRTL ? 30 : -30 }}
+            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: isRTL ? 30 : -30 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             className="space-y-6"
           >
             {/* No Reservation Card */}
             <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-white/10">
-              <div className="flex items-center gap-4 mb-4">
+              <div className={`flex items-center gap-4 mb-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
                 <div className="w-12 h-12 bg-[#006847] rounded-xl flex items-center justify-center">
                   <span className="text-2xl">🎉</span>
                 </div>
-                <div>
-                  <h3 className="text-xl font-semibold text-white">No Reservation Needed</h3>
-                  <p className="text-white/60">Just walk in and enjoy the match!</p>
+                <div className={isRTL ? 'text-right' : ''}>
+                  <h3 className="text-xl font-semibold text-white">{t('afcon', 'noReservation')}</h3>
+                  <p className="text-white/60">{t('afcon', 'justWalkIn')}</p>
                 </div>
               </div>
-              <p className="text-white/70 leading-relaxed">
-                Join us at Lubina Blanca to celebrate every goal, every victory! Enjoy the game with
-                delicious Mediterranean cuisine and an amazing atmosphere.
+              <p className={`text-white/70 leading-relaxed ${isRTL ? 'text-right' : ''}`}>
+                {t('afcon', 'joinUs')}
               </p>
             </div>
 
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className={`flex flex-col sm:flex-row gap-4 ${isRTL ? 'sm:flex-row-reverse' : ''}`}>
               <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => scrollToSection("#menu")}
                 className="flex-1 bg-gradient-to-r from-[#006847] to-[#00543a] text-white px-6 py-4 rounded-xl font-medium shadow-lg hover:shadow-xl transition-all"
               >
-                View Our Menu
+                {t('afcon', 'viewOurMenu')}
               </motion.button>
               <motion.button
                 whileHover={{ scale: 1.02 }}
@@ -128,7 +130,7 @@ export default function AfconWatch() {
                 onClick={() => scrollToSection("#contact")}
                 className="flex-1 bg-white/10 border border-white/20 text-white px-6 py-4 rounded-xl font-medium backdrop-blur-sm hover:bg-white/15 transition-all"
               >
-                Get Directions
+                {t('common', 'getDirections')}
               </motion.button>
             </div>
 
@@ -136,24 +138,24 @@ export default function AfconWatch() {
             <div className="bg-gradient-to-r from-[#C1272D] to-[#a02026] rounded-2xl p-6 text-center">
               <div className="flex items-center justify-center gap-3 mb-2">
                 <FiMonitor className="text-white" size={24} />
-                <h4 className="text-white font-semibold text-lg">Watch All Matches Here!</h4>
+                <h4 className="text-white font-semibold text-lg">{t('afcon', 'watchAllMatches')}</h4>
               </div>
               <p className="text-white/90 text-sm">
-                Fresh food • Cold drinks • Great atmosphere
+                {t('afcon', 'freshFood')}
               </p>
             </div>
           </motion.div>
 
           {/* Right Column - Match Schedule */}
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }}
+            initial={{ opacity: 0, x: isRTL ? -30 : 30 }}
+            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: isRTL ? -30 : 30 }}
             transition={{ duration: 0.8, delay: 0.3 }}
           >
             <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
-              <h3 className="text-xl font-semibold text-white mb-6 flex items-center gap-3">
+              <h3 className={`text-xl font-semibold text-white mb-6 flex items-center gap-3 ${isRTL ? 'flex-row-reverse' : ''}`}>
                 <FiCalendar className="text-[#D4AF37]" size={22} />
-                Morocco Group Stage
+                {t('afcon', 'moroccoGroupStage')}
               </h3>
 
               <div className="space-y-4">
@@ -165,16 +167,16 @@ export default function AfconWatch() {
                     transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
                     className="bg-white/5 rounded-xl p-4 border border-white/5 hover:border-white/15 transition-all"
                   >
-                    <div className="flex items-center justify-between">
-                      <div>
+                    <div className={`flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}>
+                      <div className={isRTL ? 'text-right' : ''}>
                         <h4 className="text-white font-semibold text-lg mb-1">
                           Morocco {match.opponent}
                         </h4>
-                        <p className="text-white/60 text-sm flex items-center gap-2">
+                        <p className={`text-white/60 text-sm flex items-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
                           <FiCalendar size={14} />
                           {match.date}
                         </p>
-                        <p className="text-white/50 text-xs flex items-center gap-2 mt-1">
+                        <p className={`text-white/50 text-xs flex items-center gap-2 mt-1 ${isRTL ? 'flex-row-reverse' : ''}`}>
                           <FiMapPin size={12} />
                           {match.venue}
                         </p>
@@ -198,7 +200,7 @@ export default function AfconWatch() {
           className="mt-12 text-center"
         >
           <p className="text-white/50 text-sm">
-            🏟️ Celebrate every goal with us • Open during all match times 🏟️
+            {t('afcon', 'celebrateEveryGoal')}
           </p>
         </motion.div>
       </div>

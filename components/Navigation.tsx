@@ -190,16 +190,30 @@ export default function Navigation() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="fixed inset-0 bg-black/50 md:hidden z-[199]"
+              className="fixed inset-0 md:hidden"
+              style={{
+                backgroundColor: 'rgba(0,0,0,0.5)',
+                zIndex: 9998
+              }}
               onClick={() => setIsOpen(false)}
             />
-            {/* Menu Panel */}
+            {/* Menu Panel - Solid White Full Screen */}
             <motion.div
               initial={{ x: isRTL ? "-100%" : "100%" }}
               animate={{ x: 0 }}
               exit={{ x: isRTL ? "-100%" : "100%" }}
               transition={{ type: "tween", duration: 0.3 }}
-              className="fixed top-0 right-0 bottom-0 w-full h-full md:hidden z-[200] bg-white overflow-hidden"
+              className="fixed md:hidden overflow-hidden"
+              style={{
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                width: '100vw',
+                height: '100vh',
+                backgroundColor: '#ffffff',
+                zIndex: 9999,
+              }}
             >
               {/* Close Button - Top Right */}
               <motion.button
@@ -208,13 +222,14 @@ export default function Navigation() {
                 exit={{ opacity: 0, scale: 0.8 }}
                 transition={{ delay: 0.1 }}
                 onClick={() => setIsOpen(false)}
-                className={`absolute top-4 ${isRTL ? 'left-4' : 'right-4'} p-3 bg-gray-100 hover:bg-gray-200 rounded-full transition-colors z-50`}
+                className={`absolute top-4 ${isRTL ? 'left-4' : 'right-4'} p-3 bg-gray-100 hover:bg-gray-200 rounded-full transition-colors`}
+                style={{ zIndex: 10000 }}
                 aria-label="Close menu"
               >
                 <FiX size={24} className="text-gray-800" />
               </motion.button>
 
-              <div className="flex flex-col items-center justify-center h-full space-y-8 px-4 bg-white">
+              <div className="flex flex-col items-center justify-center h-full space-y-8 px-4" style={{ backgroundColor: '#ffffff' }}>
                 {navLinks.map((link, index) => (
                   <motion.button
                     key={link.href}

@@ -15,6 +15,7 @@ import {
   FiLayers,
   FiMenu,
   FiX,
+  FiDatabase,
 } from "react-icons/fi";
 import toast from "react-hot-toast";
 
@@ -26,6 +27,7 @@ const menuItems = [
   { name: "About", href: "/lubina-gestion-2025/about", icon: FiInfo },
   { name: "Interior", href: "/lubina-gestion-2025/interior", icon: FiLayers },
   { name: "Contact Info", href: "/lubina-gestion-2025/contact", icon: FiMail },
+  { name: "Database", href: "/lubina-gestion-2025/database", icon: FiDatabase },
 ];
 
 export default function Sidebar() {

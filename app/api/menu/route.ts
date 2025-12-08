@@ -1,21 +1,51 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSessionFromCookie } from "@/lib/auth";
 import { readDataFile, writeDataFile } from "@/lib/dataManager";
-import { MenuItem } from "@/data/menuData";
+import { MenuItem, menuItems as staticMenuItems, menuCategories as staticMenuCategories } from "@/data/menuData";
+import * as db from "@/lib/database";
+
+// Check if database is configured
+const isDatabaseConfigured = () => {
+  return !!process.env.POSTGRES_URL;
+};
 
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const action = searchParams.get("action");
 
-    const data = await readDataFile<{ menuItems: MenuItem[]; menuCategories: string[] }>("menuData.ts");
+    // Try database first if configured
+    if (isDatabaseConfigured()) {
+      try {
+        const menuItems = await db.getMenuItems();
+        const menuCategories = await db.getCategories();
 
-    // If requesting only categories
-    if (action === "categories") {
-      return NextResponse.json({ menuCategories: data.menuCategories });
+        // If database has data, use it
+        if (menuItems.length > 0) {
+          if (action === "categories") {
+            return NextResponse.json({ menuCategories });
+          }
+          return NextResponse.json({ menuItems, menuCategories });
+        }
+      } catch (dbError) {
+        console.log("Database not available, falling back to file");
+      }
     }
 
-    return NextResponse.json(data);
+    // Fallback to file-based data
+    try {
+      const data = await readDataFile<{ menuItems: MenuItem[]; menuCategories: string[] }>("menuData.ts");
+      if (action === "categories") {
+        return NextResponse.json({ menuCategories: data.menuCategories });
+      }
+      return NextResponse.json(data);
+    } catch (fileError) {
+      // Last resort: use static imports
+      if (action === "categories") {
+        return NextResponse.json({ menuCategories: staticMenuCategories });
+      }
+      return NextResponse.json({ menuItems: staticMenuItems, menuCategories: staticMenuCategories });
+    }
   } catch (error) {
     console.error("Error reading menu data:", error);
     return NextResponse.json({ error: "Failed to read menu data" }, { status: 500 });
@@ -31,80 +61,83 @@ export async function POST(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const action = searchParams.get("action");
-    const data = await readDataFile<any>("menuData.ts");
-
-    // Read body once at the start
     const body = await request.json();
 
-    // Handle category addition
+    // Use database if configured
+    if (isDatabaseConfigured()) {
+      try {
+        if (action === "add-category") {
+          const { category } = body;
+          if (!category || category.trim() === "") {
+            return NextResponse.json({ error: "Category name is required" }, { status: 400 });
+          }
+          const success = await db.addCategory(category);
+          if (success) {
+            const categories = await db.getCategories();
+            return NextResponse.json({ menuCategories: categories }, { status: 201 });
+          }
+          return NextResponse.json({ error: "Failed to add category" }, { status: 500 });
+        }
+
+        if (action === "reorder") {
+          const { items } = body;
+          const success = await db.updateSortOrder(items);
+          if (success) {
+            return NextResponse.json({ success: true }, { status: 200 });
+          }
+          return NextResponse.json({ error: "Failed to update order" }, { status: 500 });
+        }
+
+        // Default: add new menu item
+        const newItem = await db.addMenuItem(body);
+        if (newItem) {
+          return NextResponse.json(newItem, { status: 201 });
+        }
+        return NextResponse.json({ error: "Failed to add item" }, { status: 500 });
+      } catch (dbError) {
+        console.error("Database error, falling back to file:", dbError);
+      }
+    }
+
+    // Fallback to file-based operations
+    const data = await readDataFile<any>("menuData.ts");
+
     if (action === "add-category") {
       const { category } = body;
-
       if (!category || category.trim() === "") {
         return NextResponse.json({ error: "Category name is required" }, { status: 400 });
       }
-
       if (data.menuCategories.includes(category)) {
         return NextResponse.json({ error: "Category already exists" }, { status: 400 });
       }
-
-      // Add new category (insert before "All" if it exists, or at the beginning)
       const allIndex = data.menuCategories.indexOf("All");
       if (allIndex !== -1) {
         data.menuCategories.splice(allIndex, 0, category);
       } else {
         data.menuCategories.push(category);
       }
-
-      const exportContent = {
-        menuCategories: data.menuCategories,
-        menuItems: data.menuItems,
-      };
-
-      await writeDataFile("menuData.ts", exportContent, "{ menuCategories, menuItems }");
-
+      await writeDataFile("menuData.ts", { menuCategories: data.menuCategories, menuItems: data.menuItems }, "{ menuCategories, menuItems }");
       return NextResponse.json({ menuCategories: data.menuCategories }, { status: 201 });
     }
 
-    // Handle reorder action
     if (action === "reorder") {
       const { items } = body;
-
-      // Update sortOrder for each item
       for (const orderItem of items) {
         const menuItem = data.menuItems.find((item: MenuItem) => item.id === orderItem.id);
         if (menuItem) {
           menuItem.sortOrder = orderItem.sortOrder;
         }
       }
-
-      const exportContent = {
-        menuCategories: data.menuCategories,
-        menuItems: data.menuItems,
-      };
-
-      await writeDataFile("menuData.ts", exportContent, "{ menuCategories, menuItems }");
-
+      await writeDataFile("menuData.ts", { menuCategories: data.menuCategories, menuItems: data.menuItems }, "{ menuCategories, menuItems }");
       return NextResponse.json({ success: true }, { status: 200 });
     }
 
-    // Handle menu item creation (default action)
+    // Default: add new menu item
     const newItem = body;
-
-    // Generate new ID
     const maxId = Math.max(...data.menuItems.map((item: MenuItem) => parseInt(item.id)), 0);
     newItem.id = String(maxId + 1);
-
     data.menuItems.push(newItem);
-
-    // Write back to file
-    const exportContent = {
-      menuCategories: data.menuCategories,
-      menuItems: data.menuItems,
-    };
-
-    await writeDataFile("menuData.ts", exportContent, "{ menuCategories, menuItems }");
-
+    await writeDataFile("menuData.ts", { menuCategories: data.menuCategories, menuItems: data.menuItems }, "{ menuCategories, menuItems }");
     return NextResponse.json(newItem, { status: 201 });
   } catch (error) {
     console.error("Error in menu POST:", error);
@@ -120,22 +153,27 @@ export async function PUT(request: NextRequest) {
 
   try {
     const updatedItem = await request.json();
-    const data = await readDataFile<any>("menuData.ts");
 
+    // Use database if configured
+    if (isDatabaseConfigured()) {
+      try {
+        const success = await db.updateMenuItem(updatedItem);
+        if (success) {
+          return NextResponse.json(updatedItem);
+        }
+      } catch (dbError) {
+        console.error("Database error, falling back to file:", dbError);
+      }
+    }
+
+    // Fallback to file-based
+    const data = await readDataFile<any>("menuData.ts");
     const index = data.menuItems.findIndex((item: MenuItem) => item.id === updatedItem.id);
     if (index === -1) {
       return NextResponse.json({ error: "Item not found" }, { status: 404 });
     }
-
     data.menuItems[index] = updatedItem;
-
-    const exportContent = {
-      menuCategories: data.menuCategories,
-      menuItems: data.menuItems,
-    };
-
-    await writeDataFile("menuData.ts", exportContent, "{ menuCategories, menuItems }");
-
+    await writeDataFile("menuData.ts", { menuCategories: data.menuCategories, menuItems: data.menuItems }, "{ menuCategories, menuItems }");
     return NextResponse.json(updatedItem);
   } catch (error) {
     console.error("Error updating menu item:", error);
@@ -152,62 +190,67 @@ export async function DELETE(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const action = searchParams.get("action");
+
+    // Use database if configured
+    if (isDatabaseConfigured()) {
+      try {
+        if (action === "delete-category") {
+          const category = searchParams.get("category");
+          if (!category) {
+            return NextResponse.json({ error: "Category name is required" }, { status: 400 });
+          }
+          if (category === "All") {
+            return NextResponse.json({ error: "Cannot delete 'All' category" }, { status: 400 });
+          }
+          const success = await db.deleteCategory(category);
+          if (success) {
+            const categories = await db.getCategories();
+            return NextResponse.json({ menuCategories: categories });
+          }
+        } else {
+          const id = searchParams.get("id");
+          if (!id) {
+            return NextResponse.json({ error: "ID is required" }, { status: 400 });
+          }
+          const success = await db.deleteMenuItem(id);
+          if (success) {
+            return NextResponse.json({ success: true });
+          }
+        }
+      } catch (dbError) {
+        console.error("Database error, falling back to file:", dbError);
+      }
+    }
+
+    // Fallback to file-based
     const data = await readDataFile<any>("menuData.ts");
 
-    // Handle category deletion
     if (action === "delete-category") {
       const category = searchParams.get("category");
-
       if (!category) {
         return NextResponse.json({ error: "Category name is required" }, { status: 400 });
       }
-
-      // Prevent deleting "All" category
       if (category === "All") {
         return NextResponse.json({ error: "Cannot delete 'All' category" }, { status: 400 });
       }
-
-      // Check if any menu items use this category
       const itemsInCategory = data.menuItems.filter((item: MenuItem) => item.category === category);
       if (itemsInCategory.length > 0) {
-        return NextResponse.json({
-          error: `Cannot delete category. ${itemsInCategory.length} menu item(s) are using this category.`
-        }, { status: 400 });
+        return NextResponse.json({ error: `Cannot delete category. ${itemsInCategory.length} menu item(s) are using this category.` }, { status: 400 });
       }
-
       data.menuCategories = data.menuCategories.filter((cat: string) => cat !== category);
-
-      const exportContent = {
-        menuCategories: data.menuCategories,
-        menuItems: data.menuItems,
-      };
-
-      await writeDataFile("menuData.ts", exportContent, "{ menuCategories, menuItems }");
-
+      await writeDataFile("menuData.ts", { menuCategories: data.menuCategories, menuItems: data.menuItems }, "{ menuCategories, menuItems }");
       return NextResponse.json({ menuCategories: data.menuCategories });
     }
 
-    // Handle menu item deletion
     const id = searchParams.get("id");
-
     if (!id) {
       return NextResponse.json({ error: "ID is required" }, { status: 400 });
     }
-
     data.menuItems = data.menuItems.filter((item: MenuItem) => item.id !== id);
-
-    const exportContent = {
-      menuCategories: data.menuCategories,
-      menuItems: data.menuItems,
-    };
-
-    await writeDataFile("menuData.ts", exportContent, "{ menuCategories, menuItems }");
-
+    await writeDataFile("menuData.ts", { menuCategories: data.menuCategories, menuItems: data.menuItems }, "{ menuCategories, menuItems }");
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Error deleting menu item:", error);
     return NextResponse.json({ error: "Failed to delete menu item" }, { status: 500 });
   }
 }
-
-

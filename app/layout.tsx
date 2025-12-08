@@ -36,10 +36,22 @@ export const metadata: Metadata = {
   title: "Lubina Blanca - Authentic Mediterranean Seafood Restaurant in Tangier",
   description: "Experience the finest Mediterranean cuisine with fresh seafood and traditional recipes in Tangier, Morocco. Visit Lubina Blanca for an unforgettable dining experience. Open 24 hours.",
   keywords: ["restaurant", "Mediterranean", "seafood", "fine dining", "Tangier", "Morocco", "Lubina Blanca", "fresh fish", "paella", "couscous"],
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icon-512.png", sizes: "512x512", type: "image/png" },
+    ],
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+  },
+  manifest: "/manifest.json",
   openGraph: {
     title: "Lubina Blanca - Authentic Mediterranean Seafood Restaurant in Tangier",
     description: "Experience the finest Mediterranean cuisine with fresh seafood and traditional recipes in Tangier, Morocco. Open 24 hours.",
     type: "website",
+    images: ["/lubinalogo.png"],
   },
 };
 

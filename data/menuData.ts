@@ -57,7 +57,7 @@ export const menuItems: MenuItem[] = [
       "fr": "Paella espagnole traditionnelle avec riz au safran, fruits de mer et épices authentiques",
       "es": "Paella española tradicional con arroz con azafrán, mariscos y especias auténticas"
     },
-    "sortOrder": 2
+    "sortOrder": 9
   },
   {
     "name": "Paella Spécial (2 persons)",
@@ -81,7 +81,7 @@ export const menuItems: MenuItem[] = [
       "fr": "Paella traditionnelle pour deux",
       "es": "Paella tradicional para dos"
     },
-    "sortOrder": 1
+    "sortOrder": 8
   },
   {
     "name": "Couscous au Poulet",
@@ -105,7 +105,7 @@ export const menuItems: MenuItem[] = [
       "fr": "Couscous marocain avec poulet tendre et légumes",
       "es": "Cuscús marroquí con pollo tierno y verduras"
     },
-    "sortOrder": 3
+    "sortOrder": 10
   },
   {
     "name": "Couscous au Poulet (Beldi)",
@@ -129,7 +129,7 @@ export const menuItems: MenuItem[] = [
       "fr": "Couscous Beldi avec poulet fermier",
       "es": "Cuscús Beldi con pollo de corral"
     },
-    "sortOrder": 4
+    "sortOrder": 11
   },
   {
     "name": "Couscous à la Viande",
@@ -153,7 +153,7 @@ export const menuItems: MenuItem[] = [
       "fr": "Couscous traditionnel avec agneau ou bœuf",
       "es": "Cuscús tradicional con cordero o ternera"
     },
-    "sortOrder": 5
+    "sortOrder": 12
   },
   {
     "name": "Couscous aux Poissons",
@@ -177,7 +177,7 @@ export const menuItems: MenuItem[] = [
       "fr": "Couscous au poisson frais",
       "es": "Cuscús de pescado fresco"
     },
-    "sortOrder": 6
+    "sortOrder": 13
   },
   {
     "name": "Salade Niçoise",
@@ -201,7 +201,7 @@ export const menuItems: MenuItem[] = [
       "fr": "Salade classique avec thon",
       "es": "Ensalada clásica con atún"
     },
-    "sortOrder": 7
+    "sortOrder": 14
   },
   {
     "name": "Salade Fruits de Mer",
@@ -225,7 +225,7 @@ export const menuItems: MenuItem[] = [
       "fr": "Salade de fruits de mer frais",
       "es": "Ensalada de mariscos frescos"
     },
-    "sortOrder": 8
+    "sortOrder": 15
   },
   {
     "name": "Salade Verte",
@@ -249,7 +249,7 @@ export const menuItems: MenuItem[] = [
       "fr": "Salade verte fraîche",
       "es": "Ensalada verde fresca"
     },
-    "sortOrder": 9
+    "sortOrder": 16
   },
   {
     "name": "Salade Arabe",
@@ -273,7 +273,7 @@ export const menuItems: MenuItem[] = [
       "fr": "Salade arabe traditionnelle",
       "es": "Ensalada árabe tradicional"
     },
-    "sortOrder": 10
+    "sortOrder": 17
   },
   {
     "name": "Salade Russe",
@@ -297,7 +297,7 @@ export const menuItems: MenuItem[] = [
       "fr": "Salade russe de pommes de terre",
       "es": "Ensalada rusa de patatas"
     },
-    "sortOrder": 11
+    "sortOrder": 18
   },
   {
     "name": "Salade Special",
@@ -321,7 +321,7 @@ export const menuItems: MenuItem[] = [
       "fr": "Salade spéciale du chef",
       "es": "Ensalada especial del chef"
     },
-    "sortOrder": 12
+    "sortOrder": 2
   },
   {
     "name": "Soupe Special",
@@ -345,7 +345,7 @@ export const menuItems: MenuItem[] = [
       "fr": "Soupe spéciale du jour",
       "es": "Sopa especial del día"
     },
-    "sortOrder": 13
+    "sortOrder": 19
   },
   {
     "name": "Soupe Royal",
@@ -369,7 +369,7 @@ export const menuItems: MenuItem[] = [
       "fr": "Soupe de fruits de mer premium",
       "es": "Sopa de mariscos premium"
     },
-    "sortOrder": 14
+    "sortOrder": 20
   },
   {
     "name": "Friture Spéciale (1 person)",
@@ -393,7 +393,7 @@ export const menuItems: MenuItem[] = [
       "fr": "Assiette de poisson frit",
       "es": "Plato de pescado frito"
     },
-    "sortOrder": 15
+    "sortOrder": 21
   },
   {
     "name": "Calamars",
@@ -417,7 +417,7 @@ export const menuItems: MenuItem[] = [
       "fr": "Calamars grillés ou frits",
       "es": "Calamares a la plancha o fritos"
     },
-    "sortOrder": 16
+    "sortOrder": 22
   },
   {
     "name": "Gambas Pil Pil",
@@ -441,7 +441,7 @@ export const menuItems: MenuItem[] = [
       "fr": "Crevettes à l'huile d'ail",
       "es": "Gambas al ajillo"
     },
-    "sortOrder": 17
+    "sortOrder": 23
   },
   {
     "name": "Saumon pour Assiette",
@@ -465,7 +465,7 @@ export const menuItems: MenuItem[] = [
       "fr": "Steak de saumon grillé",
       "es": "Filete de salmón a la parrilla"
     },
-    "sortOrder": 18
+    "sortOrder": 24
   },
   {
     "name": "Rigamonte",
@@ -497,7 +497,7 @@ export const menuItems: MenuItem[] = [
       "fr": "Poisson style portugais",
       "es": "Pescado estilo portugués"
     },
-    "sortOrder": 19
+    "sortOrder": 25
   },
   {
     "id": "20",
@@ -506,7 +506,7 @@ export const menuItems: MenuItem[] = [
     "price": "100.00 DH",
     "image": "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=800&h=600&fit=crop",
     "category": "Fish Dishes",
-    "sortOrder": 20
+    "sortOrder": 26
   },
   {
     "id": "21",
@@ -515,7 +515,7 @@ export const menuItems: MenuItem[] = [
     "price": "80.00 DH",
     "image": "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=800&h=600&fit=crop",
     "category": "Fish Dishes",
-    "sortOrder": 21
+    "sortOrder": 27
   },
   {
     "name": "Meja",
@@ -544,7 +544,7 @@ export const menuItems: MenuItem[] = [
       "fr": "Poisson local style méditerranéen",
       "es": "Pescado local estilo mediterráneo"
     },
-    "sortOrder": 22
+    "sortOrder": 28
   },
   {
     "name": "Les Huîtres (Unité)",
@@ -568,7 +568,7 @@ export const menuItems: MenuItem[] = [
       "fr": "Huîtres fraîches sur glace",
       "es": "Ostras frescas sobre hielo"
     },
-    "sortOrder": 23
+    "sortOrder": 29
   },
   {
     "name": "Crab",
@@ -592,7 +592,7 @@ export const menuItems: MenuItem[] = [
       "fr": "Crabe frais",
       "es": "Cangrejo fresco"
     },
-    "sortOrder": 24
+    "sortOrder": 30
   },
   {
     "name": "Anchois (Chthoun)",
@@ -616,7 +616,7 @@ export const menuItems: MenuItem[] = [
       "fr": "Anchois frais grillés",
       "es": "Anchoas frescas a la parrilla"
     },
-    "sortOrder": 25
+    "sortOrder": 31
   },
   {
     "name": "Pilpil Royal",
@@ -640,7 +640,7 @@ export const menuItems: MenuItem[] = [
       "fr": "Pil pil royal aux fruits de mer",
       "es": "Pil pil real de mariscos"
     },
-    "sortOrder": 26
+    "sortOrder": 3
   },
   {
     "name": "Gambas Planchat",
@@ -664,7 +664,7 @@ export const menuItems: MenuItem[] = [
       "fr": "Crevettes grillées à la plancha",
       "es": "Gambas a la plancha"
     },
-    "sortOrder": 27
+    "sortOrder": 32
   },
   {
     "name": "Mandrita",
@@ -688,7 +688,7 @@ export const menuItems: MenuItem[] = [
       "fr": "Daurade fraîche",
       "es": "Dorada fresca"
     },
-    "sortOrder": 28
+    "sortOrder": 6
   },
   {
     "name": "Spadon",
@@ -712,7 +712,7 @@ export const menuItems: MenuItem[] = [
       "fr": "Steak d'espadon",
       "es": "Filete de pez espada"
     },
-    "sortOrder": 29
+    "sortOrder": 7
   },
   {
     "name": "Meloussa",
@@ -736,7 +736,7 @@ export const menuItems: MenuItem[] = [
       "fr": "Poisson local frais",
       "es": "Pescado local fresco"
     },
-    "sortOrder": 30
+    "sortOrder": 33
   },
   {
     "name": "Rouget",
@@ -760,7 +760,7 @@ export const menuItems: MenuItem[] = [
       "fr": "Rouget grillé",
       "es": "Salmonete a la parrilla"
     },
-    "sortOrder": 31
+    "sortOrder": 34
   },
   {
     "id": "32",
@@ -769,7 +769,7 @@ export const menuItems: MenuItem[] = [
     "price": "90.00 DH",
     "image": "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=800&h=600&fit=crop",
     "category": "Fish Dishes",
-    "sortOrder": 32
+    "sortOrder": 35
   },
   {
     "id": "33",
@@ -778,7 +778,7 @@ export const menuItems: MenuItem[] = [
     "price": "100.00 DH",
     "image": "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=800&h=600&fit=crop",
     "category": "Fish Dishes",
-    "sortOrder": 33
+    "sortOrder": 36
   },
   {
     "id": "34",
@@ -787,7 +787,7 @@ export const menuItems: MenuItem[] = [
     "price": "100.00 DH",
     "image": "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=800&h=600&fit=crop",
     "category": "Fish Dishes",
-    "sortOrder": 34
+    "sortOrder": 37
   },
   {
     "id": "35",
@@ -796,7 +796,7 @@ export const menuItems: MenuItem[] = [
     "price": "10.00 DH",
     "image": "https://images.unsplash.com/photo-1625944525533-473f1a3d54e7?w=800&h=600&fit=crop",
     "category": "Fish Dishes",
-    "sortOrder": 35
+    "sortOrder": 38
   },
   {
     "name": "Plat de Poisson Royal",
@@ -828,7 +828,7 @@ export const menuItems: MenuItem[] = [
       "fr": "Assiette royale de poisson",
       "es": "Plato real de pescado"
     },
-    "sortOrder": 36
+    "sortOrder": 1
   },
   {
     "id": "37",
@@ -837,7 +837,7 @@ export const menuItems: MenuItem[] = [
     "price": "90.00 DH",
     "image": "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=800&h=600&fit=crop",
     "category": "Fish Dishes",
-    "sortOrder": 37
+    "sortOrder": 39
   },
   {
     "name": "Thon",
@@ -861,7 +861,7 @@ export const menuItems: MenuItem[] = [
       "fr": "Steak de thon frais",
       "es": "Filete de atún fresco"
     },
-    "sortOrder": 38
+    "sortOrder": 5
   },
   {
     "name": "Angolas",
@@ -885,7 +885,7 @@ export const menuItems: MenuItem[] = [
       "fr": "Poisson spécialité premium",
       "es": "Pescado especialidad premium"
     },
-    "sortOrder": 39
+    "sortOrder": 4
   },
   {
     "id": "41",

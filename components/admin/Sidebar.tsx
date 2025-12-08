@@ -19,13 +19,13 @@ import {
 import toast from "react-hot-toast";
 
 const menuItems = [
-  { name: "Dashboard", href: "/admin", icon: FiHome },
-  { name: "Hero Slides", href: "/admin/hero", icon: FiImage },
-  { name: "Menu Items", href: "/admin/menu", icon: FiGrid },
-  { name: "Gallery", href: "/admin/gallery", icon: FiBook },
-  { name: "About", href: "/admin/about", icon: FiInfo },
-  { name: "Interior", href: "/admin/interior", icon: FiLayers },
-  { name: "Contact Info", href: "/admin/contact", icon: FiMail },
+  { name: "Dashboard", href: "/lubina-gestion-2024", icon: FiHome },
+  { name: "Hero Slides", href: "/lubina-gestion-2024/hero", icon: FiImage },
+  { name: "Menu Items", href: "/lubina-gestion-2024/menu", icon: FiGrid },
+  { name: "Gallery", href: "/lubina-gestion-2024/gallery", icon: FiBook },
+  { name: "About", href: "/lubina-gestion-2024/about", icon: FiInfo },
+  { name: "Interior", href: "/lubina-gestion-2024/interior", icon: FiLayers },
+  { name: "Contact Info", href: "/lubina-gestion-2024/contact", icon: FiMail },
 ];
 
 export default function Sidebar() {
@@ -37,7 +37,7 @@ export default function Sidebar() {
     try {
       await fetch("/api/auth/logout", { method: "POST" });
       toast.success("Logged out successfully");
-      router.push("/admin/login");
+      router.push("/lubina-gestion-2024/login");
     } catch (error) {
       toast.error("Logout failed");
     }

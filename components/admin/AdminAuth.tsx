@@ -12,7 +12,7 @@ export default function AdminAuth({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const checkAuth = async () => {
       // Skip auth check for login page
-      if (pathname === "/admin/login") {
+      if (pathname === "/lubina-gestion-2024/login") {
         setLoading(false);
         return;
       }
@@ -23,10 +23,10 @@ export default function AdminAuth({ children }: { children: React.ReactNode }) {
         if (response.ok) {
           setAuthenticated(true);
         } else {
-          router.push("/admin/login");
+          router.push("/lubina-gestion-2024/login");
         }
       } catch (error) {
-        router.push("/admin/login");
+        router.push("/lubina-gestion-2024/login");
       } finally {
         setLoading(false);
       }
@@ -47,7 +47,7 @@ export default function AdminAuth({ children }: { children: React.ReactNode }) {
   }
 
   // Allow login page without authentication
-  if (pathname === "/admin/login") {
+  if (pathname === "/lubina-gestion-2024/login") {
     return <>{children}</>;
   }
 

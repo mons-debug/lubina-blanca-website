@@ -44,21 +44,21 @@ export default function AdminDashboard() {
       value: stats.menuItems,
       icon: FiGrid,
       color: "bg-blue-500",
-      href: "/admin/menu",
+      href: "/lubina-gestion-2024/menu",
     },
     {
       title: "Hero Slides",
       value: stats.heroSlides,
       icon: FiImage,
       color: "bg-green-500",
-      href: "/admin/hero",
+      href: "/lubina-gestion-2024/hero",
     },
     {
       title: "Gallery Images",
       value: stats.galleryImages,
       icon: FiBook,
       color: "bg-purple-500",
-      href: "/admin/gallery",
+      href: "/lubina-gestion-2024/gallery",
     },
   ];
 
@@ -123,17 +123,17 @@ export default function AdminDashboard() {
             Quick Actions
           </h2>
           <div className="space-y-3">
-            <Link href="/admin/menu">
+            <Link href="/lubina-gestion-2024/menu">
               <button className="w-full text-left px-5 py-4 bg-gradient-to-r from-[#5eb3ce] to-[#3a8fa8] hover:from-[#3a8fa8] hover:to-[#5eb3ce] text-white font-semibold rounded-xl transition-all shadow-md hover:shadow-lg">
                 ➕ Add New Menu Item
               </button>
             </Link>
-            <Link href="/admin/hero">
+            <Link href="/lubina-gestion-2024/hero">
               <button className="w-full text-left px-5 py-4 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-500 text-white font-semibold rounded-xl transition-all shadow-md hover:shadow-lg">
                 🖼️ Manage Hero Slides
               </button>
             </Link>
-            <Link href="/admin/gallery">
+            <Link href="/lubina-gestion-2024/gallery">
               <button className="w-full text-left px-5 py-4 bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-500 text-white font-semibold rounded-xl transition-all shadow-md hover:shadow-lg">
                 📸 Upload Gallery Images
               </button>

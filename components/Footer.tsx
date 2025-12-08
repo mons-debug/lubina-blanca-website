@@ -18,7 +18,7 @@ export default function Footer() {
           {/* Brand - Full width on mobile, then normal */}
           <div className="col-span-2 md:col-span-1">
             <img
-              src="/lubinalogo.png"
+              src="/lubinalogo-white.png"
               alt="Lubina Blanca Logo"
               className="h-12 sm:h-16 md:h-20 w-auto mb-2 sm:mb-3 md:mb-4"
             />

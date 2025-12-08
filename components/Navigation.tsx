@@ -82,7 +82,7 @@ export default function Navigation() {
             className="flex items-center"
           >
             <img
-              src="/lubinalogo.png"
+              src="/lubinalogo-white.png"
               alt="Lubina Blanca Logo"
               className="h-12 md:h-16 w-auto"
             />

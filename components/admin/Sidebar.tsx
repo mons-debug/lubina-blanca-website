@@ -48,7 +48,7 @@ export default function Sidebar() {
       {/* Header */}
       <div className="p-4 lg:p-6 border-b border-gray-700">
         <img
-          src="/lubinalogo.png"
+          src="/lubinalogo-white.png"
           alt="Lubina Blanca Logo"
           className="h-12 lg:h-16 w-auto mb-2 lg:mb-3 drop-shadow-lg"
         />
@@ -68,8 +68,8 @@ export default function Sidebar() {
                 whileHover={{ x: 4, scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 className={`flex items-center space-x-3 px-3 lg:px-4 py-2.5 lg:py-3 rounded-xl transition-all ${isActive
-                    ? "bg-gradient-to-r from-[#5eb3ce] to-[#3a8fa8] text-white shadow-lg font-bold"
-                    : "text-gray-300 hover:bg-gray-700/50 hover:text-white font-medium"
+                  ? "bg-gradient-to-r from-[#5eb3ce] to-[#3a8fa8] text-white shadow-lg font-bold"
+                  : "text-gray-300 hover:bg-gray-700/50 hover:text-white font-medium"
                   }`}
               >
                 <Icon size={20} />

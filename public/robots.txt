@@ -2,5 +2,5 @@ User-agent: *
 Allow: /
 
 # Exclude admin pages from search engines
-Disallow: /lubina-gestion-2024
-Disallow: /lubina-gestion-2024/
+Disallow: /lubina-gestion-2025
+Disallow: /lubina-gestion-2025/

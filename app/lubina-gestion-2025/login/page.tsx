@@ -26,7 +26,7 @@ export default function LoginPage() {
 
       if (response.ok) {
         toast.success("Login successful!");
-        router.push("/lubina-gestion-2024");
+        router.push("/lubina-gestion-2025");
       } else {
         toast.error(data.error || "Login failed");
       }

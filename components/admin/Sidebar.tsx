@@ -19,13 +19,13 @@ import {
 import toast from "react-hot-toast";
 
 const menuItems = [
-  { name: "Dashboard", href: "/lubina-gestion-2024", icon: FiHome },
-  { name: "Hero Slides", href: "/lubina-gestion-2024/hero", icon: FiImage },
-  { name: "Menu Items", href: "/lubina-gestion-2024/menu", icon: FiGrid },
-  { name: "Gallery", href: "/lubina-gestion-2024/gallery", icon: FiBook },
-  { name: "About", href: "/lubina-gestion-2024/about", icon: FiInfo },
-  { name: "Interior", href: "/lubina-gestion-2024/interior", icon: FiLayers },
-  { name: "Contact Info", href: "/lubina-gestion-2024/contact", icon: FiMail },
+  { name: "Dashboard", href: "/lubina-gestion-2025", icon: FiHome },
+  { name: "Hero Slides", href: "/lubina-gestion-2025/hero", icon: FiImage },
+  { name: "Menu Items", href: "/lubina-gestion-2025/menu", icon: FiGrid },
+  { name: "Gallery", href: "/lubina-gestion-2025/gallery", icon: FiBook },
+  { name: "About", href: "/lubina-gestion-2025/about", icon: FiInfo },
+  { name: "Interior", href: "/lubina-gestion-2025/interior", icon: FiLayers },
+  { name: "Contact Info", href: "/lubina-gestion-2025/contact", icon: FiMail },
 ];
 
 export default function Sidebar() {
@@ -37,7 +37,7 @@ export default function Sidebar() {
     try {
       await fetch("/api/auth/logout", { method: "POST" });
       toast.success("Logged out successfully");
-      router.push("/lubina-gestion-2024/login");
+      router.push("/lubina-gestion-2025/login");
     } catch (error) {
       toast.error("Logout failed");
     }

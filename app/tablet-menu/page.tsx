@@ -124,7 +124,7 @@ function TabletMenuContent() {
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 10 }}
-                      className={`absolute ${isRTL ? 'left-0' : 'right-0'} top-full mt-2 bg-white rounded-xl shadow-xl overflow-hidden min-w-[160px] z-50`}
+                      className="absolute right-0 top-full mt-2 bg-white rounded-xl shadow-xl overflow-hidden min-w-[160px] z-50"
                     >
                       {languages.map((lang) => (
                         <button

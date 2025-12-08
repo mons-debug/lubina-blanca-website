@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { FiEdit, FiTrash2, FiPlus, FiUpload, FiEye, FiEyeOff, FiCrop, FiArrowUp, FiArrowDown } from "react-icons/fi";
+import { FiEdit, FiTrash2, FiPlus, FiUpload, FiEye, FiEyeOff, FiCrop, FiArrowUp, FiArrowDown, FiChevronsUp } from "react-icons/fi";
 import toast from "react-hot-toast";
 import { MenuItem } from "@/data/menuData";
 import MenuItemModal from "@/components/MenuItemModal";
@@ -85,6 +85,36 @@ export default function MenuManagement() {
         body: JSON.stringify({ items: updatedItems.map(item => ({ id: item.id, sortOrder: item.sortOrder })) }),
       });
       toast.success("Order updated!");
+    } catch (error) {
+      toast.error("Failed to save order");
+      fetchMenuData(); // Revert on error
+    }
+  };
+
+  const moveToTop = async (itemId: string) => {
+    const currentIndex = menuItems.findIndex(item => item.id === itemId);
+    if (currentIndex <= 0) return; // Already at top or not found
+
+    // Move item to the beginning
+    const item = menuItems[currentIndex];
+    const newItems = [item, ...menuItems.filter((_, i) => i !== currentIndex)];
+
+    // Update sortOrder for all items
+    const updatedItems = newItems.map((item, index) => ({
+      ...item,
+      sortOrder: index + 1
+    }));
+
+    setMenuItems(updatedItems);
+
+    // Save to API
+    try {
+      await fetch("/api/menu?action=reorder", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ items: updatedItems.map(item => ({ id: item.id, sortOrder: item.sortOrder })) }),
+      });
+      toast.success("Moved to top!");
     } catch (error) {
       toast.error("Failed to save order");
       fetchMenuData(); // Revert on error
@@ -677,6 +707,14 @@ export default function MenuManagement() {
                 <tr key={item.id} className="hover:bg-gray-50">
                   <td className="px-4 py-4">
                     <div className="flex flex-col gap-1">
+                      <button
+                        onClick={() => moveToTop(item.id)}
+                        disabled={index === 0}
+                        className={`p-1.5 rounded ${index === 0 ? 'text-gray-300 cursor-not-allowed' : 'text-amber-500 hover:bg-amber-50 hover:text-amber-600'}`}
+                        title="Send to top"
+                      >
+                        <FiChevronsUp size={16} />
+                      </button>
                       <button
                         onClick={() => moveItem(item.id, 'up')}
                         disabled={index === 0}

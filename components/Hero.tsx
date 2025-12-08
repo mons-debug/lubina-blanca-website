@@ -155,7 +155,7 @@ export default function Hero() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.2 }}
-                className="text-white/70 text-sm uppercase tracking-[0.4em] font-light mb-8"
+                className="text-white text-sm uppercase tracking-[0.4em] font-light mb-8 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
               >
                 {getSlideTranslation(currentSlide, language).subtitle || slide.subtitle}
               </motion.p>
@@ -165,7 +165,7 @@ export default function Hero() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3, duration: 0.8 }}
-                className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extralight text-white mb-8 leading-[0.95] tracking-tight"
+                className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extralight text-white mb-8 leading-[0.95] tracking-tight drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)]"
                 style={{ fontFamily: 'var(--font-playfair, Georgia, serif)' }}
               >
                 {getSlideTranslation(currentSlide, language).title || slide.title}
@@ -184,7 +184,7 @@ export default function Hero() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.6 }}
-                className="text-lg md:text-xl text-white/60 max-w-xl mx-auto mb-12 font-light leading-relaxed"
+                className="text-lg md:text-xl text-white max-w-xl mx-auto mb-12 font-light leading-relaxed drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
               >
                 {getSlideTranslation(currentSlide, language).description || slide.description}
               </motion.p>
@@ -198,7 +198,7 @@ export default function Hero() {
               >
                 <button
                   onClick={() => scrollToSection("#menu")}
-                  className="px-10 py-4 bg-white text-slate-900 font-medium tracking-wide hover:bg-white/90 transition-all duration-300"
+                  className="px-10 py-4 bg-white text-slate-900 font-medium tracking-wide hover:bg-[#5eb3ce] hover:text-white transition-all duration-300 shadow-lg"
                 >
                   {t('common', 'viewMenu')}
                 </button>

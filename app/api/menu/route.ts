@@ -33,9 +33,12 @@ export async function POST(request: NextRequest) {
     const action = searchParams.get("action");
     const data = await readDataFile<any>("menuData.ts");
 
+    // Read body once at the start
+    const body = await request.json();
+
     // Handle category addition
     if (action === "add-category") {
-      const { category } = await request.json();
+      const { category } = body;
 
       if (!category || category.trim() === "") {
         return NextResponse.json({ error: "Category name is required" }, { status: 400 });
@@ -65,7 +68,7 @@ export async function POST(request: NextRequest) {
 
     // Handle reorder action
     if (action === "reorder") {
-      const { items } = await request.json();
+      const { items } = body;
 
       // Update sortOrder for each item
       for (const orderItem of items) {
@@ -85,8 +88,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: true }, { status: 200 });
     }
 
-    // Handle menu item creation
-    const newItem = await request.json();
+    // Handle menu item creation (default action)
+    const newItem = body;
 
     // Generate new ID
     const maxId = Math.max(...data.menuItems.map((item: MenuItem) => parseInt(item.id)), 0);
@@ -104,8 +107,8 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(newItem, { status: 201 });
   } catch (error) {
-    console.error("Error creating menu item:", error);
-    return NextResponse.json({ error: "Failed to create menu item" }, { status: 500 });
+    console.error("Error in menu POST:", error);
+    return NextResponse.json({ error: "Failed to process request" }, { status: 500 });
   }
 }
 

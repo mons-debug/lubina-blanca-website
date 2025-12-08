@@ -41,7 +41,7 @@ export default function LanguageSelector() {
                     className="text-center mb-8"
                 >
                     <img
-                        src="/lubinalogo.png"
+                        src="/lubinalogo-white.png"
                         alt="Lubina Blanca"
                         className="h-20 w-auto mx-auto mb-4 drop-shadow-2xl"
                     />

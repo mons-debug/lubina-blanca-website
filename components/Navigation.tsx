@@ -167,14 +167,16 @@ export default function Navigation() {
             </div>
           </div>
 
-          {/* Mobile Menu Button */}
-          <motion.button
-            whileTap={{ scale: 0.9 }}
-            onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden z-50 text-white"
-          >
-            {isOpen ? <FiX size={28} /> : <FiMenu size={28} />}
-          </motion.button>
+          {/* Mobile Menu Button - Hidden when menu is open */}
+          {!isOpen && (
+            <motion.button
+              whileTap={{ scale: 0.9 }}
+              onClick={() => setIsOpen(true)}
+              className="md:hidden text-white"
+            >
+              <FiMenu size={28} />
+            </motion.button>
+          )}
         </div>
       </div>
 
@@ -186,7 +188,7 @@ export default function Navigation() {
             animate={{ x: 0 }}
             exit={{ x: isRTL ? "-100%" : "100%" }}
             transition={{ type: "tween", duration: 0.3 }}
-            className="fixed top-0 right-0 bottom-0 w-full bg-white md:hidden shadow-2xl z-50"
+            className="fixed inset-0 w-full h-full bg-white md:hidden z-[100]"
           >
             {/* Close Button - Top Right */}
             <motion.button

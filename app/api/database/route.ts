@@ -30,16 +30,26 @@ export async function POST(request: NextRequest) {
 
         if (action === "migrate") {
             // First initialize tables
-            await initializeDatabase();
+            const initResult = await initializeDatabase();
+            console.log("Init result:", initResult);
 
             // Then migrate data from file
+            console.log("Migrating items:", fileMenuItems.length, "categories:", fileMenuCategories.length);
+
             const success = await importData({
                 menuItems: fileMenuItems,
                 menuCategories: fileMenuCategories
             });
 
             if (success) {
-                return NextResponse.json({ message: "Data migrated successfully" });
+                // Verify the migration
+                const items = await getMenuItems();
+                const categories = await getCategories();
+                return NextResponse.json({
+                    message: "Data migrated successfully",
+                    itemCount: items.length,
+                    categoryCount: categories.length
+                });
             }
             return NextResponse.json({ error: "Failed to migrate data" }, { status: 500 });
         }
@@ -53,7 +63,10 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ error: "Invalid action" }, { status: 400 });
     } catch (error) {
         console.error("Database setup error:", error);
-        return NextResponse.json({ error: "Database operation failed" }, { status: 500 });
+        return NextResponse.json({
+            error: "Database operation failed",
+            details: error instanceof Error ? error.message : String(error)
+        }, { status: 500 });
     }
 }
 

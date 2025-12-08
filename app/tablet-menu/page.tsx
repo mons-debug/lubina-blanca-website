@@ -141,16 +141,6 @@ function TabletMenuContent() {
                   )}
                 </AnimatePresence>
               </div>
-
-              {/* Call Button */}
-              <a
-                href="tel:+212539318849"
-                className={`flex items-center gap-2 bg-[#5eb3ce] text-white px-5 py-2.5 rounded-full font-medium hover:bg-[#4da3be] transition-colors ${isRTL ? 'flex-row-reverse' : ''}`}
-              >
-                <FiPhone size={18} />
-                <span className="hidden sm:inline">+212 5393-18849</span>
-                <span className="sm:hidden">{t('common', 'call')}</span>
-              </a>
             </div>
           </div>
         </div>

@@ -84,23 +84,6 @@ export default function Hero() {
 
   return (
     <section id="home" className="relative h-screen w-full overflow-hidden">
-      {/* AFCON Event Badge - Subtle floating indicator */}
-      <motion.div
-        initial={{ opacity: 0, x: 50 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: 2, duration: 0.8 }}
-        className="absolute top-24 right-4 md:right-8 z-20"
-      >
-        <a
-          href="#afcon-watch"
-          onClick={(e) => { e.preventDefault(); scrollToSection('#afcon-watch'); }}
-          className="group flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-[#1a472a]/90 to-[#2d5a3f]/90 backdrop-blur-sm border border-white/10 hover:border-[#c4a000]/40 transition-all duration-300 shadow-lg hover:shadow-xl"
-        >
-          <span className="text-[10px] text-[#c4a000] font-semibold uppercase tracking-wider">{t('hero', 'afconLive')}</span>
-          <span className="w-1.5 h-1.5 bg-[#c4a000] rounded-full animate-pulse" />
-          <span className="text-white/90 text-xs font-medium">{t('hero', 'afcon2025')}</span>
-        </a>
-      </motion.div>
 
       {/* Background Media - Clean fade, no blue tint */}
       <AnimatePresence mode="wait">

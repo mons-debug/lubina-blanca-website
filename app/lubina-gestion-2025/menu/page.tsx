@@ -79,13 +79,17 @@ export default function MenuManagement() {
 
     // Save to API
     try {
-      await fetch("/api/menu?action=reorder", {
+      const response = await fetch("/api/menu?action=reorder", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ items: updatedItems.map(item => ({ id: item.id, sortOrder: item.sortOrder })) }),
       });
+      if (!response.ok) {
+        throw new Error("API returned error");
+      }
       toast.success("Order updated!");
     } catch (error) {
+      console.error("Reorder error:", error);
       toast.error("Failed to save order");
       fetchMenuData(); // Revert on error
     }
@@ -109,13 +113,17 @@ export default function MenuManagement() {
 
     // Save to API
     try {
-      await fetch("/api/menu?action=reorder", {
+      const response = await fetch("/api/menu?action=reorder", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ items: updatedItems.map(item => ({ id: item.id, sortOrder: item.sortOrder })) }),
       });
+      if (!response.ok) {
+        throw new Error("API returned error");
+      }
       toast.success("Moved to top!");
     } catch (error) {
+      console.error("Move to top error:", error);
       toast.error("Failed to save order");
       fetchMenuData(); // Revert on error
     }

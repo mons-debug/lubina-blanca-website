@@ -52,10 +52,12 @@ function TabletMenuContent() {
     }
   };
 
+  // Filter out hidden items first, then apply category filter
+  const visibleMenuItems = menuItems.filter(item => !item.hidden);
   const filteredItems =
     selectedCategory === "All"
-      ? menuItems
-      : menuItems.filter((item) => item.category === selectedCategory);
+      ? visibleMenuItems
+      : visibleMenuItems.filter((item) => item.category === selectedCategory);
 
   const container = {
     hidden: { opacity: 0 },

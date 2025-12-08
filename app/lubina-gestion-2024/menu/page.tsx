@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { FiEdit, FiTrash2, FiPlus, FiUpload, FiEye, FiCrop } from "react-icons/fi";
+import { FiEdit, FiTrash2, FiPlus, FiUpload, FiEye, FiEyeOff, FiCrop } from "react-icons/fi";
 import toast from "react-hot-toast";
 import { MenuItem } from "@/data/menuData";
 import MenuItemModal from "@/components/MenuItemModal";
@@ -24,6 +24,7 @@ export default function MenuManagement() {
     preparationOptions: "",
     imagePosition: undefined as { x: number; y: number; zoom: number } | undefined,
     imagesPositions: [] as Array<{ x: number; y: number; zoom: number }>,
+    hidden: false,
   });
   const [uploadingImage, setUploadingImage] = useState(false);
   const [uploadingGalleryImage, setUploadingGalleryImage] = useState(false);
@@ -180,6 +181,7 @@ export default function MenuManagement() {
           preparationOptions: "",
           imagePosition: undefined,
           imagesPositions: [],
+          hidden: false,
         });
         fetchMenuData();
       } else {
@@ -203,6 +205,7 @@ export default function MenuManagement() {
       preparationOptions: item.preparationOptions || "",
       imagePosition: item.imagePosition,
       imagesPositions: item.imagesPositions || [],
+      hidden: item.hidden || false,
     });
     setShowForm(true);
     // Scroll to form
@@ -239,7 +242,8 @@ export default function MenuManagement() {
       images: [],
       preparationOptions: "",
       imagePosition: undefined,
-      imagesPositions: []
+      imagesPositions: [],
+      hidden: false
     });
   };
 
@@ -567,6 +571,25 @@ export default function MenuManagement() {
               <p className="text-xs text-gray-500 mt-1">
                 Describe how this dish can be prepared (e.g., grilling methods, cooking styles)
               </p>
+            </div>
+
+            {/* Visibility Toggle */}
+            <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Visibility</label>
+                <p className="text-xs text-gray-500 mt-1">
+                  {formData.hidden ? "This item is hidden from the public menu" : "This item is visible on the public menu"}
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setFormData({ ...formData, hidden: !formData.hidden })}
+                className={`relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${formData.hidden ? 'bg-red-500' : 'bg-green-500'}`}
+              >
+                <span
+                  className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${formData.hidden ? 'translate-x-5' : 'translate-x-0'}`}
+                />
+              </button>
             </div>
 
             <div className="flex space-x-4">

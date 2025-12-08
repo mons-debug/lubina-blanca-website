@@ -38,9 +38,11 @@ export default function Menu() {
     setTimeout(() => setSelectedItem(null), 300);
   };
 
+  // Filter out hidden items first, then apply category filter
+  const visibleMenuItems = menuItems.filter(item => !item.hidden);
   const filteredItems = selectedCategory === "All"
-    ? menuItems
-    : menuItems.filter(item => item.category === selectedCategory);
+    ? visibleMenuItems
+    : visibleMenuItems.filter(item => item.category === selectedCategory);
 
   // Calculate items to show: 2 rows initially, then expand by 3 rows at a time
   const itemsPerRow = isMobile ? 2 : 3;

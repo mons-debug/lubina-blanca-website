@@ -85,44 +85,60 @@ export default function Hero() {
   return (
     <section id="home" className="relative h-screen w-full overflow-hidden">
 
-      {/* Background Media - Clean fade, no blue tint */}
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={slide.id}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 1.2 }}
-          className="absolute inset-0"
+      {/* Mobile Video Background - Shows only on mobile */}
+      <div className="md:hidden absolute inset-0">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
         >
-          {slide.mediaType === "video" ? (
-            <video
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="absolute inset-0 w-full h-full object-cover"
-              key={slide.image}
-            >
-              <source src={slide.image} type="video/mp4" />
-            </video>
-          ) : (
-            <Image
-              src={slide.image}
-              alt={slide.title}
-              fill
-              className="object-cover"
-              sizes="100vw"
-              priority={currentSlide === 0}
-              quality={90}
-            />
-          )}
+          <source src="/hero-mobile.webm" type="video/webm" />
+        </video>
+        {/* Dark overlay for mobile video */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/60" />
+      </div>
 
-          {/* Clean dark overlay - no blue */}
-          <div className="absolute inset-0 bg-black/50" />
-        </motion.div>
-      </AnimatePresence>
+      {/* Desktop Background Media - Hidden on mobile */}
+      <div className="hidden md:block">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={slide.id}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1.2 }}
+            className="absolute inset-0"
+          >
+            {slide.mediaType === "video" ? (
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="absolute inset-0 w-full h-full object-cover"
+                key={slide.image}
+              >
+                <source src={slide.image} type="video/mp4" />
+              </video>
+            ) : (
+              <Image
+                src={slide.image}
+                alt={slide.title}
+                fill
+                className="object-cover"
+                sizes="100vw"
+                priority={currentSlide === 0}
+                quality={90}
+              />
+            )}
 
+            {/* Clean dark overlay - no blue */}
+            <div className="absolute inset-0 bg-black/50" />
+          </motion.div>
+        </AnimatePresence>
+      </div>
       {/* Content */}
       <div className="relative h-full flex flex-col items-center justify-center px-6 z-10">
         <div className="max-w-4xl mx-auto text-center">

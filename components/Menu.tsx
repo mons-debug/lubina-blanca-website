@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
-import { menuItems, menuCategories, MenuItem } from "@/data/menuData";
+import { menuItems as staticMenuItems, menuCategories as staticMenuCategories, MenuItem } from "@/data/menuData";
 import MenuItemModal from "./MenuItemModal";
 import PositionedImage from "./PositionedImage";
 import { FiChevronDown } from "react-icons/fi";
@@ -16,6 +16,8 @@ export default function Menu() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [menuItems, setMenuItems] = useState<MenuItem[]>(staticMenuItems);
+  const [menuCategories, setMenuCategories] = useState<string[]>(staticMenuCategories);
   const ref = useRef(null);
   const expandButtonRef = useRef<HTMLButtonElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
@@ -26,6 +28,30 @@ export default function Menu() {
     checkMobile();
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Fetch menu data from API
+  useEffect(() => {
+    const fetchMenuData = async () => {
+      try {
+        const response = await fetch("/api/menu");
+        const data = await response.json();
+        if (data.menuItems) {
+          // Sort by sortOrder
+          const sortedItems = data.menuItems.sort((a: MenuItem, b: MenuItem) =>
+            (a.sortOrder ?? 999) - (b.sortOrder ?? 999)
+          );
+          setMenuItems(sortedItems);
+        }
+        if (data.menuCategories) {
+          setMenuCategories(data.menuCategories);
+        }
+      } catch (error) {
+        console.error("Failed to fetch menu data:", error);
+        // Fall back to static data
+      }
+    };
+    fetchMenuData();
   }, []);
 
   const openModal = (item: MenuItem) => {

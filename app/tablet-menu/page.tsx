@@ -43,7 +43,11 @@ function TabletMenuContent() {
         throw new Error("Failed to fetch menu data");
       }
       const data = await response.json();
-      setMenuItems(data.menuItems || []);
+      // Sort items by sortOrder when loading
+      const sortedItems = (data.menuItems || []).sort((a: MenuItem, b: MenuItem) =>
+        (a.sortOrder ?? 999) - (b.sortOrder ?? 999)
+      );
+      setMenuItems(sortedItems);
       setMenuCategories(data.menuCategories || []);
     } catch (error) {
       console.error("Error fetching menu data:", error);

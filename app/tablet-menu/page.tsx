@@ -52,12 +52,13 @@ function TabletMenuContent() {
     }
   };
 
-  // Filter out hidden items first, then apply category filter
+  // Filter out hidden items first, then apply category filter, then sort by sortOrder
   const visibleMenuItems = menuItems.filter(item => !item.hidden);
-  const filteredItems =
+  const filteredItems = (
     selectedCategory === "All"
       ? visibleMenuItems
-      : visibleMenuItems.filter((item) => item.category === selectedCategory);
+      : visibleMenuItems.filter((item) => item.category === selectedCategory)
+  ).sort((a, b) => (a.sortOrder ?? 999) - (b.sortOrder ?? 999));
 
   const container = {
     hidden: { opacity: 0 },

@@ -21,6 +21,8 @@ export interface MenuItem {
   descriptionTranslations?: MenuItemTranslations;
   // Visibility control
   hidden?: boolean; // If true, item is hidden from public menu
+  // Display order
+  sortOrder?: number; // Lower numbers appear first
 }
 
 export const menuCategories = [

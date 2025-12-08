@@ -38,11 +38,12 @@ export default function Menu() {
     setTimeout(() => setSelectedItem(null), 300);
   };
 
-  // Filter out hidden items first, then apply category filter
+  // Filter out hidden items first, then apply category filter, then sort by sortOrder
   const visibleMenuItems = menuItems.filter(item => !item.hidden);
-  const filteredItems = selectedCategory === "All"
+  const filteredItems = (selectedCategory === "All"
     ? visibleMenuItems
-    : visibleMenuItems.filter(item => item.category === selectedCategory);
+    : visibleMenuItems.filter(item => item.category === selectedCategory))
+    .sort((a, b) => (a.sortOrder ?? 999) - (b.sortOrder ?? 999));
 
   // Calculate items to show: 2 rows initially, then expand by 3 rows at a time
   const itemsPerRow = isMobile ? 2 : 3;

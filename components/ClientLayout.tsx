@@ -4,6 +4,7 @@ import { ReactNode } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { LanguageProvider, useLanguage } from '@/lib/LanguageContext';
 import LanguageSelector from './LanguageSelector';
+import LoadingScreen from './LoadingScreen';
 
 function ClientLayoutInner({ children }: { children: ReactNode }) {
     const { languageSelected } = useLanguage();
@@ -13,9 +14,11 @@ function ClientLayoutInner({ children }: { children: ReactNode }) {
             <AnimatePresence mode="wait">
                 {!languageSelected && <LanguageSelector key="language-selector" />}
             </AnimatePresence>
-            <div style={{ display: languageSelected ? 'block' : 'none' }}>
-                {children}
-            </div>
+            {languageSelected && (
+                <LoadingScreen>
+                    {children}
+                </LoadingScreen>
+            )}
         </>
     );
 }

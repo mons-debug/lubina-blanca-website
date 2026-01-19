@@ -1,3 +1,10 @@
+export interface MenuItemTranslations {
+  en?: string;
+  ar?: string;
+  fr?: string;
+  es?: string;
+}
+
 export interface MenuItem {
   id: string;
   name: string;
@@ -9,6 +16,10 @@ export interface MenuItem {
   preparationOptions?: string; // e.g., "Available: Grilled, Tagine, Plancha, Fried"
   imagePosition?: { x: number; y: number; zoom: number }; // Main image positioning
   imagesPositions?: Array<{ x: number; y: number; zoom: number }>; // Gallery images positioning
+  nameTranslations?: MenuItemTranslations;
+  descriptionTranslations?: MenuItemTranslations;
+  hidden?: boolean;
+  sortOrder?: number;
 }
 
 export const menuCategories = [

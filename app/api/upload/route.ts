@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
     let bytes = await file.arrayBuffer();
     let buffer = Buffer.from(bytes);
     let finalFilename = file.name.replace(/\s+/g, "-");
-    
+
     // Check if file is HEIC/HEIF format
     const fileExtension = path.extname(file.name).toLowerCase();
     const isHeic = [".heic", ".heif"].includes(fileExtension);
@@ -44,13 +44,13 @@ export async function POST(request: NextRequest) {
       try {
         // Convert HEIC to JPEG
         const jpegBuffer = await convertHeic(buffer);
-        
+
         // Optimize with sharp
         // @ts-ignore - Buffer type compatibility
         buffer = await sharp(jpegBuffer)
           .jpeg({ quality: 90 })
           .toBuffer();
-        
+
         // Change extension to .jpg
         finalFilename = finalFilename.replace(/\.(heic|heif)$/i, ".jpg");
         console.log("HEIC conversion successful");
@@ -65,14 +65,14 @@ export async function POST(request: NextRequest) {
       // For other image formats, optimize with sharp
       try {
         const imageInfo = await sharp(buffer).metadata();
-        
+
         // Convert to JPEG if it's a supported format
         if (["jpeg", "jpg", "png", "webp"].includes(imageInfo.format || "")) {
           // @ts-ignore - Buffer type compatibility
           buffer = await sharp(buffer)
             .jpeg({ quality: 90 })
             .toBuffer();
-          
+
           // Ensure .jpg extension
           if (![".jpg", ".jpeg"].includes(fileExtension)) {
             finalFilename = finalFilename.replace(/\.\w+$/, ".jpg");
@@ -88,9 +88,20 @@ export async function POST(request: NextRequest) {
     const filename = `${timestamp}-${finalFilename}`;
     const blobPath = `uploads/${filename}`;
 
-    // Try Vercel Blob Storage first (if token is configured)
+    // Check if we're in production environment (Vercel)
+    const isProduction = process.env.VERCEL === "1" || process.env.NODE_ENV === "production";
     const blobToken = process.env.BLOB_READ_WRITE_TOKEN;
-    
+
+    // In production, we MUST use Vercel Blob Storage
+    if (isProduction && !blobToken) {
+      console.error("BLOB_READ_WRITE_TOKEN is not configured for production");
+      return NextResponse.json(
+        { error: "Storage not configured. Please contact administrator." },
+        { status: 500 }
+      );
+    }
+
+    // Try Vercel Blob Storage if token is configured
     if (blobToken) {
       try {
         const blob = await put(blobPath, buffer, {
@@ -102,19 +113,29 @@ export async function POST(request: NextRequest) {
           return NextResponse.json({ url: blob.url, filename }, { status: 201 });
         }
       } catch (blobError: any) {
-        // If Blob storage fails, fall back to local storage
-        console.warn("Vercel Blob upload failed, using local storage:", blobError?.message || blobError);
+        console.error("Vercel Blob upload failed:", blobError?.message || blobError);
+
+        // In production, don't fall back to local storage
+        if (isProduction) {
+          return NextResponse.json(
+            { error: "Failed to upload image to storage" },
+            { status: 500 }
+          );
+        }
+
+        // In development, log and continue to local fallback
+        console.warn("Falling back to local storage...");
       }
     }
 
-    // Fallback to local file storage
+    // Local file storage (only works in development)
     const uploadsDir = path.join(process.cwd(), "public", "uploads");
     try {
       await mkdir(uploadsDir, { recursive: true });
     } catch (error) {
       // Directory might already exist, ignore error
     }
-    
+
     const filepath = path.join(uploadsDir, filename);
     await writeFile(filepath, buffer);
     const url = `/uploads/${filename}`;

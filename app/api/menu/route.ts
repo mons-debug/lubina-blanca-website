@@ -151,6 +151,8 @@ export async function PUT(request: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
+  const isProduction = process.env.VERCEL === "1" || process.env.NODE_ENV === "production";
+
   try {
     const updatedItem = await request.json();
 
@@ -161,12 +163,24 @@ export async function PUT(request: NextRequest) {
         if (success) {
           return NextResponse.json(updatedItem);
         }
+        // If update returns false, the item might not exist
+        return NextResponse.json({ error: "Failed to update item in database" }, { status: 500 });
       } catch (dbError) {
-        console.error("Database error, falling back to file:", dbError);
+        console.error("Database error:", dbError);
+
+        // In production, don't fall back to file storage
+        if (isProduction) {
+          return NextResponse.json({ error: "Database error. Please try again." }, { status: 500 });
+        }
+
+        console.warn("Database error, falling back to file storage");
       }
+    } else if (isProduction) {
+      // In production, database must be configured
+      return NextResponse.json({ error: "Database not configured" }, { status: 500 });
     }
 
-    // Fallback to file-based
+    // Fallback to file-based (only in development)
     const data = await readDataFile<any>("menuData.ts");
     const index = data.menuItems.findIndex((item: MenuItem) => item.id === updatedItem.id);
     if (index === -1) {

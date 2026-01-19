@@ -307,7 +307,7 @@ export const menuItems: MenuItem[] = [
       "fr": "Salade spéciale du chef",
       "es": "Ensalada especial del chef"
     },
-    "sortOrder": 1
+    "sortOrder": 2
   },
   {
     "name": "Soupe Special",
@@ -486,13 +486,17 @@ export const menuItems: MenuItem[] = [
     "sortOrder": 25
   },
   {
-    "id": "20",
     "name": "Merlan",
     "description": "Grilled whiting fish with olive oil and herbs",
     "price": "100.00 DH",
-    "image": "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=800&h=600&fit=crop",
     "category": "Fish Dishes",
-    "sortOrder": 26
+    "image": "/uploads/1768845785199-i8323-filet-de-merlan-et-ses-pommes-de-terre-au-four.jpg",
+    "images": [],
+    "preparationOptions": "",
+    "imagesPositions": [],
+    "hidden": false,
+    "sortOrder": 26,
+    "id": "20"
   },
   {
     "id": "21",
@@ -586,23 +590,20 @@ export const menuItems: MenuItem[] = [
     "price": "60.00 DH",
     "category": "Fish Dishes",
     "image": "/uploads/1765021977497-anchois.jpg",
-    "images": [],
+    "images": [
+      "/uploads/1768845640742-WhatsApp-Image-2026-01-17-at-21.52.41-(1).jpeg"
+    ],
     "preparationOptions": "",
-    "imagesPositions": [],
-    "id": "25",
-    "nameTranslations": {
-      "en": "Anchovies",
-      "ar": "أنشوجة",
-      "fr": "Anchois",
-      "es": "Anchoas"
-    },
-    "descriptionTranslations": {
-      "en": "Fresh anchovies grilled",
-      "ar": "أنشوجة طازجة مشوية",
-      "fr": "Anchois frais grillés",
-      "es": "Anchoas frescas a la parrilla"
-    },
-    "sortOrder": 31
+    "imagesPositions": [
+      {
+        "x": 0,
+        "y": 0,
+        "zoom": 1
+      }
+    ],
+    "hidden": false,
+    "sortOrder": 31,
+    "id": "25"
   },
   {
     "name": "Pilpil Royal",
@@ -626,7 +627,7 @@ export const menuItems: MenuItem[] = [
       "fr": "Pil pil royal aux fruits de mer",
       "es": "Pil pil real de mariscos"
     },
-    "sortOrder": 2
+    "sortOrder": 3
   },
   {
     "name": "Gambas Planchat",
@@ -729,42 +730,39 @@ export const menuItems: MenuItem[] = [
     "description": "Red mullet grilled with olive oil and lemon",
     "price": "100.00 DH",
     "category": "Fish Dishes",
-    "image": "/uploads/1765030271750-toujet.jpg",
+    "image": "/uploads/1768845728958-filets-de-rouget-poeles-au-poivre-de-sichuan-et-zestes-d-agrumes.avif",
     "images": [],
     "preparationOptions": "",
     "imagesPositions": [],
-    "id": "31",
-    "nameTranslations": {
-      "en": "Red Mullet",
-      "ar": "سمك البوري",
-      "fr": "Rouget",
-      "es": "Salmonete"
-    },
-    "descriptionTranslations": {
-      "en": "Red mullet grilled",
-      "ar": "سمك البوري مشوي",
-      "fr": "Rouget grillé",
-      "es": "Salmonete a la parrilla"
-    },
-    "sortOrder": 34
+    "hidden": false,
+    "sortOrder": 34,
+    "id": "31"
   },
   {
-    "id": "32",
     "name": "Laouzi",
     "description": "Fresh local specialty fish",
     "price": "90.00 DH",
-    "image": "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=800&h=600&fit=crop",
     "category": "Fish Dishes",
-    "sortOrder": 35
+    "image": "/uploads/1768844798852-29b88093-e93a-48d1-945c-8ccd1e4e8ca7.JPG",
+    "images": [],
+    "preparationOptions": "",
+    "imagesPositions": [],
+    "hidden": false,
+    "sortOrder": 35,
+    "id": "32"
   },
   {
-    "id": "33",
     "name": "Œufs des Poissons",
     "description": "Fish roe prepared Mediterranean style",
     "price": "100.00 DH",
-    "image": "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=800&h=600&fit=crop",
     "category": "Fish Dishes",
-    "sortOrder": 36
+    "image": "/uploads/1768845503609-WhatsApp-Image-2026-01-17-at-21.51.32.jpeg",
+    "images": [],
+    "preparationOptions": "",
+    "imagesPositions": [],
+    "hidden": false,
+    "sortOrder": 36,
+    "id": "33"
   },
   {
     "id": "34",
@@ -776,13 +774,17 @@ export const menuItems: MenuItem[] = [
     "sortOrder": 37
   },
   {
-    "id": "35",
     "name": "Croquette",
     "description": "Fish croquette with crispy coating",
     "price": "10.00 DH",
-    "image": "https://images.unsplash.com/photo-1625944525533-473f1a3d54e7?w=800&h=600&fit=crop",
     "category": "Fish Dishes",
-    "sortOrder": 38
+    "image": "/uploads/1768846349452-1080x1080-Photo-2_1309-How-to-Make-POTATO-CROQUETTES-Like-an-Italian-V1-2.jpg",
+    "images": [],
+    "preparationOptions": "",
+    "imagesPositions": [],
+    "hidden": false,
+    "sortOrder": 38,
+    "id": "35"
   },
   {
     "name": "Plat de Poisson Royal",
@@ -814,16 +816,20 @@ export const menuItems: MenuItem[] = [
       "fr": "Assiette royale de poisson",
       "es": "Plato real de pescado"
     },
-    "sortOrder": 3
+    "sortOrder": 1
   },
   {
-    "id": "37",
     "name": "Spilinka",
     "description": "Traditional coastal fish specialty",
     "price": "90.00 DH",
-    "image": "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=800&h=600&fit=crop",
     "category": "Fish Dishes",
-    "sortOrder": 39
+    "image": "/uploads/1768844916595-WhatsApp-Image-2026-01-17-at-21.43.53.jpeg",
+    "images": [],
+    "preparationOptions": "",
+    "imagesPositions": [],
+    "hidden": false,
+    "sortOrder": 39,
+    "id": "37"
   },
   {
     "name": "Thon",
@@ -874,13 +880,17 @@ export const menuItems: MenuItem[] = [
     "sortOrder": 4
   },
   {
-    "id": "41",
     "name": "Bogavante (KG)",
     "description": "Fresh lobster sold by weight",
     "price": "600.00 DH/KG",
-    "image": "https://images.unsplash.com/photo-1559339352-11d035aa65de?w=800&h=600&fit=crop",
     "category": "Fish by Kilo",
-    "sortOrder": 40
+    "image": "/uploads/1768845863423-bogavante.jpg",
+    "images": [],
+    "preparationOptions": "",
+    "imagesPositions": [],
+    "hidden": false,
+    "sortOrder": 40,
+    "id": "41"
   },
   {
     "name": "Langusta (KG)",
@@ -931,31 +941,43 @@ export const menuItems: MenuItem[] = [
     "sortOrder": 42
   },
   {
-    "id": "44",
     "name": "Pardio Découpé (KG)",
     "description": "Filleted pardio fish sold by weight",
     "price": "500.00 DH/KG",
-    "image": "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=800&h=600&fit=crop",
     "category": "Fish by Kilo",
-    "sortOrder": 43
+    "image": "/uploads/1768845434837-WhatsApp-Image-2026-01-17-at-21.41.45.jpeg",
+    "images": [],
+    "preparationOptions": "",
+    "imagesPositions": [],
+    "hidden": false,
+    "sortOrder": 43,
+    "id": "44"
   },
   {
-    "id": "45",
     "name": "Rapel Lalote (KG)",
     "description": "Fresh lalote fish sold by weight",
     "price": "500.00 DH/KG",
-    "image": "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=800&h=600&fit=crop",
     "category": "Fish by Kilo",
-    "sortOrder": 44
+    "image": "/uploads/1768846608198-Screenshot-2026-01-19-at-19.16.20.jpg",
+    "images": [],
+    "preparationOptions": "",
+    "imagesPositions": [],
+    "hidden": false,
+    "sortOrder": 44,
+    "id": "45"
   },
   {
-    "id": "46",
     "name": "Langusta Gris (KG)",
     "description": "Grey lobster sold by weight",
     "price": "500.00 DH/KG",
-    "image": "https://images.unsplash.com/photo-1559339352-11d035aa65de?w=800&h=600&fit=crop",
     "category": "Fish by Kilo",
-    "sortOrder": 45
+    "image": "/uploads/1768845930402-closeup-view-fresh-spiny-lobsters-260nw-2659304455.jpg",
+    "images": [],
+    "preparationOptions": "",
+    "imagesPositions": [],
+    "hidden": false,
+    "sortOrder": 45,
+    "id": "46"
   },
   {
     "id": "47",
@@ -967,40 +989,56 @@ export const menuItems: MenuItem[] = [
     "sortOrder": 46
   },
   {
-    "id": "48",
     "name": "Sigala (KG)",
     "description": "Premium sigala fish sold by weight",
     "price": "800.00 DH/KG",
-    "image": "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=800&h=600&fit=crop",
     "category": "Fish by Kilo",
-    "sortOrder": 47
+    "image": "/uploads/1768846052752-images.jpeg",
+    "images": [],
+    "preparationOptions": "",
+    "imagesPositions": [],
+    "hidden": false,
+    "sortOrder": 47,
+    "id": "48"
   },
   {
-    "id": "49",
     "name": "Filet Lalote (KG)",
     "description": "Lalote fillets sold by weight",
     "price": "500.00 DH/KG",
-    "image": "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=800&h=600&fit=crop",
     "category": "Fish by Kilo",
-    "sortOrder": 48
+    "image": "/uploads/1768846631995-Screenshot-2026-01-19-at-19.16.20.jpg",
+    "images": [],
+    "preparationOptions": "",
+    "imagesPositions": [],
+    "hidden": false,
+    "sortOrder": 48,
+    "id": "49"
   },
   {
-    "id": "50",
     "name": "Filet Lubina (KG)",
     "description": "Sea bass fillets sold by weight",
     "price": "600.00 DH/KG",
-    "image": "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=800&h=600&fit=crop",
     "category": "Fish by Kilo",
-    "sortOrder": 49
+    "image": "/uploads/1768845347723-WhatsApp-Image-2026-01-17-at-21.40.54.jpeg",
+    "images": [],
+    "preparationOptions": "",
+    "imagesPositions": [],
+    "hidden": false,
+    "sortOrder": 49,
+    "id": "50"
   },
   {
-    "id": "51",
     "name": "Filet Merou (KG)",
     "description": "Grouper fillets sold by weight",
     "price": "600.00 DH/KG",
-    "image": "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=800&h=600&fit=crop",
     "category": "Fish by Kilo",
-    "sortOrder": 50
+    "image": "/uploads/1768845013153-WhatsApp-Image-2026-01-17-at-21.46.30.jpeg",
+    "images": [],
+    "preparationOptions": "",
+    "imagesPositions": [],
+    "hidden": false,
+    "sortOrder": 50,
+    "id": "51"
   },
   {
     "name": "Boracci (KG)",
@@ -1189,42 +1227,47 @@ export const menuItems: MenuItem[] = [
     "description": "Red mullet sold by weight",
     "price": "Sur demande",
     "category": "Fish by Kilo",
-    "image": "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=800&h=600&fit=crop",
+    "image": "/uploads/1768846437426-images-(1).jpeg",
     "images": [],
     "preparationOptions": "",
     "imagesPositions": [],
-    "id": "59",
-    "nameTranslations": {
-      "en": "Red Mullet (KG)",
-      "ar": "روجيه (كجم)",
-      "fr": "Rouget (KG)",
-      "es": "Salmonete (KG)"
-    },
-    "descriptionTranslations": {
-      "en": "Red mullet by weight",
-      "ar": "سمك البوري بالوزن",
-      "fr": "Rouget au poids",
-      "es": "Salmonete por peso"
-    },
-    "sortOrder": 58
+    "hidden": false,
+    "sortOrder": 58,
+    "id": "59"
   },
   {
-    "id": "60",
     "name": "Flan (Crème Caramel)",
     "description": "Classic caramel custard dessert",
     "price": "20.00 DH",
-    "image": "https://images.unsplash.com/photo-1551024601-bec78aea704b?w=800&h=600&fit=crop",
     "category": "Desserts",
-    "sortOrder": 59
+    "image": "/uploads/1768845253854-IMG_3468.jpg",
+    "images": [],
+    "preparationOptions": "",
+    "imagesPositions": [],
+    "hidden": false,
+    "sortOrder": 59,
+    "id": "60"
   },
   {
-    "id": "61",
     "name": "Fruits de Saison",
     "description": "Fresh seasonal fruit platter",
     "price": "Sur demande",
-    "image": "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=800&h=600&fit=crop",
     "category": "Desserts",
-    "sortOrder": 60
+    "image": "/uploads/1768846722477-WhatsApp-Image-2026-01-17-at-21.36.55.jpeg",
+    "images": [
+      "/uploads/1768846739961-WhatsApp-Image-2026-01-17-at-21.36.17.jpeg"
+    ],
+    "preparationOptions": "",
+    "imagesPositions": [
+      {
+        "x": 0,
+        "y": 0,
+        "zoom": 1
+      }
+    ],
+    "hidden": false,
+    "sortOrder": 60,
+    "id": "61"
   },
   {
     "id": "62",
